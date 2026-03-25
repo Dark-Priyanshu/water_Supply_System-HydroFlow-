@@ -20,4 +20,32 @@ if (isset($_POST['add_motor'])) {
         exit();
     }
 }
+
+if (isset($_POST['update_motor'])) {
+    $motor_id = $_POST['motor_id'];
+    $motor_name = $_POST['motor_name'];
+    $horsepower = $_POST['horsepower'];
+    $location = $_POST['location'];
+
+    if ($motorModel->updateMotor($motor_id, $motor_name, $horsepower, $location)) {
+        $_SESSION['success_msg'] = "Motor updated successfully!";
+        header("Location: ../views/motors/motor_list.php");
+        exit();
+    } else {
+        $_SESSION['error_msg'] = "Error updating motor.";
+        header("Location: ../views/motors/edit_motor.php?id=" . $motor_id);
+        exit();
+    }
+}
+
+if (isset($_GET['action']) && $_GET['action'] == 'toggle_status' && isset($_GET['id'])) {
+    $motor_id = $_GET['id'];
+    if ($motorModel->toggleStatus($motor_id)) {
+        $_SESSION['success_msg'] = "Motor status updated successfully!";
+    } else {
+        $_SESSION['error_msg'] = "Error updating status.";
+    }
+    header("Location: ../views/motors/motor_list.php");
+    exit();
+}
 ?>

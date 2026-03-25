@@ -96,8 +96,10 @@ if($total_motors > 0) {
                      </div>
                  </div>
                  <div class="flex items-center justify-end gap-3 pt-4 border-t border-outline-variant/10 mt-2">
-                     <a href="#" class="p-2 text-on-surface-variant hover:text-primary hover:bg-primary-fixed/50 rounded-lg transition-colors" title="Edit Motor"><span class="material-symbols-outlined">edit_note</span></a>
-                     <a href="#" class="p-2 text-on-surface-variant hover:text-primary hover:bg-primary-fixed/50 rounded-lg transition-colors" title="View Details"><span class="material-symbols-outlined">visibility</span></a>
+                     <a href="edit_motor.php?id=<?= $motor['motor_id'] ?>" class="p-2 text-on-surface-variant hover:text-primary hover:bg-primary-fixed/50 rounded-lg transition-colors" title="Edit Motor"><span class="material-symbols-outlined">edit_note</span></a>
+                     <a href="../../controllers/motorController.php?action=toggle_status&id=<?= $motor['motor_id'] ?>" class="p-2 text-on-surface-variant hover:text-primary hover:bg-primary-fixed/50 rounded-lg transition-colors" title="<?= $motor['status'] == 'active' ? 'Deactivate Motor' : 'Activate Motor' ?>">
+                        <span class="material-symbols-outlined"><?= $motor['status'] == 'active' ? 'visibility_off' : 'visibility' ?></span>
+                     </a>
                  </div>
              </div>
         </div>
