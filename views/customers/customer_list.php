@@ -107,7 +107,7 @@ $customer_count = $customers->num_rows;
                     <td class="px-6 py-5 text-right">
                         <div class="flex justify-end gap-2">
                             <a href="#" class="p-1.5 text-slate-400 hover:text-primary transition-colors"><span class="material-symbols-outlined text-lg">visibility</span></a>
-                            <a href="#" class="p-1.5 text-slate-400 hover:text-secondary transition-colors"><span class="material-symbols-outlined text-lg">edit</span></a>
+                            <a href="edit_customer.php?id=<?= $row['customer_id'] ?>" class="p-1.5 text-slate-400 hover:text-secondary transition-colors"><span class="material-symbols-outlined text-lg">edit</span></a>
                             <a href="#" class="p-1.5 text-slate-400 hover:text-error transition-colors"><span class="material-symbols-outlined text-lg">delete</span></a>
                         </div>
                     </td>

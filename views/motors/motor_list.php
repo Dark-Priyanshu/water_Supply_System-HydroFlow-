@@ -75,7 +75,7 @@ if($total_motors > 0) {
 <div class="grid grid-cols-1 xl:grid-cols-2 gap-8 mb-12">
     <?php if ($total_motors > 0): ?>
         <?php foreach ($motors_data as $motor): ?>
-        <div class="bg-surface-container-lowest rounded-xl overflow-hidden group flex flex-col md:flex-row shadow-sm hover:shadow-md transition-shadow border border-outline-variant/10">
+        <div class="searchable-item bg-surface-container-lowest rounded-xl overflow-hidden group flex flex-col md:flex-row shadow-sm hover:shadow-md transition-shadow border border-outline-variant/10">
              <div class="md:w-32 h-32 md:h-auto relative overflow-hidden bg-surface-container-highest flex items-center justify-center">
                  <span class="material-symbols-outlined text-6xl text-outline/30 group-hover:scale-110 transition-transform duration-500">water_pump</span>
                  <?php if($motor['status'] == 'active'): ?>

@@ -97,8 +97,20 @@
                     ?>
                 </h2>
                 <div class="relative group hidden md:block">
+                    <?php 
+                        $search_placeholder = 'Search records...';
+                        switch($current_page) {
+                            case 'dashboard.php': $search_placeholder = 'Search dashboard...'; break;
+                            case 'customer_list.php': $search_placeholder = 'Search customers or villages...'; break;
+                            case 'motor_list.php': $search_placeholder = 'Search motor details...'; break;
+                            case 'supply_history.php': $search_placeholder = 'Search supply logs...'; break;
+                            case 'bill_history.php': $search_placeholder = 'Search bills or invoices...'; break;
+                            case 'payment_history.php': $search_placeholder = 'Search payments...'; break;
+                            case 'daily_report.php': $search_placeholder = 'Search reports...'; break;
+                        }
+                    ?>
                     <span class="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-outline">search</span>
-                    <input class="bg-surface-container-high border-none rounded-lg pl-10 pr-4 py-2 w-48 lg:w-72 text-sm focus:ring-2 focus:ring-[#005d90]/20 focus:bg-surface-container-lowest transition-all placeholder:text-outline-variant" placeholder="Search for customers or logs..." type="text"/>
+                    <input id="topGlobalSearch" class="bg-surface-container-high border-none rounded-lg pl-10 pr-4 py-2 w-48 lg:w-72 text-sm focus:ring-2 focus:ring-[#005d90]/20 focus:bg-surface-container-lowest transition-all placeholder:text-outline-variant" placeholder="<?= $search_placeholder ?>" type="text"/>
                 </div>
             </div>
             <div class="flex items-center gap-4">

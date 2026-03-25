@@ -15,7 +15,7 @@ CREATE TABLE customers (
     mobile VARCHAR(15) NOT NULL,
     village VARCHAR(100) NOT NULL,
     farm_name VARCHAR(100),
-    connection_no VARCHAR(50) UNIQUE,
+    connection_no VARCHAR(50),
     pipe_size VARCHAR(20),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

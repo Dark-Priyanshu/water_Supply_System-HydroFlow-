@@ -30,6 +30,9 @@
                     "pageLength": 10,
                     "ordering": true,
                     "info": true,
+                    "dom": "<'flex flex-col md:flex-row justify-between items-center mb-4'lf>" +
+                           "<'overflow-x-auto w-full'tr>" +
+                           "<'flex flex-col md:flex-row justify-between items-center mt-4 gap-4'ip>",
                     "language": {
                         "search": "_INPUT_",
                         "searchPlaceholder": "Search records...",
@@ -46,6 +49,27 @@
                     }
                 });
             }
+            // Bind top global search to DataTables and generic cards
+            $('#topGlobalSearch').on('keyup', function() {
+                var searchVal = $(this).val().toLowerCase();
+                
+                // 1. Filter DataTables
+                if ($('.datatable').length) {
+                    $('.datatable').DataTable().search(searchVal).draw();
+                }
+                
+                // 2. Filter Custom Grids / Cards
+                if ($('.searchable-item').length) {
+                    $('.searchable-item').each(function() {
+                        var textContent = $(this).text().toLowerCase();
+                        if (textContent.indexOf(searchVal) > -1) {
+                            $(this).removeClass('hidden');
+                        } else {
+                            $(this).addClass('hidden');
+                        }
+                    });
+                }
+            });
         });
     </script>
 </body>

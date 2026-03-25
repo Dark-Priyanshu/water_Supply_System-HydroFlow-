@@ -34,6 +34,17 @@ if (isset($_SESSION['admin_id'])) {
             -webkit-backdrop-filter: blur(16px);
             border: 1px solid rgba(255, 255, 255, 0.4);
         }
+        
+        /* Utility classes missing after migration */
+        .text-primary { color: #005d90; }
+        .bg-primary\/20 { background-color: rgba(0, 93, 144, 0.2); }
+        .bg-gradient-to-r.from-primary.to-primary-container {
+            background: linear-gradient(to right, #005d90, #007bbd);
+        }
+        .shadow-primary\/30 {
+            box-shadow: 0 10px 15px -3px rgba(0, 93, 144, 0.3);
+        }
+        .text-white { color: #ffffff; }
     </style>
 </head>
 <body class="bg-login font-body text-on-surface antialiased min-h-screen flex items-center justify-center p-4 relative overflow-hidden">

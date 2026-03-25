@@ -1,0 +1,19 @@
+project title -  water Supply Management System
+project Guide - Mr. Mahaboob Hussain
+Student Name - Priyanshu Shakya 
+Study Center - Subhash Academy(9050)
+Enrollment No - AZ149050055
+Mobile No - 7880762083
+Objective - To develop a web application for water supply management system that can be used to manage the water supply to the consumers.
+Frontend - HTML,CSS, jQuery, DataTables 
+Backend - PHP
+Database - MySQL Server
+Environment Setup - XAMPP (Apache)
+Technical - operating System - Windows 7 
+            hardware - 4GB RAM, 100GB HDD
+Innovativeness & usefulness - User Friendly
+Competitive Advantage - Zero power consumption, 
+                        Zero maintenance, 
+                        Zero water wastage,
+                        Easy to Operate
+                        Easy to Maintain

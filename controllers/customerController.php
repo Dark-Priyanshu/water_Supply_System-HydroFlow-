@@ -23,4 +23,24 @@ if (isset($_POST['add_customer'])) {
         exit();
     }
 }
+
+if (isset($_POST['update_customer'])) {
+    $customer_id = $_POST['customer_id'];
+    $farmer_name = $_POST['farmer_name'];
+    $mobile = $_POST['mobile'];
+    $village = $_POST['village'];
+    $farm_name = $_POST['farm_name'];
+    $connection_no = $_POST['connection_no'];
+    $pipe_size = $_POST['pipe_size'];
+
+    if ($customerModel->updateCustomer($customer_id, $farmer_name, $mobile, $village, $farm_name, $connection_no, $pipe_size)) {
+        $_SESSION['success_msg'] = "Customer updated successfully!";
+        header("Location: ../views/customers/customer_list.php");
+        exit();
+    } else {
+        $_SESSION['error_msg'] = "Error updating customer. Connection number might already exist.";
+        header("Location: ../views/customers/edit_customer.php?id=" . $customer_id);
+        exit();
+    }
+}
 ?>
