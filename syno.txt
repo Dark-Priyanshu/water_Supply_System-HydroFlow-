@@ -5,7 +5,7 @@ Study Center - Subhash Academy(9050)
 Enrollment No - AZ149050055
 Mobile No - 7880762083
 Objective - To develop a web application for water supply management system that can be used to manage the water supply to the consumers.
-Frontend - HTML,CSS, jQuery, DataTables 
+Frontend - HTML,CSS, js, DataTables 
 Backend - PHP
 Database - MySQL Server
 Environment Setup - XAMPP (Apache)
