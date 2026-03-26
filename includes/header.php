@@ -10,6 +10,14 @@ if (!isset($_SESSION['admin_id'])) {
 $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http";
 $host = $_SERVER['HTTP_HOST'];
 $base_url = $protocol . "://" . $host . "/waterS/";
+
+// DB connection (needed by sidebar for dynamic admin name)
+if (!isset($conn)) {
+    // Resolve config path regardless of which view includes header
+    $config_path = __DIR__ . '/../config/database.php';
+    if (!file_exists($config_path)) $config_path = __DIR__ . '/../../config/database.php';
+    require_once $config_path;
+}
 ?>
 <!DOCTYPE html>
 <html class="light" lang="en">
@@ -77,50 +85,51 @@ $base_url = $protocol . "://" . $host . "/waterS/";
           --color-on-primary-fixed: #001d32;
         }
 
-        @media (prefers-color-scheme: dark) {
-          :root {
-              --color-primary: #94ccff;
-              --color-on-primary: #003351;
-              --color-primary-container: #004b74;
-              --color-on-primary-container: #cde5ff;
-              --color-secondary: #95d4b3;
-              --color-on-secondary: #003823;
-              --color-secondary-container: #0e5138;
-              --color-on-secondary-container: #b1f0ce;
-              --color-tertiary: #95d0dc;
-              --color-on-tertiary: #00363e;
-              --color-tertiary-container: #034f59;
-              --color-on-tertiary-container: #b1ecf8;
-              --color-error: #ffb4ab;
-              --color-on-error: #690005;
-              --color-error-container: #93000a;
-              --color-on-error-container: #ffdad6;
-              --color-background: #191c1e;
-              --color-on-background: #e0e3e5;
-              --color-surface: #191c1e;
-              --color-on-surface: #e0e3e5;
-              --color-surface-variant: #404850;
-              --color-on-surface-variant: #bfc7d1;
-              --color-outline: #89929a;
-              --color-outline-variant: #404850;
-              --color-inverse-surface: #e0e3e5;
-              --color-inverse-on-surface: #191c1e;
-              --color-inverse-primary: #006399;
-              --color-surface-dim: #111416;
-              --color-surface-bright: #373a3c;
-              --color-surface-container-lowest: #0c0f10;
-              --color-surface-container-low: #191c1e;
-              --color-surface-container: #1d2022;
-              --color-surface-container-high: #272a2c;
-              --color-surface-container-highest: #323537;
-              --color-surface-tint: #94ccff;
-          }
-          .glass-sidebar {
-              background: rgba(25, 28, 30, 0.7) !important;
-          }
-          .wave-bg {
-              background: linear-gradient(180deg, rgba(149, 212, 179, 0) 0%, rgba(149, 212, 179, 0.05) 100%) !important;
-          }
+        /* OS dark mode intentionally disabled — use Settings toggle only */
+
+        /* ── Manual (localStorage) dark mode toggle ─────────────── */
+        [data-theme="dark"] {
+            --color-primary: #94ccff;
+            --color-on-primary: #003351;
+            --color-primary-container: #004b74;
+            --color-on-primary-container: #cde5ff;
+            --color-secondary: #95d4b3;
+            --color-on-secondary: #003823;
+            --color-secondary-container: #0e5138;
+            --color-on-secondary-container: #b1f0ce;
+            --color-tertiary: #95d0dc;
+            --color-on-tertiary: #00363e;
+            --color-tertiary-container: #034f59;
+            --color-on-tertiary-container: #b1ecf8;
+            --color-error: #ffb4ab;
+            --color-on-error: #690005;
+            --color-error-container: #93000a;
+            --color-on-error-container: #ffdad6;
+            --color-background: #191c1e;
+            --color-on-background: #e0e3e5;
+            --color-surface: #191c1e;
+            --color-on-surface: #e0e3e5;
+            --color-surface-variant: #404850;
+            --color-on-surface-variant: #bfc7d1;
+            --color-outline: #89929a;
+            --color-outline-variant: #404850;
+            --color-inverse-surface: #e0e3e5;
+            --color-inverse-on-surface: #191c1e;
+            --color-inverse-primary: #006399;
+            --color-surface-dim: #111416;
+            --color-surface-bright: #373a3c;
+            --color-surface-container-lowest: #0c0f10;
+            --color-surface-container-low: #191c1e;
+            --color-surface-container: #1d2022;
+            --color-surface-container-high: #272a2c;
+            --color-surface-container-highest: #323537;
+            --color-surface-tint: #94ccff;
+        }
+        [data-theme="dark"] .glass-sidebar {
+            background: rgba(25, 28, 30, 0.85) !important;
+        }
+        [data-theme="dark"] .wave-bg {
+            background: linear-gradient(180deg, rgba(149, 212, 179, 0) 0%, rgba(149, 212, 179, 0.05) 100%) !important;
         }
 
         .material-symbols-outlined {
@@ -136,5 +145,14 @@ $base_url = $protocol . "://" . $host . "/waterS/";
             background: linear-gradient(180deg, rgba(44, 105, 78, 0) 0%, rgba(44, 105, 78, 0.05) 100%);
         }
     </style>
+    <!-- Prevent flash: apply saved theme + scale BEFORE first paint -->
+    <script>
+        (function(){
+            var t = localStorage.getItem('hydroTheme');
+            if (t === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+            var s = parseInt(localStorage.getItem('hydroScale') || '100', 10);
+            if (s !== 100) document.documentElement.style.fontSize = (s / 100 * 16) + 'px';
+        })();
+    </script>
 </head>
 <body class="bg-surface font-body text-on-surface antialiased">

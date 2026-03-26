@@ -94,7 +94,7 @@ if (isset($_SESSION['admin_id'])) {
         </form>
         
         <div class="mt-8 text-center border-t border-outline/10 pt-6">
-            <p class="text-xs text-outline font-medium">Water Supply Management System v2.0</p>
+            <p class="text-xs text-outline font-medium">Water Supply Management System</p>
         </div>
     </div>
 </body>

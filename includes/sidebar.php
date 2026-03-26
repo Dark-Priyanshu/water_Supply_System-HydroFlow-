@@ -54,6 +54,10 @@
                 <span class="material-symbols-outlined">bar_chart</span>
                 <span class="text-label-sm">Reports</span>
             </a>
+            <a class="<?= getLinkClass(['settings.php'], $current_page) ?>" href="<?= $base_url ?>views/settings.php">
+                <span class="material-symbols-outlined">settings</span>
+                <span class="text-label-sm">Settings</span>
+            </a>
             
             <div class="pt-4 mt-4 border-t border-slate-200/50">
                 <a class="text-slate-500 hover:text-[#ba1a1a] hover:bg-red-50 flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-300" href="<?= $base_url ?>logout.php">
@@ -65,9 +69,20 @@
         
         <div class="mt-auto pt-6 border-t-0">
             <div class="bg-surface-container-low rounded-2xl p-4 flex items-center gap-3">
-                <img class="w-10 h-10 rounded-full object-cover" src="https://ui-avatars.com/api/?name=Admin&background=005d90&color=fff" alt="Admin Avatar"/>
+                <?php
+                    // Fetch current admin's username dynamically
+                    $admin_username = 'Admin';
+                    if (isset($_SESSION['admin_id'])) {
+                        $adm_stmt = $conn->prepare("SELECT username FROM admins WHERE admin_id = ?");
+                        $adm_stmt->bind_param("i", $_SESSION['admin_id']);
+                        $adm_stmt->execute();
+                        $adm_row = $adm_stmt->get_result()->fetch_assoc();
+                        if ($adm_row) $admin_username = htmlspecialchars($adm_row['username']);
+                    }
+                ?>
+                <img class="w-10 h-10 rounded-full object-cover" src="https://ui-avatars.com/api/?name=<?= urlencode($admin_username) ?>&background=005d90&color=fff" alt="Admin Avatar"/>
                 <div class="overflow-hidden">
-                    <p class="text-sm font-semibold truncate">Anand Kumar</p>
+                    <p class="text-sm font-semibold truncate"><?= $admin_username ?></p>
                     <p class="text-[10px] text-on-surface-variant truncate">System Administrator</p>
                 </div>
             </div>
@@ -92,6 +107,7 @@
                             case 'bill_history.php': echo 'Billing & Invoices'; break;
                             case 'payment_history.php': echo 'Payments Tracking'; break;
                             case 'daily_report.php': echo 'Reports & Analytics'; break;
+                            case 'settings.php': echo 'Settings'; break;
                             default: echo 'Management System'; break;
                         }
                     ?>
