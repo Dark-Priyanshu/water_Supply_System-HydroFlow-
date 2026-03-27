@@ -13,13 +13,15 @@
         window.toggleSidebar = function() {
             const sidebar = document.getElementById('sidebarMenu');
             const overlay = document.getElementById('mobileOverlay');
-            sidebar.classList.toggle('-translate-x-full');
-            if (overlay.classList.contains('hidden')) {
-                overlay.classList.remove('hidden');
-                setTimeout(() => overlay.classList.remove('opacity-0'), 10);
+            
+            sidebar.classList.toggle('sidebar-open');
+            
+            if (overlay.style.display === 'none' || overlay.style.display === '') {
+                overlay.style.display = 'block';
+                setTimeout(() => overlay.style.opacity = '1', 10);
             } else {
-                overlay.classList.add('opacity-0');
-                setTimeout(() => overlay.classList.add('hidden'), 300);
+                overlay.style.opacity = '0';
+                setTimeout(() => overlay.style.display = 'none', 300);
             }
         };
 
@@ -30,21 +32,21 @@
                     "pageLength": 10,
                     "ordering": true,
                     "info": true,
-                    "dom": "<'flex flex-col md:flex-row justify-between items-center mb-4'lf>" +
-                           "<'overflow-x-auto w-full'tr>" +
-                           "<'flex flex-col md:flex-row justify-between items-center mt-4 gap-4'ip>",
+                    "dom": "<'dt-container-row'lf>" +
+                           "<'table-container'tr>" +
+                           "<'dt-container-row'ip>",
                     "language": {
                         "search": "_INPUT_",
                         "searchPlaceholder": "Search records...",
-                        "emptyTable": `<div class="py-12 text-center flex flex-col items-center justify-center">
-                            <span class="material-symbols-outlined text-5xl text-outline/30 mb-4 block">folder_off</span>
-                            <p class="text-[15px] font-semibold text-on-surface-variant">No records available.</p>
-                            <p class="text-xs text-outline mt-1">Try adjusting your filters or adding new data.</p>
+                        "emptyTable": `<div class="dt-empty-state">
+                            <span class="material-symbols-outlined dt-empty-icon">folder_off</span>
+                            <p style="font-size: 0.9375rem; font-weight: 600; color: var(--color-on-surface-variant);">No records available.</p>
+                            <p style="font-size: 0.75rem; color: var(--color-outline); margin-top: 0.25rem;">Try adjusting your filters or adding new data.</p>
                         </div>`,
-                        "zeroRecords": `<div class="py-12 text-center flex flex-col items-center justify-center">
-                            <span class="material-symbols-outlined text-5xl text-outline/30 mb-4 block">search_off</span>
-                            <p class="text-[15px] font-semibold text-on-surface-variant">No matching records found.</p>
-                            <p class="text-xs text-outline mt-1">Please try a different search query.</p>
+                        "zeroRecords": `<div class="dt-empty-state">
+                            <span class="material-symbols-outlined dt-empty-icon">search_off</span>
+                            <p style="font-size: 0.9375rem; font-weight: 600; color: var(--color-on-surface-variant);">No matching records found.</p>
+                            <p style="font-size: 0.75rem; color: var(--color-outline); margin-top: 0.25rem;">Please try a different search query.</p>
                         </div>`
                     }
                 });
@@ -63,9 +65,9 @@
                     $('.searchable-item').each(function() {
                         var textContent = $(this).text().toLowerCase();
                         if (textContent.indexOf(searchVal) > -1) {
-                            $(this).removeClass('hidden');
+                            $(this).show();
                         } else {
-                            $(this).addClass('hidden');
+                            $(this).hide();
                         }
                     });
                 }

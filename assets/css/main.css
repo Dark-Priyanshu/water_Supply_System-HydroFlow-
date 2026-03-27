@@ -1,0 +1,176 @@
+/* 
+    HydroFlow Core CSS
+    Vanilla Implementation of the Hydrological Clarity Design System 
+*/
+
+:root {
+  /* Surface colors */
+  --color-surface: #f7f9fb;
+  --color-surface-dim: #d8dadc;
+  --color-surface-bright: #f7f9fb;
+  --color-on-surface: #191c1e;
+  --color-on-surface-variant: #404850;
+  --color-surface-variant: #e0e3e5;
+  --color-surface-container: #eceef0;
+  --color-surface-container-low: #f2f4f6;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-high: #e6e8ea;
+  --color-surface-container-highest: #e0e3e5;
+  
+  /* Primary colors */
+  --color-primary: #005d90;
+  --color-on-primary: #ffffff;
+  --color-primary-container: #0077b6;
+  --color-on-primary-container: #f3f7ff;
+  --color-primary-fixed: #cde5ff;
+  --color-primary-fixed-dim: #94ccff;
+  
+  /* Secondary colors */
+  --color-secondary: #2c694e;
+  --color-on-secondary: #ffffff;
+  --color-secondary-container: #aeeecb;
+  --color-on-secondary-container: #316e52;
+  --color-secondary-fixed: #b1f0ce;
+  --color-secondary-fixed-dim: #95d4b3;
+  
+  /* Tertiary colors */
+  --color-tertiary: #23616b;
+  --color-on-tertiary: #ffffff;
+  --color-tertiary-container: #3f7a85;
+  --color-on-tertiary-container: #e8fbff;
+  --color-tertiary-fixed: #b1ecf8;
+  --color-tertiary-fixed-dim: #95d0dc;
+  
+  /* Error colors */
+  --color-error: #ba1a1a;
+  --color-on-error: #ffffff;
+  --color-error-container: #ffdad6;
+  --color-on-error-container: #93000a;
+  
+  /* Other tokens */
+  --color-background: #f7f9fb;
+  --color-on-background: #191c1e;
+  --color-outline: #707881;
+  --color-outline-variant: #bfc7d1;
+  --color-inverse-surface: #2d3133;
+  --color-inverse-on-surface: #eff1f3;
+  --color-inverse-primary: #94ccff;
+  
+  /* Fonts */
+  --font-headline: 'Manrope', sans-serif;
+  --font-body: 'Inter', sans-serif;
+}
+
+[data-theme="dark"] {
+  --color-primary: #94ccff;
+  --color-on-primary: #003351;
+  --color-primary-container: #004b74;
+  --color-on-primary-container: #cde5ff;
+  --color-secondary: #95d4b3;
+  --color-on-secondary: #003823;
+  --color-secondary-container: #0e5138;
+  --color-on-secondary-container: #b1f0ce;
+  --color-tertiary: #95d0dc;
+  --color-on-tertiary: #00363e;
+  --color-tertiary-container: #034f59;
+  --color-on-tertiary-container: #b1ecf8;
+  --color-error: #ffb4ab;
+  --color-on-error: #690005;
+  --color-error-container: #93000a;
+  --color-on-error-container: #ffdad6;
+  --color-background: #191c1e;
+  --color-on-background: #e0e3e5;
+  --color-surface: #191c1e;
+  --color-on-surface: #e0e3e5;
+  --color-surface-variant: #404850;
+  --color-on-surface-variant: #bfc7d1;
+  --color-outline: #89929a;
+  --color-outline-variant: #404850;
+  --color-inverse-surface: #e0e3e5;
+  --color-inverse-on-surface: #191c1e;
+  --color-inverse-primary: #006399;
+  --color-surface-dim: #111416;
+  --color-surface-bright: #373a3c;
+  --color-surface-container-lowest: #0c0f10;
+  --color-surface-container-low: #191c1e;
+  --color-surface-container: #1d2022;
+  --color-surface-container-high: #272a2c;
+  --color-surface-container-highest: #323537;
+  --color-surface-tint: #94ccff;
+}
+
+/* Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-surface);
+  color: var(--color-on-surface);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-headline);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.2s ease;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+ul {
+  list-style: none;
+}
+
+/* Utilities */
+.hidden { display: none; }
+.flex { display: flex; }
+.grid { display: grid; }
+.relative { position: relative; }
+.absolute { position: absolute; }
+.fixed { position: fixed; }
+.z-50 { z-index: 50; }
+.z-10 { z-index: 10; }
+.z-20 { z-index: 20; }
+.w-full { width: 100%; }
+.h-full { height: 100%; }
+
+/* Scrollbar */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Effects */
+.glass-nav {
+  backdrop-filter: blur(24px);
+  background: rgba(255, 255, 255, 0.7);
+}
+
+[data-theme="dark"] .glass-nav {
+  background: rgba(25, 28, 30, 0.8) !important;
+}
+
+.wave-bg {
+  background: linear-gradient(180deg, rgba(44, 105, 78, 0) 0%, rgba(44, 105, 78, 0.05) 100%);
+}
+
+[data-theme="dark"] .wave-bg {
+  background: linear-gradient(180deg, rgba(149, 212, 179, 0) 0%, rgba(149, 212, 179, 0.05) 100%) !important;
+}
+
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}

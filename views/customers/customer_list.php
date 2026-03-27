@@ -10,105 +10,112 @@ $customer_count = $customers->num_rows;
 ?>
 
 <!-- Header Section -->
-<div class="flex justify-between items-end mb-10 mt-4">
+<div class="flex" style="justify-content: space-between; align-items: flex-end; margin-bottom: 2.5rem; margin-top: 1rem;">
     <div>
-        <h2 class="text-headline-lg font-headline font-extrabold text-on-surface tracking-tight mb-2">Customer Management</h2>
-        <p class="text-body-md text-on-surface-variant max-w-2xl">Monitor and manage irrigation customers, farm details, and connection statuses.</p>
+        <h2 style="font-family: var(--font-headline); font-size: 1.875rem; font-weight: 800; color: var(--color-on-surface); letter-spacing: -0.025em; margin-bottom: 0.5rem;">Customer Management</h2>
+        <p style="font-size: 1rem; color: var(--color-on-surface-variant); max-width: 40rem;">Monitor and manage irrigation customers, farm details, and connection statuses.</p>
     </div>
-    <a href="add_customer.php" class="flex items-center gap-2 px-6 py-3 bg-gradient-to-br from-primary to-primary-container text-white rounded-xl font-semibold transition-transform active:scale-95 shadow-lg shadow-primary/20">
-        <span class="material-symbols-outlined text-xl">person_add</span>
-        <span class="text-sm">Add Customer</span>
+    <a href="add_customer.php" class="btn bg-gradient-primary" style="padding: 0.75rem 1.5rem; border-radius: 0.75rem;">
+        <span class="material-symbols-outlined" style="font-size: 1.25rem;">person_add</span>
+        <span>Add Customer</span>
     </a>
 </div>
 
 <?php if (isset($_SESSION['success_msg'])): ?>
-<div class="mb-8 p-4 bg-secondary/10 border border-secondary/20 rounded-xl flex items-center justify-between">
-    <div class="flex items-center gap-3">
-        <span class="material-symbols-outlined text-secondary">check_circle</span>
-        <span class="text-secondary font-medium"><?= $_SESSION['success_msg'] ?></span>
+<div class="error-alert" style="background-color: var(--color-secondary-container); color: var(--color-on-secondary-container); border-color: rgba(44, 105, 78, 0.2); margin-bottom: 2rem;">
+    <div class="flex" style="align-items: center; gap: 0.75rem; width: 100%;">
+        <span class="material-symbols-outlined">check_circle</span>
+        <span style="font-weight: 500; font-size: 0.875rem; flex: 1;"><?= $_SESSION['success_msg'] ?></span>
+        <button type="button" style="background: transparent; border: none; cursor: pointer; color: inherit; opacity: 0.6;" onclick="this.parentElement.parentElement.remove()">
+            <span class="material-symbols-outlined" style="font-size: 1.125rem;">close</span>
+        </button>
     </div>
-    <button type="button" class="text-secondary/60 hover:text-secondary p-1" onclick="this.parentElement.remove()">
-        <span class="material-symbols-outlined">close</span>
-    </button>
 </div>
 <?php unset($_SESSION['success_msg']); endif; ?>
 
 <!-- Dashboard Stats / Filters Bento -->
-<div class="grid grid-cols-12 gap-6 mb-8">
-    <!-- Filter Section (Placeholder) -->
-    <div class="col-span-12 lg:col-span-8 bg-surface-container-low rounded-xl p-6 flex flex-wrap items-center gap-6">
-        <div class="flex items-center gap-3">
-            <span class="text-label-sm font-bold text-on-surface-variant uppercase tracking-wider">Filter By:</span>
-            <select class="bg-surface-container-lowest border-none rounded-lg text-sm px-4 py-2 focus:ring-2 focus:ring-primary/20 outline-none cursor-pointer text-on-surface-variant">
+<div class="grid" style="grid-template-columns: repeat(12, 1fr); gap: 1.5rem; margin-bottom: 2rem;">
+    <style>
+        .col-8 { grid-column: span 12; }
+        .col-4 { grid-column: span 12; }
+        @media (min-width: 1024px) {
+            .col-8 { grid-column: span 8; }
+            .col-4 { grid-column: span 4; }
+        }
+    </style>
+    <!-- Filter Section -->
+    <div class="col-8" style="background-color: var(--color-surface-container-low); border-radius: 0.75rem; padding: 1.5rem; display: flex; flex-wrap: wrap; align-items: center; gap: 1.5rem;">
+        <div class="flex" style="align-items: center; gap: 0.75rem;">
+            <span style="font-size: 0.625rem; font-weight: 700; color: var(--color-on-surface-variant); text-transform: uppercase; letter-spacing: 0.05em;">Filter By:</span>
+            <select style="background-color: var(--color-surface-container-lowest); border: none; border-radius: 0.5rem; font-size: 0.875rem; padding: 0.5rem 1rem; color: var(--color-on-surface-variant); cursor: pointer; outline: none;">
                 <option>All Villages</option>
             </select>
-            <select class="bg-surface-container-lowest border-none rounded-lg text-sm px-4 py-2 focus:ring-2 focus:ring-primary/20 outline-none cursor-pointer text-on-surface-variant">
+            <select style="background-color: var(--color-surface-container-lowest); border: none; border-radius: 0.5rem; font-size: 0.875rem; padding: 0.5rem 1rem; color: var(--color-on-surface-variant); cursor: pointer; outline: none;">
                 <option>Connection Status</option>
             </select>
         </div>
-        <div class="h-8 w-px bg-outline-variant/30 mx-2"></div>
-        <div class="flex gap-2">
-            <button class="px-4 py-2 bg-surface-container-lowest text-primary text-xs font-bold rounded-lg hover:bg-primary hover:text-white transition-all">Today</button>
-            <button class="px-4 py-2 bg-surface-container-lowest text-slate-500 text-xs font-bold rounded-lg hover:bg-primary hover:text-white transition-all">This Month</button>
+        <div style="height: 2rem; width: 1px; background-color: rgba(112, 120, 129, 0.2); margin: 0 0.5rem;" class="hidden-mobile"></div>
+        <div class="flex" style="gap: 0.5rem;">
+            <button style="padding: 0.5rem 1rem; background-color: var(--color-surface-container-lowest); color: var(--color-primary); border: none; border-radius: 0.5rem; font-size: 0.75rem; font-weight: 700; cursor: pointer;" onmouseover="this.style.backgroundColor='var(--color-primary)'; this.style.color='white';" onmouseout="this.style.backgroundColor='var(--color-surface-container-lowest)'; this.style.color='var(--color-primary)';">Today</button>
+            <button style="padding: 0.5rem 1rem; background-color: var(--color-surface-container-lowest); color: #64748b; border: none; border-radius: 0.5rem; font-size: 0.75rem; font-weight: 700; cursor: pointer;" onmouseover="this.style.backgroundColor='var(--color-primary)'; this.style.color='white';" onmouseout="this.style.backgroundColor='var(--color-surface-container-lowest)'; this.style.color='#64748b';">This Month</button>
         </div>
     </div>
     <!-- Quick Stats -->
-    <div class="col-span-12 lg:col-span-4 bg-surface-container-lowest rounded-xl p-6 shadow-sm flex items-center justify-between border border-outline-variant/15 overflow-hidden relative">
+    <div class="col-4 card" style="padding: 1.5rem; flex-direction: row; justify-content: space-between; align-items: center;">
         <div>
-            <p class="text-label-sm font-bold text-on-surface-variant uppercase tracking-wider mb-1">Total Active Customers</p>
-            <h3 class="text-3xl font-headline font-extrabold text-primary"><?= $customer_count ?></h3>
+            <p style="font-size: 0.625rem; font-weight: 700; color: var(--color-on-surface-variant); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.25rem;">Total Active Customers</p>
+            <h3 style="font-size: 1.875rem; font-family: var(--font-headline); font-weight: 800; color: var(--color-primary);"><?= $customer_count ?></h3>
         </div>
-        <div class="w-12 h-12 rounded-full bg-secondary-container/30 flex items-center justify-center text-secondary">
+        <div style="width: 3rem; height: 3rem; border-radius: 50%; background-color: rgba(44, 105, 78, 0.1); color: var(--color-secondary); display: flex; align-items: center; justify-content: center;">
             <span class="material-symbols-outlined">groups</span>
         </div>
-        <!-- Subtle Gradient Wave -->
-        <div class="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-secondary/20 to-transparent"></div>
+        <div class="absolute" style="bottom: 0; left: 0; right: 0; height: 4px; background: linear-gradient(to right, transparent, rgba(44, 105, 78, 0.2), transparent);"></div>
     </div>
 </div>
 
 <!-- Professional Data Table -->
-<div class="bg-surface-container-lowest rounded-xl shadow-sm border border-outline-variant/15 overflow-hidden">
-    <div class="overflow-x-auto">
-        <table class="w-full text-left border-collapse datatable">
+<div class="table-container">
+    <div style="overflow-x: auto;">
+        <table class="table-custom datatable">
             <thead>
-                <tr class="bg-surface-container-low">
-                    <th class="px-6 py-4 text-label-md font-bold text-on-surface-variant uppercase tracking-widest text-[11px]">ID</th>
-                    <th class="px-6 py-4 text-label-md font-bold text-on-surface-variant uppercase tracking-widest text-[11px]">Farmer Name</th>
-                    <th class="px-6 py-4 text-label-md font-bold text-on-surface-variant uppercase tracking-widest text-[11px]">Mobile Number</th>
-                    <th class="px-6 py-4 text-label-md font-bold text-on-surface-variant uppercase tracking-widest text-[11px]">Village</th>
-                    <th class="px-6 py-4 text-label-md font-bold text-on-surface-variant uppercase tracking-widest text-[11px]">Conn. No</th>
-                    <th class="px-6 py-4 text-label-md font-bold text-on-surface-variant uppercase tracking-widest text-[11px]">Pipe Size</th>
-                    <th class="px-6 py-4 text-label-md font-bold text-on-surface-variant uppercase tracking-widest text-[11px] text-right">Actions</th>
+                <tr>
+                    <th style="padding-left: 1.5rem;">ID</th>
+                    <th>Farmer Name</th>
+                    <th>Mobile Number</th>
+                    <th>Village</th>
+                    <th>Conn. No</th>
+                    <th>Pipe Size</th>
+                    <th style="padding-right: 1.5rem; text-align: right;">Actions</th>
                 </tr>
             </thead>
-            <tbody class="divide-y divide-outline-variant/10">
+            <tbody>
                 <?php while ($row = $customers->fetch_assoc()): ?>
-                <tr class="hover:bg-surface-container-low/40 transition-colors group">
-                    <td class="px-6 py-5 text-sm font-semibold text-primary">#<?= $row['customer_id'] ?></td>
-                    <td class="px-6 py-5">
-                        <div class="flex items-center gap-3">
-                            <div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-xs font-bold text-primary">
-                                <?= strtoupper(substr(trim($row['farmer_name']), 0, 2)) ?>
+                <tr>
+                    <td style="padding-left: 1.5rem; font-weight: 700; color: var(--color-primary);">#<?= $row['customer_id'] ?></td>
+                    <td>
+                        <div class="flex" style="align-items: center; gap: 0.75rem;">
+                            <div style="width: 2rem; height: 2rem; border-radius: 50%; background-color: rgba(0, 93, 144, 0.1); color: var(--color-primary); display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700;">
+                                <?= strtoupper(substr(trim($row['farmer_name'] ?? 'NA'), 0, 2)) ?>
                             </div>
-                            <span class="text-sm font-medium text-on-surface"><?= htmlspecialchars($row['farmer_name']) ?></span>
+                            <span style="font-weight: 500;"><?= htmlspecialchars($row['farmer_name'] ?? 'N/A') ?></span>
                         </div>
                     </td>
-                    <td class="px-6 py-5 text-sm text-on-surface-variant"><?= htmlspecialchars($row['mobile']) ?></td>
-                    <td class="px-6 py-5">
-                        <span class="px-2 py-1 bg-slate-100 text-slate-600 rounded text-[10px] font-bold uppercase tracking-wider"><?= htmlspecialchars($row['village']) ?></span>
+                    <td style="color: var(--color-on-surface-variant);"><?= htmlspecialchars($row['mobile'] ?? 'N/A') ?></td>
+                    <td>
+                        <span style="padding: 0.25rem 0.5rem; background-color: #f1f5f9; color: #475569; border-radius: 0.25rem; font-size: 0.625rem; font-weight: 700; text-transform: uppercase;"><?= htmlspecialchars($row['village'] ?? 'N/A') ?></span>
                     </td>
-                    <td class="px-6 py-5 text-sm text-on-surface-variant"><?= htmlspecialchars($row['connection_no']) ?></td>
-                    <td class="px-6 py-5">
-                        <div class="flex items-center gap-2">
-                            <span class="w-2 h-2 rounded-full <?= $row['pipe_size'] ? 'bg-secondary' : 'bg-slate-300' ?>"></span>
-                            <span class="text-sm font-medium <?= $row['pipe_size'] ? 'text-secondary' : 'text-slate-400' ?>"><?= $row['pipe_size'] ? htmlspecialchars($row['pipe_size']) : 'N/A' ?></span>
+                    <td style="color: var(--color-on-surface-variant);"><?= htmlspecialchars($row['connection_no'] ?? 'N/A') ?></td>
+                    <td>
+                        <div class="flex" style="align-items: center; gap: 0.5rem;">
+                            <span style="width: 0.5rem; height: 0.5rem; border-radius: 50%; background-color: <?= $row['pipe_size'] ? 'var(--color-secondary)' : '#cbd5e1' ?>;"></span>
+                            <span style="font-weight: 500; font-size: 0.875rem; color: <?= $row['pipe_size'] ? 'var(--color-secondary)' : '#94a3b8' ?>;"><?= $row['pipe_size'] ? htmlspecialchars($row['pipe_size']) : 'N/A' ?></span>
                         </div>
                     </td>
-                    <td class="px-6 py-5 text-right">
-                        <div class="flex justify-end gap-2">
-                            <a href="#" class="p-1.5 text-slate-400 hover:text-primary transition-colors"><span class="material-symbols-outlined text-lg">visibility</span></a>
-                            <a href="edit_customer.php?id=<?= $row['customer_id'] ?>" class="p-1.5 text-slate-400 hover:text-secondary transition-colors"><span class="material-symbols-outlined text-lg">edit</span></a>
-                            <a href="#" class="p-1.5 text-slate-400 hover:text-error transition-colors"><span class="material-symbols-outlined text-lg">delete</span></a>
+                    <td style="padding-right: 1.5rem; text-align: right;">
+                        <div class="flex" style="justify-content: flex-end; gap: 0.5rem;">
+                            <a href="#" style="padding: 0.375rem; color: #94a3b8;" onmouseover="this.style.color='var(--color-primary)';" onmouseout="this.style.color='#94a3b8';"><span class="material-symbols-outlined" style="font-size: 1.125rem;">visibility</span></a>
+                            <a href="edit_customer.php?id=<?= $row['customer_id'] ?>" style="padding: 0.375rem; color: #94a3b8;" onmouseover="this.style.color='var(--color-secondary)';" onmouseout="this.style.color='#94a3b8';"><span class="material-symbols-outlined" style="font-size: 1.125rem;">edit</span></a>
+                            <a href="#" style="padding: 0.375rem; color: #94a3b8;" onmouseover="this.style.color='var(--color-error)';" onmouseout="this.style.color='#94a3b8';"><span class="material-symbols-outlined" style="font-size: 1.125rem;">delete</span></a>
                         </div>
                     </td>
                 </tr>
@@ -117,5 +124,11 @@ $customer_count = $customers->num_rows;
         </table>
     </div>
 </div>
+
+<style>
+    @media (max-width: 767px) {
+        .hidden-mobile { display: none !important; }
+    }
+</style>
 
 <?php include '../../includes/footer.php'; ?>

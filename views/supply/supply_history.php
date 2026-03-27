@@ -9,79 +9,81 @@ $supplies = $supplyModel->getAllSupply();
 ?>
 
 <!-- Header Section -->
-<div class="flex justify-between items-end mb-8 mt-4">
+<div class="flex" style="justify-content: space-between; align-items: flex-end; margin-bottom: 2rem; margin-top: 1rem;">
     <div>
-        <h2 class="text-headline-lg font-headline font-extrabold text-on-surface tracking-tight mb-2">Water Supply History</h2>
-        <p class="text-body-md text-on-surface-variant max-w-2xl">View previous irrigation logs, duration, and billing status.</p>
+        <h2 style="font-family: var(--font-headline); font-size: 1.875rem; font-weight: 800; color: var(--color-on-surface); letter-spacing: -0.025em; margin-bottom: 0.5rem;">Water Supply History</h2>
+        <p style="font-size: 1rem; color: var(--color-on-surface-variant); max-width: 40rem;">View previous irrigation logs, duration, and billing status.</p>
     </div>
-    <a href="add_supply.php" class="flex items-center gap-2 px-6 py-3 bg-gradient-to-br from-primary to-primary-container text-white rounded-xl font-semibold transition-transform active:scale-95 shadow-lg shadow-primary/20 hover:shadow-xl">
-        <span class="material-symbols-outlined text-xl" style="font-variation-settings: 'FILL' 1;">waves</span>
-        <span class="text-sm">Record Supply</span>
+    <a href="add_supply.php" class="btn bg-gradient-primary" style="padding: 0.75rem 1.5rem; border-radius: 0.75rem;">
+        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; font-size: 1.25rem;">waves</span>
+        <span>Record Supply</span>
     </a>
 </div>
 
 <?php if (isset($_SESSION['success_msg'])): ?>
-<div class="mb-8 p-4 bg-secondary/10 border border-secondary/20 rounded-xl flex items-center justify-between">
-    <div class="flex items-center gap-3">
-        <span class="material-symbols-outlined text-secondary">check_circle</span>
-        <span class="text-secondary font-medium"><?= $_SESSION['success_msg'] ?></span>
+<div class="error-alert" style="background-color: var(--color-secondary-container); color: var(--color-on-secondary-container); border-color: rgba(44, 105, 78, 0.2); margin-bottom: 2rem;">
+    <div class="flex" style="align-items: center; gap: 0.75rem; width: 100%;">
+        <span class="material-symbols-outlined">check_circle</span>
+        <span style="font-weight: 500; font-size: 0.875rem; flex: 1;"><?= $_SESSION['success_msg'] ?></span>
+        <button type="button" style="background: transparent; border: none; cursor: pointer; color: inherit; opacity: 0.6;" onclick="this.parentElement.parentElement.remove()">
+            <span class="material-symbols-outlined" style="font-size: 1.125rem;">close</span>
+        </button>
     </div>
-    <button type="button" class="text-secondary/60 hover:text-secondary p-1" onclick="this.parentElement.remove()">
-        <span class="material-symbols-outlined">close</span>
-    </button>
 </div>
 <?php unset($_SESSION['success_msg']); endif; ?>
 
 <!-- Professional Data Table -->
-<div class="bg-surface-container-lowest rounded-xl shadow-[0_8px_32px_rgba(25,28,30,0.04)] border border-outline-variant/10 overflow-hidden">
-    <div class="overflow-x-auto">
-        <table class="w-full text-left border-collapse datatable">
+<div class="table-container">
+    <div style="overflow-x: auto;">
+        <table class="table-custom datatable">
             <thead>
-                <tr class="bg-surface-container-low/50">
-                    <th class="px-6 py-4 text-[10px] font-label font-bold text-on-surface-variant uppercase tracking-widest border-b border-outline-variant/10">Supply ID</th>
-                    <th class="px-6 py-4 text-[10px] font-label font-bold text-on-surface-variant uppercase tracking-widest border-b border-outline-variant/10">Date</th>
-                    <th class="px-6 py-4 text-[10px] font-label font-bold text-on-surface-variant uppercase tracking-widest border-b border-outline-variant/10">Farmer Name</th>
-                    <th class="px-6 py-4 text-[10px] font-label font-bold text-on-surface-variant uppercase tracking-widest border-b border-outline-variant/10">Motor Used</th>
-                    <th class="px-6 py-4 text-[10px] font-label font-bold text-on-surface-variant uppercase tracking-widest border-b border-outline-variant/10">Duration</th>
-                    <th class="px-6 py-4 text-[10px] font-label font-bold text-on-surface-variant uppercase tracking-widest border-b border-outline-variant/10 text-right">Amount</th>
-                    <th class="px-6 py-4 text-[10px] font-label font-bold text-on-surface-variant uppercase tracking-widest border-b border-outline-variant/10 text-center">Actions</th>
+                <tr>
+                    <th style="padding-left: 1.5rem;">Supply ID</th>
+                    <th>Date</th>
+                    <th>Farmer Name</th>
+                    <th>Motor Used</th>
+                    <th>Duration</th>
+                    <th style="text-right">Amount</th>
+                    <th style="padding-right: 1.5rem; text-align: center;">Actions</th>
                 </tr>
             </thead>
-            <tbody class="divide-y divide-outline-variant/5">
+            <tbody>
                 <?php while ($row = $supplies->fetch_assoc()): ?>
-                <tr class="hover:bg-surface-container-low/30 transition-colors group">
-                    <td class="px-6 py-5 text-sm font-semibold text-primary">#<?= $row['supply_id'] ?></td>
-                    <td class="px-6 py-5">
-                        <span class="text-sm font-medium text-on-surface"><?= date('d M, Y', strtotime($row['date'])) ?></span>
+                <tr>
+                    <td style="padding-left: 1.5rem; font-weight: 700; color: var(--color-primary);">#<?= $row['supply_id'] ?></td>
+                    <td>
+                        <span style="font-weight: 500;"><?= date('d M, Y', strtotime($row['date'])) ?></span>
                     </td>
-                    <td class="px-6 py-5 text-sm font-semibold text-on-surface">
-                        <?= htmlspecialchars($row['farmer_name']) ?>
+                    <td style="font-weight: 600;">
+                        <?= htmlspecialchars($row['farmer_name'] ?? 'N/A') ?>
                     </td>
-                    <td class="px-6 py-5">
-                        <div class="flex items-center gap-2">
-                            <span class="material-symbols-outlined text-[16px] text-on-surface-variant opacity-60">water_pump</span>
-                            <span class="text-[13px] text-on-surface-variant font-medium"><?= htmlspecialchars($row['motor_name']) ?></span>
+                    <td>
+                        <div class="flex" style="align-items: center; gap: 0.5rem; color: var(--color-on-surface-variant); font-size: 0.8125rem;">
+                            <span class="material-symbols-outlined" style="font-size: 1rem; opacity: 0.6;">water_pump</span>
+                            <span style="font-weight: 500;"><?= htmlspecialchars($row['motor_name'] ?? 'N/A') ?></span>
                         </div>
                     </td>
-                    <td class="px-6 py-5">
-                        <div class="text-[12px] font-semibold text-on-surface-variant mb-1"><?= date('h:i A', strtotime($row['start_time'])) ?> - <?= date('h:i A', strtotime($row['end_time'])) ?></div>
-                        <span class="px-2 py-0.5 bg-surface-container-high rounded text-[11px] font-bold tracking-wider text-on-surface-variant"><?= number_format($row['total_hours'], 2) ?> hrs</span>
+                    <td>
+                        <div style="font-size: 0.75rem; font-weight: 600; color: var(--color-on-surface-variant); margin-bottom: 0.25rem;">
+                            <?= date('h:i A', strtotime($row['start_time'])) ?> - <?= date('h:i A', strtotime($row['end_time'])) ?>
+                        </div>
+                        <span style="padding: 0.125rem 0.5rem; background-color: var(--color-surface-container-high); border-radius: 0.25rem; font-size: 0.6875rem; font-weight: 700; color: var(--color-on-surface-variant);"><?= number_format($row['total_hours'], 2) ?> hrs</span>
                     </td>
-                    <td class="px-6 py-5 text-right font-headline">
-                        <span class="text-sm font-extrabold text-secondary">₹<?= number_format($row['total_amount'], 2) ?></span>
+                    <td style="text-align: right; font-weight: 800; color: var(--color-secondary);">
+                        ₹<?= number_format($row['total_amount'], 2) ?>
                     </td>
-                    <td class="px-6 py-5 text-center">
+                    <td style="padding-right: 1.5rem; text-align: center;">
                         <?php 
-                        $check_bill = $conn->query("SELECT bill_id FROM bills WHERE supply_id = {$row['supply_id']}");
-                        if($check_bill->num_rows > 0): 
+                        $check_bill = $conn->query("SELECT bill_id FROM bills WHERE supply_id = " . (int)$row['supply_id']);
+                        if($check_bill && $check_bill->num_rows > 0): 
                         ?>
-                            <span class="inline-flex items-center gap-1 px-3 py-1 bg-secondary/10 text-secondary text-[11px] font-extrabold rounded-full tracking-wider uppercase border border-secondary/20">
-                                <span class="material-symbols-outlined text-[14px]">check_circle</span>
+                            <span class="badge" style="background-color: rgba(44, 105, 78, 0.1); color: var(--color-secondary); border: 1px solid rgba(44, 105, 78, 0.1); display: inline-flex; align-items: center; gap: 0.25rem;">
+                                <span class="material-symbols-outlined" style="font-size: 0.875rem;">check_circle</span>
                                 Billed
                             </span>
                         <?php else: ?>
-                            <a href="../billing/generate_bill.php?supply_id=<?= $row['supply_id'] ?>" class="inline-flex items-center gap-2 px-3 py-1.5 bg-primary/10 text-primary text-[11px] font-bold rounded hover:bg-primary hover:text-white transition-colors border border-primary/20 hover:border-primary" title="Generate Bill">
-                                <span class="material-symbols-outlined text-[16px]">receipt_long</span> Generate Bill
+                            <a href="../billing/generate_bill.php?supply_id=<?= $row['supply_id'] ?>" class="btn" style="padding: 0.375rem 0.75rem; font-size: 0.6875rem; background-color: rgba(0, 93, 144, 0.1); color: var(--color-primary); border: 1px solid rgba(0, 93, 144, 0.1);" onmouseover="this.style.backgroundColor='var(--color-primary)'; this.style.color='white';" onmouseout="this.style.backgroundColor='rgba(0, 93, 144, 0.1)'; this.style.color='var(--color-primary)';">
+                                <span class="material-symbols-outlined" style="font-size: 1rem;">receipt_long</span> Generate Bill
                             </a>
                         <?php endif; ?>
                     </td>

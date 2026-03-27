@@ -1,18 +1,18 @@
     <!-- Mobile Overlay -->
-    <div id="mobileOverlay" class="fixed inset-0 bg-black/50 z-30 hidden md:hidden opacity-0 transition-opacity duration-300" onclick="toggleSidebar()"></div>
+    <div id="mobileOverlay" class="fixed" style="inset: 0; background-color: rgba(0,0,0,0.5); z-index: 30; display: none; opacity: 0; transition: opacity 0.3s ease;" onclick="toggleSidebar()"></div>
 
     <!-- SideNavBar Component -->
-    <aside id="sidebarMenu" class="fixed left-0 top-0 h-full z-40 px-6 py-8 flex flex-col w-64 glass-sidebar shadow-[8px_0_32px_rgba(25,28,30,0.06)] transform -translate-x-full lg:translate-x-0 transition-transform duration-300">
-        <div class="mb-12 px-2 flex items-center gap-3">
-            <div class="w-10 h-10 rounded-xl flex items-center justify-center">
-                <img src="<?= $base_url ?>assets/images/icon.png" alt="HydroFlow Logo" class="w-full h-full object-contain">
+    <aside id="sidebarMenu" class="side-sidebar">
+        <div style="margin-bottom: 3rem; padding: 0 0.5rem; display: flex; align-items: center; gap: 0.75rem;">
+            <div style="width: 2.5rem; height: 2.5rem; border-radius: 0.75rem; display: flex; align-items: center; justify-content: center;">
+                <img src="<?= $base_url ?>assets/images/icon.png" alt="HydroFlow Logo" style="width: 100%; height: 100%; object-fit: contain;">
             </div>
             <div>
-                <h1 class="text-xl font-bold text-[#005d90] tracking-tight font-headline">HydroFlow</h1>
-                <p class="text-[10px] uppercase tracking-[0.2em] text-slate-400 font-semibold">Precision Supply</p>
+                <h1 style="font-size: 1.25rem; font-weight: 700; color: var(--color-primary); letter-spacing: -0.025em; font-family: var(--font-headline);">HydroFlow</h1>
+                <p style="font-size: 0.625rem; text-transform: uppercase; letter-spacing: 0.2em; color: #94a3b8; font-weight: 600;">Precision Supply</p>
             </div>
         </div>
-        <nav class="flex-1 space-y-1">
+        <nav style="flex: 1; display: flex; flex-direction: column; gap: 0.25rem;">
             <?php 
             $current_page = basename($_SERVER['PHP_SELF']); 
             function getLinkClass($pages, $current) {
@@ -20,55 +20,55 @@
                     $pages = [$pages];
                 }
                 if (in_array($current, $pages)) {
-                    return "relative text-[#005d90] font-semibold before:content-[''] before:absolute before:left-[-24px] before:w-1 before:h-6 before:bg-[#005d90] before:rounded-full flex items-center gap-4 px-4 py-3 rounded-xl bg-slate-100/50 transition-all duration-200 active:scale-[0.98]";
+                    return "nav-link nav-link-active";
                 } else {
-                    return "text-slate-500 hover:text-[#005d90] hover:bg-slate-100/50 flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-300";
+                    return "nav-link";
                 }
             }
             ?>
             <a class="<?= getLinkClass(['dashboard.php'], $current_page) ?>" href="<?= $base_url ?>views/dashboard.php">
                 <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
-                <span class="text-label-sm">Dashboard</span>
+                <span>Dashboard</span>
             </a>
             <a class="<?= getLinkClass(['customer_list.php', 'add_customer.php'], $current_page) ?>" href="<?= $base_url ?>views/customers/customer_list.php">
                 <span class="material-symbols-outlined">agriculture</span>
-                <span class="text-label-sm">Customers / Farms</span>
+                <span>Customers / Farms</span>
             </a>
             <a class="<?= getLinkClass(['motor_list.php', 'add_motor.php'], $current_page) ?>" href="<?= $base_url ?>views/motors/motor_list.php">
                 <span class="material-symbols-outlined">water_pump</span>
-                <span class="text-label-sm">Motor Management</span>
+                <span>Motor Management</span>
             </a>
             <a class="<?= getLinkClass(['supply_history.php', 'add_supply.php'], $current_page) ?>" href="<?= $base_url ?>views/supply/supply_history.php">
                 <span class="material-symbols-outlined">waves</span>
-                <span class="text-label-sm">Water Supply Record</span>
+                <span>Water Supply Record</span>
             </a>
             <a class="<?= getLinkClass(['bill_history.php', 'generate_bill.php', 'view_bill.php'], $current_page) ?>" href="<?= $base_url ?>views/billing/bill_history.php">
                 <span class="material-symbols-outlined">receipt_long</span>
-                <span class="text-label-sm">Billing / Invoices</span>
+                <span>Billing / Invoices</span>
             </a>
             <a class="<?= getLinkClass(['payment_history.php', 'add_payment.php'], $current_page) ?>" href="<?= $base_url ?>views/payments/payment_history.php">
                 <span class="material-symbols-outlined">payments</span>
-                <span class="text-label-sm">Payments Tracking</span>
+                <span>Payments Tracking</span>
             </a>
             <a class="<?= getLinkClass(['daily_report.php'], $current_page) ?>" href="<?= $base_url ?>views/reports/daily_report.php">
                 <span class="material-symbols-outlined">bar_chart</span>
-                <span class="text-label-sm">Reports</span>
+                <span>Reports</span>
             </a>
             <a class="<?= getLinkClass(['settings.php'], $current_page) ?>" href="<?= $base_url ?>views/settings.php">
                 <span class="material-symbols-outlined">settings</span>
-                <span class="text-label-sm">Settings</span>
+                <span>Settings</span>
             </a>
             
-            <div class="pt-4 mt-4 border-t border-slate-200/50">
-                <a class="text-slate-500 hover:text-[#ba1a1a] hover:bg-red-50 flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-300" href="<?= $base_url ?>logout.php">
+            <div style="padding-top: 1rem; margin-top: 1rem; border-top: 1px solid rgba(226, 232, 240, 0.5);">
+                <a class="nav-link" style="color: #64748b;" onmouseover="this.style.color='#ba1a1a'; this.style.backgroundColor='rgba(254, 226, 226, 0.5)';" onmouseout="this.style.color='#64748b'; this.style.backgroundColor='transparent';" href="<?= $base_url ?>logout.php">
                     <span class="material-symbols-outlined">logout</span>
-                    <span class="text-label-sm">Logout</span>
+                    <span>Logout</span>
                 </a>
             </div>
         </nav>
         
-        <div class="mt-auto pt-6 border-t-0">
-            <div class="bg-surface-container-low rounded-2xl p-4 flex items-center gap-3">
+        <div style="margin-top: auto; padding-top: 1.5rem;">
+            <div style="background-color: var(--color-surface-container-low); border-radius: 1rem; padding: 1rem; display: flex; align-items: center; gap: 0.75rem;">
                 <?php
                     // Fetch current admin's username dynamically
                     $admin_username = 'Admin';
@@ -80,24 +80,29 @@
                         if ($adm_row) $admin_username = htmlspecialchars($adm_row['username']);
                     }
                 ?>
-                <img class="w-10 h-10 rounded-full object-cover" src="https://ui-avatars.com/api/?name=<?= urlencode($admin_username) ?>&background=005d90&color=fff" alt="Admin Avatar"/>
-                <div class="overflow-hidden">
-                    <p class="text-sm font-semibold truncate"><?= $admin_username ?></p>
-                    <p class="text-[10px] text-on-surface-variant truncate">System Administrator</p>
+                <img style="width: 2.5rem; height: 2.5rem; border-radius: 50%; object-fit: cover;" src="https://ui-avatars.com/api/?name=<?= urlencode($admin_username) ?>&background=005d90&color=fff" alt="Admin Avatar"/>
+                <div style="overflow: hidden;">
+                    <p style="font-size: 0.875rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><?= $admin_username ?></p>
+                    <p style="font-size: 0.625rem; color: var(--color-on-surface-variant); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">System Administrator</p>
                 </div>
             </div>
         </div>
     </aside>
 
     <!-- Main Content Wrapper -->
-    <main class="lg:ml-64 min-h-screen flex flex-col transition-all duration-300 overflow-x-hidden">
+    <main class="main-container">
         <!-- TopNavBar Component -->
-        <header class="flex justify-between items-center px-4 lg:px-10 py-6 max-w-[1600px] h-20 bg-transparent shrink-0">
-            <div class="flex items-center gap-4 lg:gap-8">
-                <button onclick="toggleSidebar()" class="lg:hidden w-10 h-10 flex items-center justify-center rounded-xl bg-primary/10 text-primary hover:bg-primary/20 transition-colors">
+        <header style="display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 2.5rem; height: 5rem; background-color: transparent; flex-shrink: 0;">
+            <div style="display: flex; align-items: center; gap: 2rem;">
+                <button onclick="toggleSidebar()" style="display: none;" id="mobileMenuBtn">
                     <span class="material-symbols-outlined">menu_open</span>
                 </button>
-                <h2 class="font-headline text-[18px] lg:text-headline-sm font-semibold text-slate-900 hidden sm:block">
+                <style>
+                    @media (max-width: 1023px) {
+                        #mobileMenuBtn { display: flex !important; align-items: center; justify-content: center; width: 2.5rem; height: 2.5rem; border-radius: 0.75rem; background-color: rgba(0, 93, 144, 0.1); color: var(--color-primary); border: none; cursor: pointer; }
+                    }
+                </style>
+                <h2 style="font-family: var(--font-headline); font-size: 1.125rem; font-weight: 600; color: #0f172a;" class="hidden-sm">
                     <?php 
                         switch($current_page) {
                             case 'dashboard.php': echo 'Dashboard Overview'; break;
@@ -112,29 +117,17 @@
                         }
                     ?>
                 </h2>
-                <div class="relative group hidden md:block">
-                    <?php 
-                        $search_placeholder = 'Search records...';
-                        switch($current_page) {
-                            case 'dashboard.php': $search_placeholder = 'Search dashboard...'; break;
-                            case 'customer_list.php': $search_placeholder = 'Search customers or villages...'; break;
-                            case 'motor_list.php': $search_placeholder = 'Search motor details...'; break;
-                            case 'supply_history.php': $search_placeholder = 'Search supply logs...'; break;
-                            case 'bill_history.php': $search_placeholder = 'Search bills or invoices...'; break;
-                            case 'payment_history.php': $search_placeholder = 'Search payments...'; break;
-                            case 'daily_report.php': $search_placeholder = 'Search reports...'; break;
-                        }
-                    ?>
-                    <span class="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-outline">search</span>
-                    <input id="topGlobalSearch" class="bg-surface-container-high border-none rounded-lg pl-10 pr-4 py-2 w-48 lg:w-72 text-sm focus:ring-2 focus:ring-[#005d90]/20 focus:bg-surface-container-lowest transition-all placeholder:text-outline-variant" placeholder="<?= $search_placeholder ?>" type="text"/>
+                <div style="position: relative;" class="hidden-md">
+                    <span class="material-symbols-outlined" style="position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%); color: var(--color-outline);">search</span>
+                    <input id="topGlobalSearch" style="background-color: var(--color-surface-container-high); border: none; border-radius: 0.5rem; padding: 0.5rem 1rem 0.5rem 2.5rem; width: 18rem; font-size: 0.875rem; transition: all 0.3s ease;" placeholder="Search records..." type="text"/>
                 </div>
             </div>
-            <div class="flex items-center gap-4">
-                <button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-100/50 transition-colors">
-                    <span class="material-symbols-outlined text-slate-600">notifications</span>
+            <div style="display: flex; align-items: center; gap: 1rem;">
+                <button style="width: 2.5rem; height: 2.5rem; display: flex; align-items: center; justify-content: center; border-radius: 50%; border: none; background: transparent; cursor: pointer;" onmouseover="this.style.backgroundColor='rgba(241, 245, 249, 0.5)';" onmouseout="this.style.backgroundColor='transparent';">
+                    <span class="material-symbols-outlined" style="color: #475569;">notifications</span>
                 </button>
             </div>
         </header>
         
         <!-- Page Content Wrapper -->
-        <div class="px-4 lg:px-10 pb-12 max-w-[1600px] flex-1">
+        <div style="padding: 0 2.5rem 3rem; flex: 1;">

@@ -17,103 +17,106 @@ if (!$customer) {
 ?>
 
 <!-- Header -->
-<div class="flex justify-between items-end mb-8 mt-4">
+<div class="flex" style="justify-content: space-between; align-items: flex-end; margin-bottom: 2rem; margin-top: 1rem;">
     <div>
-        <nav class="flex items-center gap-2 text-xs text-on-surface-variant mb-2">
+        <nav class="breadcrumb">
             <span>Directory</span>
-            <span class="material-symbols-outlined text-[14px]">chevron_right</span>
-            <a href="customer_list.php" class="hover:text-primary transition-colors">Customers</a>
-            <span class="material-symbols-outlined text-[14px]">chevron_right</span>
-            <span class="text-primary font-medium">Edit Customer</span>
+            <span class="material-symbols-outlined" style="font-size: 0.875rem;">chevron_right</span>
+            <a href="customer_list.php">Customers</a>
+            <span class="material-symbols-outlined" style="font-size: 0.875rem;">chevron_right</span>
+            <span style="color: var(--color-primary); font-weight: 500;">Edit Customer</span>
         </nav>
-        <h2 class="text-headline-lg font-headline font-extrabold text-on-surface tracking-tight mb-2">Edit Customer</h2>
-        <p class="text-body-md text-on-surface-variant max-w-2xl">Modify the details of an existing farmer or land owner.</p>
+        <h2 style="font-size: 1.875rem; font-family: var(--font-headline); font-weight: 800; color: var(--color-on-surface); letter-spacing: -0.025em; margin-bottom: 0.5rem;">Edit Customer</h2>
+        <p style="font-size: 1rem; color: var(--color-on-surface-variant); max-width: 40rem;">Modify the details of an existing farmer or land owner.</p>
     </div>
-    <a href="customer_list.php" class="flex items-center gap-2 px-4 py-2 bg-surface-container-high text-on-surface-variant rounded-xl font-semibold hover:bg-surface-container-highest transition-colors shadow-sm">
-        <span class="material-symbols-outlined text-xl">arrow_back</span>
-        <span class="text-sm">Back to List</span>
+    <a href="customer_list.php" class="btn-secondary" style="display: flex; align-items: center; gap: 0.5rem; text-decoration: none;">
+        <span class="material-symbols-outlined" style="font-size: 1.25rem;">arrow_back</span>
+        <span>Back to List</span>
     </a>
 </div>
 
 <?php if (isset($_SESSION['error_msg'])): ?>
-<div class="mb-8 p-4 bg-error-container text-on-error-container rounded-xl flex items-center gap-3 border border-error/20 max-w-3xl">
+<div class="error-alert" style="max-width: 48rem;">
     <span class="material-symbols-outlined">error</span>
-    <span class="text-sm font-bold"><?= $_SESSION['error_msg'] ?></span>
+    <span style="font-weight: 700;"><?= $_SESSION['error_msg'] ?></span>
 </div>
 <?php unset($_SESSION['error_msg']); endif; ?>
 
 <!-- Form Card -->
-<div class="bg-surface-container-lowest rounded-2xl shadow-[0_8px_32px_rgba(25,28,30,0.04)] border border-outline-variant/10 overflow-hidden max-w-3xl">
-    <div class="p-8 md:p-10 border-b border-outline-variant/10 bg-surface-container-low/30">
-        <form action="../../controllers/customerController.php" method="POST" class="space-y-6">
+<div class="form-card">
+    <div class="form-body">
+        <form action="../../controllers/customerController.php" method="POST">
             <input type="hidden" name="customer_id" value="<?= htmlspecialchars($customer['customer_id']) ?>">
-            <h4 class="font-headline text-lg font-bold text-on-surface mb-6 border-b border-outline-variant/10 pb-2">Personal Information</h4>
+            <h4 style="font-family: var(--font-headline); font-size: 1.125rem; font-weight: 700; color: var(--color-on-surface); margin-bottom: 1.5rem; border-bottom: 1px solid rgba(112, 120, 129, 0.1); padding-bottom: 0.5rem;">Personal Information</h4>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="space-y-2">
-                    <label class="block text-xs font-bold text-on-surface-variant uppercase tracking-wider">Farmer Name <span class="text-error">*</span></label>
-                    <div class="relative">
-                        <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">person</span>
-                        <input type="text" name="farmer_name" required value="<?= htmlspecialchars($customer['farmer_name']) ?>" class="w-full pl-12 pr-4 py-3 bg-surface border border-outline-variant/30 rounded-xl focus:ring-2 focus:ring-primary/40 focus:bg-surface-container-lowest transition-all outline-none font-medium text-sm" placeholder="e.g. Rajeshwar Singh">
+            <div class="form-grid form-grid-2">
+                <div class="input-group">
+                    <label class="form-label">Farmer Name <span class="required">*</span></label>
+                    <div class="input-wrapper">
+                        <span class="material-symbols-outlined input-icon">person</span>
+                        <input type="text" name="farmer_name" required value="<?= htmlspecialchars($customer['farmer_name']) ?>" class="input-field" placeholder="e.g. Rajeshwar Singh">
                     </div>
                 </div>
                 
-                <div class="space-y-2">
-                    <label class="block text-xs font-bold text-on-surface-variant uppercase tracking-wider">Mobile Number <span class="text-error">*</span></label>
-                    <div class="relative">
-                        <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">call</span>
-                        <input type="text" name="mobile" required pattern="[0-9]{10}" title="10 digit mobile number" value="<?= htmlspecialchars($customer['mobile']) ?>" class="w-full pl-12 pr-4 py-3 bg-surface border border-outline-variant/30 rounded-xl focus:ring-2 focus:ring-primary/40 focus:bg-surface-container-lowest transition-all outline-none font-medium text-sm" placeholder="10 Digits (e.g. 9876543210)">
+                <div class="input-group">
+                    <label class="form-label">Mobile Number <span class="required">*</span></label>
+                    <div class="input-wrapper">
+                        <span class="material-symbols-outlined input-icon">call</span>
+                        <input type="text" name="mobile" required pattern="[0-9]{10}" title="10 digit mobile number" value="<?= htmlspecialchars($customer['mobile']) ?>" class="input-field" placeholder="10 Digits (e.g. 9876543210)">
                     </div>
                 </div>
                 
-                <div class="space-y-2">
-                    <label class="block text-xs font-bold text-on-surface-variant uppercase tracking-wider">Village / Location <span class="text-error">*</span></label>
-                    <div class="relative">
-                        <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">location_on</span>
-                        <input type="text" name="village" required value="<?= htmlspecialchars($customer['village']) ?>" class="w-full pl-12 pr-4 py-3 bg-surface border border-outline-variant/30 rounded-xl focus:ring-2 focus:ring-primary/40 focus:bg-surface-container-lowest transition-all outline-none font-medium text-sm" placeholder="Village Name">
+                <div class="input-group">
+                    <label class="form-label">Village / Location <span class="required">*</span></label>
+                    <div class="input-wrapper">
+                        <span class="material-symbols-outlined input-icon">location_on</span>
+                        <input type="text" name="village" required value="<?= htmlspecialchars($customer['village']) ?>" class="input-field" placeholder="Village Name">
                     </div>
                 </div>
             </div>
 
-            <h4 class="font-headline text-lg font-bold text-on-surface mb-6 mt-8 border-b border-outline-variant/10 pb-2">Farm & Technical Details</h4>
+            <h4 style="font-family: var(--font-headline); font-size: 1.125rem; font-weight: 700; color: var(--color-on-surface); margin: 2rem 0 1.5rem; border-bottom: 1px solid rgba(112, 120, 129, 0.1); padding-bottom: 0.5rem;">Farm & Technical Details</h4>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="space-y-2">
-                    <label class="block text-xs font-bold text-on-surface-variant uppercase tracking-wider">Farm Name <span class="text-outline text-[10px] ml-1">(Optional)</span></label>
-                    <div class="relative">
-                        <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">agriculture</span>
-                        <input type="text" name="farm_name" value="<?= htmlspecialchars($customer['farm_name']) ?>" class="w-full pl-12 pr-4 py-3 bg-surface border border-outline-variant/30 rounded-xl focus:ring-2 focus:ring-primary/40 focus:bg-surface-container-lowest transition-all outline-none font-medium text-sm" placeholder="e.g. Green Meadows">
+            <div class="form-grid form-grid-2">
+                <div class="input-group">
+                    <label class="form-label">Farm Name <span style="font-size: 0.625rem; color: var(--color-outline); margin-left: 0.25rem;">(Optional)</span></label>
+                    <div class="input-wrapper">
+                        <span class="material-symbols-outlined input-icon">agriculture</span>
+                        <input type="text" name="farm_name" value="<?= htmlspecialchars($customer['farm_name']) ?>" class="input-field" placeholder="e.g. Green Meadows">
                     </div>
                 </div>
                 
-                <div class="space-y-2">
-                    <label class="block text-xs font-bold text-on-surface-variant uppercase tracking-wider">Connection No. <span class="text-outline text-[10px] ml-1">(Optional)</span></label>
-                    <div class="relative">
-                        <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">cable</span>
-                        <input type="text" name="connection_no" value="<?= htmlspecialchars($customer['connection_no']) ?>" class="w-full pl-12 pr-4 py-3 bg-surface border border-outline-variant/30 rounded-xl focus:ring-2 focus:ring-primary/40 focus:bg-surface-container-lowest transition-all outline-none font-medium text-sm" placeholder="Utility Conn. Ref">
+                <div class="input-group">
+                    <label class="form-label">Connection No. <span style="font-size: 0.625rem; color: var(--color-outline); margin-left: 0.25rem;">(Optional)</span></label>
+                    <div class="input-wrapper">
+                        <span class="material-symbols-outlined input-icon">cable</span>
+                        <input type="text" name="connection_no" value="<?= htmlspecialchars($customer['connection_no']) ?>" class="input-field" placeholder="Utility Conn. Ref">
                     </div>
                 </div>
                 
-                <div class="space-y-2">
-                    <label class="block text-xs font-bold text-on-surface-variant uppercase tracking-wider">Pipe Size</label>
-                    <div class="relative">
-                        <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">straighten</span>
-                        <select name="pipe_size" class="w-full pl-12 pr-10 py-3 bg-surface border border-outline-variant/30 rounded-xl focus:ring-2 focus:ring-primary/40 focus:bg-surface-container-lowest appearance-none transition-all outline-none font-medium text-sm cursor-pointer">
+                <div class="input-group">
+                    <label class="form-label">Pipe Size</label>
+                    <div class="input-wrapper" style="display: flex; align-items: center;">
+                        <span class="material-symbols-outlined input-icon">straighten</span>
+                        <select name="pipe_size" class="input-field" style="appearance: none; cursor: pointer; padding-right: 2.5rem;">
                             <option value="">Select Delivery Size</option>
-                            <option value="2 inch" <?= $customer['pipe_size'] === '2 inch' ? 'selected' : '' ?>>2 Inch Std.</option>
-                            <option value="2.5 inch" <?= $customer['pipe_size'] === '2.5 inch' ? 'selected' : '' ?>>2.5 Inch</option>
-                            <option value="3 inch" <?= $customer['pipe_size'] === '3 inch' ? 'selected' : '' ?>>3 Inch High Flow</option>
-                            <option value="4 inch" <?= $customer['pipe_size'] === '4 inch' ? 'selected' : '' ?>>4 Inch Industrial</option>
+                            <option value="2 inch" <?= ($customer['pipe_size'] ?? '') === '2 inch' ? 'selected' : '' ?>>2 Inch Std.</option>
+                            <option value="2.5 inch" <?= ($customer['pipe_size'] ?? '') === '2.5 inch' ? 'selected' : '' ?>>2.5 Inch</option>
+                            <option value="3 inch" <?= ($customer['pipe_size'] ?? '') === '3 inch' ? 'selected' : '' ?>>3 Inch High Flow</option>
+                            <option value="4 inch" <?= ($customer['pipe_size'] ?? '') === '4 inch' ? 'selected' : '' ?>>4 Inch Industrial</option>
                         </select>
-                        <span class="absolute right-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-outline pointer-events-none">expand_more</span>
+                        <span class="material-symbols-outlined" style="position: absolute; right: 0.875rem; pointer-events: none; color: var(--color-outline);">expand_more</span>
                     </div>
                 </div>
             </div>
 
-            <div class="pt-8 flex flex-col md:flex-row gap-4 items-center mt-4 border-t border-outline-variant/10">
-                <button type="submit" name="update_customer" class="w-full md:w-auto flex-1 flex justify-center items-center gap-2 py-3.5 px-6 bg-gradient-to-r from-secondary to-secondary-container text-white font-bold rounded-xl shadow-lg shadow-secondary/25 hover:shadow-xl hover:-translate-y-0.5 transition-all text-sm uppercase tracking-wider">
-                    <span class="material-symbols-outlined text-[20px]">save</span>
+            <div class="form-footer">
+                <button type="submit" name="update_customer" class="btn bg-gradient-primary" style="flex: 1; padding: 1rem; border-radius: 0.75rem; box-shadow: 0 10px 15px -3px rgba(44, 105, 78, 0.3); background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-secondary-container) 100%);">
+                    <span class="material-symbols-outlined" style="font-size: 1.125rem;">save</span>
                     Update Customer
+                </button>
+                <button type="reset" class="btn-secondary" style="padding: 1rem 2rem;">
+                    Reset Changes
                 </button>
             </div>
         </form>

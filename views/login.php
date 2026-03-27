@@ -4,6 +4,10 @@ if (isset($_SESSION['admin_id'])) {
     header("Location: dashboard.php");
     exit();
 }
+// Robust dynamic base_url resolution
+$protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http";
+$host = $_SERVER['HTTP_HOST'];
+$base_url = $protocol . "://" . $host . "/waterS/";
 ?>
 <!DOCTYPE html>
 <html lang="en" class="light">
@@ -12,89 +16,63 @@ if (isset($_SESSION['admin_id'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login | HydroFlow Portal</title>
     <!-- Favicon -->
-    <link rel="icon" href="../assets/images/icon.png" type="image/png">
-    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="icon" href="<?= $base_url ?>assets/images/icon.png" type="image/png">
+    
+    <!-- Core & Component Styles -->
+    <link rel="stylesheet" href="<?= $base_url ?>assets/css/main.css">
+    <link rel="stylesheet" href="<?= $base_url ?>assets/css/components.css">
+    
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-    
-    <style>
-        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
-        
-        /* Modern Abstract Background overlay */
-        .bg-login {
-            background-color: #f2f4f6;
-            background-image: 
-                radial-gradient(at 0% 0%, hsla(202,100%,75%,0.3) 0px, transparent 50%),
-                radial-gradient(at 100% 100%, hsla(168,100%,75%,0.3) 0px, transparent 50%);
-        }
-        
-        .glass-card {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.4);
-        }
-        
-        /* Utility classes missing after migration */
-        .text-primary { color: #005d90; }
-        .bg-primary\/20 { background-color: rgba(0, 93, 144, 0.2); }
-        .bg-gradient-to-r.from-primary.to-primary-container {
-            background: linear-gradient(to right, #005d90, #007bbd);
-        }
-        .shadow-primary\/30 {
-            box-shadow: 0 10px 15px -3px rgba(0, 93, 144, 0.3);
-        }
-        .text-white { color: #ffffff; }
-    </style>
 </head>
-<body class="bg-login font-body text-on-surface antialiased min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
+<body class="login-container">
 
     <!-- Decorative blobs -->
-    <div class="absolute top-[-10%] left-[-10%] w-96 h-96 bg-primary/20 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob"></div>
-    <div class="absolute w-96 h-96 bg-teal-300/40 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-2000 bottom-[-10%] right-[-10%]"></div>
+    <div style="position: absolute; top: -10%; left: -10%; width: 24rem; height: 24rem; background-color: rgba(0, 93, 144, 0.2); border-radius: 50%; filter: blur(64px); opacity: 0.7; z-index: 0;"></div>
+    <div style="position: absolute; bottom: -10%; right: -10%; width: 24rem; height: 24rem; background-color: rgba(45, 212, 191, 0.4); border-radius: 50%; filter: blur(64px); opacity: 0.7; z-index: 0;"></div>
 
-    <div class="glass-card rounded-3xl w-full max-w-md p-10 shadow-[0_32px_64px_-12px_rgba(0,0,0,0.1)] relative z-10 transition-all hover:shadow-[0_40px_80px_-12px_rgba(0,0,0,0.15)]">
+    <div class="login-card">
         
-        <div class="text-center mb-8">
-            <img src="../assets/images/icon.png" alt="HydroFlow Logo" class="w-20 h-20 mx-auto mb-4 object-contain filter drop-shadow-[0_8px_16px_rgba(0,93,144,0.3)]">
-            <h2 class="text-3xl font-extrabold font-headline tracking-tight text-primary">HydroFlow</h2>
-            <p class="text-sm font-semibold text-on-surface-variant uppercase tracking-widest mt-2">Portal Access</p>
+        <div style="text-align: center; margin-bottom: 2rem;">
+            <img src="<?= $base_url ?>assets/images/icon.png" alt="HydroFlow Logo" style="width: 5rem; height: 5rem; margin: 0 auto 1rem; object-fit: contain; filter: drop-shadow(0 8px 16px rgba(0,93,144,0.3));">
+            <h2 style="font-size: 1.875rem; font-weight: 800; font-family: var(--font-headline); color: var(--color-primary); letter-spacing: -0.025em;">HydroFlow</h2>
+            <p style="font-size: 0.75rem; font-weight: 700; color: var(--color-on-surface-variant); text-transform: uppercase; letter-spacing: 0.2em; margin-top: 0.5rem;">Portal Access</p>
         </div>
         
         <?php if (isset($_SESSION['error_msg'])): ?>
-            <div class="bg-error-container/80 text-error-container-on font-bold text-error px-4 py-3 rounded-lg mb-6 flex items-start gap-2 text-sm border border-error/20">
-                <span class="material-symbols-outlined text-[18px]">error</span>
+            <div class="error-alert">
+                <span class="material-symbols-outlined" style="font-size: 1.125rem;">error</span>
                 <span><?= $_SESSION['error_msg'] ?></span>
             </div>
             <?php unset($_SESSION['error_msg']); ?>
         <?php endif; ?>
 
-        <form action="../controllers/authController.php" method="POST" class="space-y-5">
-            <div class="space-y-2">
-                <label for="username" class="block text-xs font-bold text-on-surface-variant uppercase tracking-wider">Username</label>
-                <div class="relative group">
-                    <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline group-focus-within:text-primary transition-colors">person</span>
-                    <input type="text" id="username" name="username" required class="w-full pl-12 pr-4 py-3.5 bg-surface-container-lowest/80 border border-outline/20 rounded-xl focus:ring-2 focus:ring-primary/40 focus:border-transparent transition-all outline-none font-medium placeholder:text-outline/50" placeholder="admin">
+        <form action="<?= $base_url ?>controllers/authController.php" method="POST" style="display: flex; flex-direction: column; gap: 1.25rem;">
+            <div class="input-group">
+                <label for="username" class="input-label">Username</label>
+                <div class="input-wrapper">
+                    <span class="material-symbols-outlined input-icon">person</span>
+                    <input type="text" id="username" name="username" required class="input-field" placeholder="admin">
                 </div>
             </div>
             
-            <div class="space-y-2">
-                <div class="flex justify-between items-center">
-                    <label for="password" class="block text-xs font-bold text-on-surface-variant uppercase tracking-wider">Password</label>
+            <div class="input-group">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <label for="password" class="input-label">Password</label>
                 </div>
-                <div class="relative group">
-                    <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline group-focus-within:text-primary transition-colors">lock</span>
-                    <input type="password" id="password" name="password" required class="w-full pl-12 pr-4 py-3.5 bg-surface-container-lowest/80 border border-outline/20 rounded-xl focus:ring-2 focus:ring-primary/40 focus:border-transparent transition-all outline-none font-medium placeholder:text-outline/50" placeholder="••••••••">
+                <div class="input-wrapper">
+                    <span class="material-symbols-outlined input-icon">lock</span>
+                    <input type="password" id="password" name="password" required class="input-field" placeholder="••••••••">
                 </div>
             </div>
             
-            <button type="submit" name="login" class="w-full mt-8 py-3.5 px-4 bg-gradient-to-r from-primary to-primary-container text-white font-bold rounded-xl shadow-lg shadow-primary/30 hover:-translate-y-0.5 hover:shadow-xl transition-all uppercase tracking-widest text-sm flex justify-center items-center gap-2">
-                Secure Login <span class="material-symbols-outlined text-sm">login</span>
+            <button type="submit" name="login" class="btn bg-gradient-primary" style="width: 100%; margin-top: 2rem; padding: 1rem; border-radius: 0.75rem; box-shadow: 0 10px 15px -3px rgba(0, 93, 144, 0.3);">
+                Secure Login <span class="material-symbols-outlined" style="font-size: 1rem;">login</span>
             </button>
         </form>
         
-        <div class="mt-8 text-center border-t border-outline/10 pt-6">
-            <p class="text-xs text-outline font-medium">Water Supply Management System</p>
+        <div style="margin-top: 2rem; text-align: center; border-top: 1px solid rgba(112, 120, 129, 0.1); pt-1.5rem;">
+            <p style="font-size: 0.75rem; color: var(--color-outline); font-weight: 500; margin-top: 1.5rem;">Water Supply Management System</p>
         </div>
     </div>
 </body>

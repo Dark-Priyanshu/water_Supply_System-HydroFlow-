@@ -9,85 +9,85 @@ $bills = $billModel->getAllBills();
 ?>
 
 <!-- Action Bar -->
-<div class="flex justify-between items-end mb-8 mt-4 no-print">
+<div class="flex no-print" style="justify-content: space-between; align-items: flex-end; margin-bottom: 2rem; margin-top: 1rem;">
     <div>
-        <nav class="flex items-center gap-2 text-xs text-on-surface-variant mb-2">
+        <nav class="flex" style="align-items: center; gap: 0.5rem; font-size: 0.75rem; color: var(--color-on-surface-variant); margin-bottom: 0.5rem;">
             <span>Finance</span>
-            <span class="material-symbols-outlined text-[14px]">chevron_right</span>
-            <span class="text-primary font-medium">Invoices</span>
+            <span class="material-symbols-outlined" style="font-size: 0.875rem;">chevron_right</span>
+            <span style="color: var(--color-primary); font-weight: 500;">Invoices</span>
         </nav>
-        <h2 class="text-3xl font-bold font-headline text-on-surface tracking-tight">Billing & Invoices</h2>
+        <h2 style="font-size: 1.875rem; font-weight: 800; font-family: var(--font-headline); color: var(--color-on-surface); letter-spacing: -0.025em;">Billing & Invoices</h2>
     </div>
 </div>
 
 <?php if (isset($_SESSION['success_msg'])): ?>
-<div class="mb-8 p-4 bg-secondary/10 border border-secondary/20 rounded-xl flex items-center justify-between no-print">
-    <div class="flex items-center gap-3">
-        <span class="material-symbols-outlined text-secondary">check_circle</span>
-        <span class="text-secondary font-medium"><?= $_SESSION['success_msg'] ?></span>
+<div class="error-alert no-print" style="background-color: var(--color-secondary-container); color: var(--color-on-secondary-container); border-color: rgba(44, 105, 78, 0.2); margin-bottom: 2rem;">
+    <div class="flex" style="align-items: center; gap: 0.75rem; width: 100%;">
+        <span class="material-symbols-outlined">check_circle</span>
+        <span style="font-weight: 500; font-size: 0.875rem; flex: 1;"><?= $_SESSION['success_msg'] ?></span>
+        <button type="button" style="background: transparent; border: none; cursor: pointer; color: inherit; opacity: 0.6;" onclick="this.parentElement.parentElement.remove()">
+            <span class="material-symbols-outlined" style="font-size: 1.125rem;">close</span>
+        </button>
     </div>
-    <button type="button" class="text-secondary/60 hover:text-secondary p-1" onclick="this.parentElement.remove()">
-        <span class="material-symbols-outlined">close</span>
-    </button>
 </div>
 <?php unset($_SESSION['success_msg']); endif; ?>
 
 <!-- Invoice List Container -->
-<div class="bg-surface-container-lowest rounded-2xl shadow-[0_8px_32px_rgba(25,28,30,0.04)] overflow-hidden border border-outline-variant/10">
-    <div class="overflow-x-auto">
-        <table class="w-full text-left border-collapse datatable">
-            <thead class="bg-surface-container-high/50">
+<div class="table-container">
+    <div style="overflow-x: auto;">
+        <table class="table-custom datatable">
+            <thead>
                 <tr>
-                    <th class="py-4 px-6 text-[10px] uppercase tracking-widest font-bold text-on-surface-variant">Invoice #</th>
-                    <th class="py-4 px-6 text-[10px] uppercase tracking-widest font-bold text-on-surface-variant">Date</th>
-                    <th class="py-4 px-6 text-[10px] uppercase tracking-widest font-bold text-on-surface-variant">Customer</th>
-                    <th class="py-4 px-6 text-[10px] uppercase tracking-widest font-bold text-on-surface-variant">Amount</th>
-                    <th class="py-4 px-6 text-[10px] uppercase tracking-widest font-bold text-on-surface-variant">Status</th>
-                    <th class="py-4 px-6 text-[10px] uppercase tracking-widest font-bold text-on-surface-variant text-right">Actions</th>
+                    <th style="padding-left: 1.5rem;">Invoice #</th>
+                    <th>Date</th>
+                    <th>Customer</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                    <th style="padding-right: 1.5rem; text-align: right;">Actions</th>
                 </tr>
             </thead>
-            <tbody class="divide-y divide-surface-container">
+            <tbody>
                 <?php while ($row = $bills->fetch_assoc()): ?>
-                <tr class="hover:bg-surface-container-low/30 transition-colors group">
-                    <td class="py-5 px-6 font-bold text-sm text-on-surface">INV-<?= str_pad($row['bill_id'], 4, '0', STR_PAD_LEFT) ?></td>
-                    <td class="py-5 px-6 text-sm text-on-surface-variant"><?= date('d M, Y', strtotime($row['bill_date'])) ?></td>
-                    <td class="py-5 px-6">
-                        <div class="font-semibold text-primary text-sm"><?= htmlspecialchars($row['farmer_name']) ?></div>
-                        <div class="text-[11px] text-on-surface-variant">+91 <?= htmlspecialchars($row['mobile']) ?></div>
+                <tr onmouseover="this.style.backgroundColor='rgba(242, 244, 246, 0.5)';" onmouseout="this.style.backgroundColor='transparent';">
+                    <td style="padding-left: 1.5rem; font-weight: 700; font-size: 0.875rem;">INV-<?= str_pad($row['bill_id'], 4, '0', STR_PAD_LEFT) ?></td>
+                    <td style="font-size: 0.875rem; color: var(--color-on-surface-variant);"><?= date('d M, Y', strtotime($row['bill_date'])) ?></td>
+                    <td>
+                        <div style="font-weight: 600; color: var(--color-primary); font-size: 0.875rem;"><?= htmlspecialchars($row['farmer_name'] ?? 'N/A') ?></div>
+                        <div style="font-size: 0.6875rem; color: var(--color-on-surface-variant);">+91 <?= htmlspecialchars($row['mobile'] ?? 'N/A') ?></div>
                     </td>
-                    <td class="py-5 px-6 font-bold text-on-surface font-headline">₹<?= number_format($row['total_amount'], 2) ?></td>
-                    <td class="py-5 px-6">
+                    <td style="font-weight: 700; font-family: var(--font-headline);">₹<?= number_format($row['total_amount'], 2) ?></td>
+                    <td>
                         <?php if($row['status'] == 'paid'): ?>
-                            <span class="inline-flex items-center gap-1 px-3 py-1 bg-secondary/10 text-secondary text-[10px] font-bold uppercase tracking-wider rounded-full border border-secondary/20">
-                                <span class="material-symbols-outlined text-[14px]">check_circle</span> Paid
+                            <span class="badge" style="background-color: rgba(44, 105, 78, 0.1); color: var(--color-secondary); border: 1px solid rgba(44, 105, 78, 0.1); display: inline-flex; align-items: center; gap: 0.25rem;">
+                                <span class="material-symbols-outlined" style="font-size: 0.875rem;">check_circle</span> Paid
                             </span>
                         <?php elseif($row['status'] == 'cancelled'): ?>
-                            <span class="inline-flex items-center gap-1 px-3 py-1 bg-error/10 text-error text-[10px] font-bold uppercase tracking-wider rounded-full border border-error/20">
-                                <span class="material-symbols-outlined text-[14px]">cancel</span> Cancelled
+                            <span class="badge" style="background-color: rgba(186, 26, 26, 0.1); color: var(--color-error); border: 1px solid rgba(186, 26, 26, 0.1); display: inline-flex; align-items: center; gap: 0.25rem;">
+                                <span class="material-symbols-outlined" style="font-size: 0.875rem;">cancel</span> Cancelled
                             </span>
                         <?php else: ?>
-                            <span class="inline-flex items-center gap-1 px-3 py-1 bg-surface-dim text-on-surface-variant text-[10px] font-bold uppercase tracking-wider rounded-full border border-outline-variant/30">
-                                <span class="material-symbols-outlined text-[14px]">schedule</span> Pending
+                            <span class="badge" style="background-color: var(--color-surface-dim); color: var(--color-on-surface-variant); border: 1px solid rgba(112, 120, 129, 0.2); display: inline-flex; align-items: center; gap: 0.25rem;">
+                                <span class="material-symbols-outlined" style="font-size: 0.875rem;">schedule</span> Pending
                             </span>
                         <?php endif; ?>
                     </td>
-                    <td class="py-5 px-6 text-right">
-                        <div class="flex items-center justify-end gap-2">
-                            <a href="view_bill.php?id=<?= $row['bill_id'] ?>" class="p-2 text-on-surface-variant hover:text-primary hover:bg-primary/5 rounded-lg transition-colors" title="View Invoice">
+                    <td style="padding-right: 1.5rem; text-align: right;">
+                        <div class="flex" style="justify-content: flex-end; align-items: center; gap: 0.5rem;">
+                            <a href="view_bill.php?id=<?= $row['bill_id'] ?>" style="padding: 0.5rem; color: var(--color-on-surface-variant); display: flex; border-radius: 0.5rem;" onmouseover="this.style.backgroundColor='rgba(0, 93, 144, 0.1)'; this.style.color='var(--color-primary)';" onmouseout="this.style.backgroundColor='transparent'; this.style.color='var(--color-on-surface-variant)';" title="View Invoice">
                                 <span class="material-symbols-outlined">visibility</span>
                             </a>
                             
                             <?php if($row['status'] == 'pending'): ?>
-                                <div class="relative group/dropdown inline-block">
-                                    <button type="button" class="p-2 text-on-surface-variant hover:text-primary hover:bg-primary/5 rounded-lg transition-colors">
+                                <div style="position: relative;" class="legacy-dropdown">
+                                    <button type="button" style="padding: 0.5rem; color: var(--color-on-surface-variant); display: flex; border-radius: 0.5rem; background: transparent; border: none; cursor: pointer;" onclick="this.nextElementSibling.style.display = (this.nextElementSibling.style.display === 'block' ? 'none' : 'block')">
                                         <span class="material-symbols-outlined">more_vert</span>
                                     </button>
-                                    <div class="absolute right-0 top-full mt-1 bg-surface-container-lowest border border-outline-variant/10 shadow-lg rounded-xl overflow-hidden hidden group-hover/dropdown:block z-10 w-40">
-                                        <a class="flex items-center gap-2 px-4 py-3 text-sm font-medium text-secondary hover:bg-surface-container-low transition-colors" href="../../controllers/billingController.php?update_status=paid&id=<?= $row['bill_id'] ?>">
-                                            <span class="material-symbols-outlined text-[18px]">payments</span> Mark Paid
+                                    <div style="position: absolute; right: 0; top: 100%; margin-top: 0.25rem; background-color: var(--color-surface-container-lowest); border: 1px solid rgba(112, 120, 129, 0.1); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); border-radius: 0.75rem; overflow: hidden; display: none; z-index: 10; width: 10rem;" onmouseleave="this.style.display='none'">
+                                        <a style="display: flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1rem; font-size: 0.875rem; font-weight: 500; color: var(--color-secondary); text-decoration: none;" onmouseover="this.style.backgroundColor='var(--color-surface-container-low)';" onmouseout="this.style.backgroundColor='transparent';" href="../../controllers/billingController.php?update_status=paid&id=<?= $row['bill_id'] ?>">
+                                            <span class="material-symbols-outlined" style="font-size: 1.125rem;">payments</span> Mark Paid
                                         </a>
-                                        <a class="flex items-center gap-2 px-4 py-3 text-sm font-medium text-error hover:bg-error/10 transition-colors" href="../../controllers/billingController.php?update_status=cancelled&id=<?= $row['bill_id'] ?>">
-                                            <span class="material-symbols-outlined text-[18px]">cancel</span> Cancel Bill
+                                        <a style="display: flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1rem; font-size: 0.875rem; font-weight: 500; color: var(--color-error); text-decoration: none;" onmouseover="this.style.backgroundColor='rgba(186, 26, 26, 0.05)';" onmouseout="this.style.backgroundColor='transparent';" href="../../controllers/billingController.php?update_status=cancelled&id=<?= $row['bill_id'] ?>">
+                                            <span class="material-symbols-outlined" style="font-size: 1.125rem;">cancel</span> Cancel Bill
                                         </a>
                                     </div>
                                 </div>

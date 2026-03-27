@@ -16,7 +16,7 @@ $cash_count = 0;
 $digital_count = 0;
 
 $payments_arr = [];
-if($payments->num_rows > 0) {
+if($payments && $payments->num_rows > 0) {
     while($row = $payments->fetch_assoc()) {
         $payments_arr[] = $row;
         $total_collections += (float)$row['amount'];
@@ -34,131 +34,130 @@ $pending_sum = $pending_bills->fetch_assoc()['pending_sum'] ?? 0;
 ?>
 
 <!-- Header Section -->
-<section class="mb-10 mt-4">
-    <div class="flex justify-between items-end mb-8 block hidden-print">
+<section style="margin-bottom: 2.5rem; margin-top: 1rem;">
+    <div class="flex no-print" style="justify-content: space-between; align-items: flex-end; margin-bottom: 2rem;">
         <div>
-            <nav class="flex items-center gap-2 text-xs text-on-surface-variant mb-2">
+            <nav class="flex" style="align-items: center; gap: 0.5rem; font-size: 0.75rem; color: var(--color-on-surface-variant); margin-bottom: 0.5rem;">
                 <span>Finance</span>
-                <span class="material-symbols-outlined text-[14px]">chevron_right</span>
-                <span class="text-primary font-medium">Ledger</span>
+                <span class="material-symbols-outlined" style="font-size: 0.875rem;">chevron_right</span>
+                <span style="color: var(--color-primary); font-weight: 500;">Ledger</span>
             </nav>
-            <h2 class="font-headline text-4xl font-extrabold tracking-tight text-on-surface">Payment Ledger</h2>
-            <p class="text-on-surface-variant mt-2 font-medium">Manage revenue streams and track hydrological billing cycles.</p>
+            <h2 style="font-size: 2.25rem; font-family: var(--font-headline); font-weight: 800; color: var(--color-on-surface); letter-spacing: -0.025em;">Payment Ledger</h2>
+            <p style="color: var(--color-on-surface-variant); margin-top: 0.5rem; font-weight: 500;">Manage revenue streams and track hydrological billing cycles.</p>
         </div>
-        <div class="flex gap-3 hidden-print">
-            <a href="add_payment.php" class="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-primary to-primary-container text-white font-semibold rounded-xl shadow-lg shadow-primary/20 hover:scale-[1.02] transition-transform">
-                <span class="material-symbols-outlined text-sm">add_circle</span> Record Payment
+        <div class="flex" style="gap: 0.75rem;">
+            <a href="add_payment.php" class="btn bg-gradient-primary" style="padding: 0.75rem 1.5rem; border-radius: 0.75rem;">
+                <span class="material-symbols-outlined" style="font-size: 1.125rem;">add_circle</span> Record Payment
             </a>
         </div>
     </div>
 
     <?php if (isset($_SESSION['success_msg'])): ?>
-    <div class="mb-8 p-4 bg-secondary-container text-on-secondary-container rounded-xl flex items-center gap-3">
+    <div class="error-alert" style="background-color: var(--color-secondary-container); color: var(--color-on-secondary-container); border-color: rgba(44, 105, 78, 0.2); margin-bottom: 2rem;">
         <span class="material-symbols-outlined">check_circle</span>
-        <span class="text-sm font-bold"><?= $_SESSION['success_msg'] ?></span>
+        <span style="font-size: 0.875rem; font-weight: 700;"><?= $_SESSION['success_msg'] ?></span>
     </div>
     <?php unset($_SESSION['success_msg']); endif; ?>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <!-- Card 1 -->
-        <div class="relative overflow-hidden bg-surface-container-lowest p-6 rounded-xl group border border-outline-variant/10">
-            <div class="flex justify-between items-start mb-4">
-                <span class="p-3 bg-primary/10 text-primary rounded-lg material-symbols-outlined">account_balance_wallet</span>
-                <span class="text-[10px] font-bold text-on-surface-variant border border-outline-variant/20 px-2 py-1 rounded">Overall</span>
+    <div class="grid-4" style="grid-template-columns: repeat(3, 1fr) !important;">
+        <style>
+            @media (max-width: 1023px) {
+                .grid-finance { grid-template-columns: repeat(1, 1fr) !important; }
+            }
+        </style>
+        <div class="grid grid-finance" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; grid-column: 1 / -1;">
+            <!-- Card 1 -->
+            <div class="card" style="padding: 1.5rem; border-bottom: 4px solid rgba(0, 93, 144, 0.2);">
+                <div class="flex" style="justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
+                    <span class="material-symbols-outlined" style="padding: 0.75rem; background-color: rgba(0, 93, 144, 0.1); color: var(--color-primary); border-radius: 0.5rem;">account_balance_wallet</span>
+                    <span style="font-size: 0.625rem; font-weight: 700; color: var(--color-on-surface-variant); border: 1px solid rgba(112, 120, 129, 0.2); padding: 0.25rem 0.5rem; border-radius: 0.25rem; text-transform: uppercase;">Overall</span>
+                </div>
+                <p style="font-size: 0.625rem; font-weight: 700; color: var(--color-on-surface-variant); text-transform: uppercase; letter-spacing: 0.1em;">Total Collections</p>
+                <h3 style="font-family: var(--font-headline); font-size: 1.875rem; font-weight: 800; margin-top: 0.5rem;">₹<?= number_format($total_collections, 2) ?></h3>
             </div>
-            <p class="text-on-surface-variant text-xs font-bold uppercase tracking-widest">Total Collections</p>
-            <h3 class="font-headline text-3xl font-extrabold mt-2 text-on-surface">₹<?= number_format($total_collections, 2) ?></h3>
-            <div class="absolute bottom-0 left-0 right-0 h-1.5 bg-gradient-to-r from-primary/20 to-transparent"></div>
-            <div class="absolute -bottom-4 -right-4 w-24 h-24 bg-primary/5 rounded-full blur-2xl group-hover:bg-primary/10 transition-all"></div>
-        </div>
-        
-        <!-- Card 2 -->
-        <div class="relative overflow-hidden bg-surface-container-lowest p-6 rounded-xl group border border-outline-variant/10">
-            <div class="flex justify-between items-start mb-4">
-                <span class="p-3 bg-error/10 text-error rounded-lg material-symbols-outlined">pending_actions</span>
-                <span class="text-xs font-bold text-error flex items-center gap-1">
-                    <span class="material-symbols-outlined text-xs">warning</span> High Priority
-                </span>
+            
+            <!-- Card 2 -->
+            <div class="card" style="padding: 1.5rem; border-bottom: 4px solid rgba(186, 26, 26, 0.2);">
+                <div class="flex" style="justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
+                    <span class="material-symbols-outlined" style="padding: 0.75rem; background-color: rgba(186, 26, 26, 0.1); color: var(--color-error); border-radius: 0.5rem;">pending_actions</span>
+                    <span style="font-size: 0.75rem; font-weight: 700; color: var(--color-error); display: flex; align-items: center; gap: 0.25rem;">
+                        <span class="material-symbols-outlined" style="font-size: 0.875rem;">warning</span> High Priority
+                    </span>
+                </div>
+                <p style="font-size: 0.625rem; font-weight: 700; color: var(--color-on-surface-variant); text-transform: uppercase; letter-spacing: 0.1em;">Pending Receivables</p>
+                <h3 style="font-family: var(--font-headline); font-size: 1.875rem; font-weight: 800; margin-top: 0.5rem;">₹<?= number_format($pending_sum, 2) ?></h3>
             </div>
-            <p class="text-on-surface-variant text-xs font-bold uppercase tracking-widest">Pending Receivables</p>
-            <h3 class="font-headline text-3xl font-extrabold mt-2 text-on-surface">₹<?= number_format($pending_sum, 2) ?></h3>
-            <div class="absolute bottom-0 left-0 right-0 h-1.5 bg-gradient-to-r from-error/20 to-transparent"></div>
-            <div class="absolute -bottom-4 -right-4 w-24 h-24 bg-error/5 rounded-full blur-2xl group-hover:bg-error/10 transition-all"></div>
-        </div>
-        
-        <!-- Card 3 -->
-        <div class="relative overflow-hidden bg-surface-container-lowest p-6 rounded-xl group border border-outline-variant/10">
-            <div class="flex justify-between items-start mb-4">
-                <span class="p-3 bg-secondary/10 text-secondary rounded-lg material-symbols-outlined">splitscreen</span>
-                <span class="text-[10px] font-bold text-on-surface-variant">Method Splitting</span>
-            </div>
-            <p class="text-on-surface-variant text-xs font-bold uppercase tracking-widest">Cash vs Online Ratio</p>
-            <div class="flex items-center gap-4 mt-2">
-                <div class="w-full">
-                    <h3 class="font-headline text-2xl font-extrabold text-on-surface"><?= $cash_count ?> <span class="text-sm font-normal text-on-surface-variant">/ <?= $digital_count ?></span></h3>
+            
+            <!-- Card 3 -->
+            <div class="card" style="padding: 1.5rem; border-bottom: 4px solid rgba(44, 105, 78, 0.2);">
+                <div class="flex" style="justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
+                    <span class="material-symbols-outlined" style="padding: 0.75rem; background-color: rgba(44, 105, 78, 0.1); color: var(--color-secondary); border-radius: 0.5rem;">splitscreen</span>
+                    <span style="font-size: 0.625rem; font-weight: 700; color: var(--color-on-surface-variant); text-transform: uppercase;">Method Ratio</span>
+                </div>
+                <p style="font-size: 0.625rem; font-weight: 700; color: var(--color-on-surface-variant); text-transform: uppercase; letter-spacing: 0.1em;">Cash vs Online</p>
+                <div style="margin-top: 0.5rem;">
+                    <h3 style="font-family: var(--font-headline); font-size: 1.5rem; font-weight: 800;"><?= $cash_count ?> <span style="font-size: 0.875rem; font-weight: 400; color: var(--color-on-surface-variant);">/ <?= $digital_count ?></span></h3>
                     <?php 
                         $total = $cash_count + $digital_count;
                         $cash_pct = $total > 0 ? ($cash_count / $total) * 100 : 50; 
                         $digi_pct = $total > 0 ? ($digital_count / $total) * 100 : 50;
                     ?>
-                    <div class="w-full h-2 bg-surface-container-high rounded-full mt-2 overflow-hidden flex">
-                        <div style="width: <?= $cash_pct ?>%" class="h-full bg-tertiary"></div>
-                        <div style="width: <?= $digi_pct ?>%" class="h-full bg-secondary"></div>
+                    <div style="width: 100%; height: 0.5rem; background-color: var(--color-surface-container-high); border-radius: 9999px; margin-top: 0.5rem; overflow: hidden; display: flex;">
+                        <div style="width: <?= $cash_pct ?>%; height: 100%; background-color: var(--color-tertiary);"></div>
+                        <div style="width: <?= $digi_pct ?>%; height: 100%; background-color: var(--color-secondary);"></div>
                     </div>
                 </div>
             </div>
-            <div class="absolute bottom-0 left-0 right-0 h-1.5 bg-gradient-to-r from-secondary/20 to-transparent"></div>
         </div>
     </div>
 </section>
 
 <!-- Transactions Table -->
-<section class="xl:col-span-2 mb-12">
-    <div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-[0_8px_32px_rgba(25,28,30,0.04)] border border-outline-variant/10">
-        <div class="p-6 border-b border-outline-variant/10 flex justify-between items-center bg-surface-container-low/50">
-            <h4 class="font-headline text-lg font-bold text-on-surface">Transaction History</h4>
-            <div class="flex gap-2">
-                <span class="px-3 py-1 bg-primary/10 text-primary text-[10px] font-bold rounded-full border border-primary/20">All Records</span>
-            </div>
+<section style="margin-bottom: 3rem;">
+    <div class="table-container">
+        <div class="table-header">
+            <h4 style="font-family: var(--font-headline); font-size: 1.125rem; font-weight: 700;">Transaction History</h4>
+            <span class="badge" style="background-color: rgba(0, 93, 144, 0.1); color: var(--color-primary); border: 1px solid rgba(0, 93, 144, 0.1);">All Records</span>
         </div>
-        <div class="overflow-x-auto">
-            <table class="w-full text-left datatable">
-                <thead class="bg-surface-container-high/30">
+        <div style="overflow-x: auto;">
+            <table class="table-custom datatable">
+                <thead>
                     <tr>
-                        <th class="px-6 py-4 text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Receipt ID</th>
-                        <th class="px-6 py-4 text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Date</th>
-                        <th class="px-6 py-4 text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Customer</th>
-                        <th class="px-6 py-4 text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Ref Invoice</th>
-                        <th class="px-6 py-4 text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Method</th>
-                        <th class="px-6 py-4 text-[10px] font-bold text-on-surface-variant uppercase tracking-widest text-right">Amount</th>
+                        <th style="padding-left: 1.5rem;">Receipt ID</th>
+                        <th>Date</th>
+                        <th>Customer</th>
+                        <th>Ref Invoice</th>
+                        <th>Method</th>
+                        <th style="padding-right: 1.5rem; text-align: right;">Amount</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-outline-variant/5">
+                <tbody>
                     <?php foreach ($payments_arr as $row): ?>
-                    <tr class="hover:bg-surface-container-low/40 transition-colors group">
-                        <td class="px-6 py-5 font-mono text-xs text-primary font-bold">#REC-<?= str_pad($row['payment_id'], 4, '0', STR_PAD_LEFT) ?></td>
-                        <td class="px-6 py-5 text-sm text-on-surface-variant font-medium"><?= date('M d, Y', strtotime($row['payment_date'])) ?></td>
-                        <td class="px-6 py-5">
-                            <div class="flex items-center gap-3">
-                                <div class="w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center text-on-surface-variant font-bold text-xs uppercase"><?= substr($row['farmer_name'], 0, 2) ?></div>
-                                <span class="text-sm font-bold text-on-surface"><?= htmlspecialchars($row['farmer_name']) ?></span>
+                    <tr onmouseover="this.style.backgroundColor='rgba(242, 244, 246, 0.5)';" onmouseout="this.style.backgroundColor='transparent';">
+                        <td style="padding-left: 1.5rem; font-family: monospace; font-size: 0.75rem; color: var(--color-primary); font-weight: 700;">#REC-<?= str_pad($row['payment_id'], 4, '0', STR_PAD_LEFT) ?></td>
+                        <td style="font-size: 0.875rem; color: var(--color-on-surface-variant); font-weight: 500;"><?= date('M d, Y', strtotime($row['payment_date'])) ?></td>
+                        <td>
+                            <div class="flex" style="align-items: center; gap: 0.75rem;">
+                                <div style="width: 2rem; height: 2rem; border-radius: 50%; background-color: var(--color-surface-container-highest); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.75rem; text-transform: uppercase;"><?= substr($row['farmer_name'], 0, 2) ?></div>
+                                <span style="font-weight: 700; font-size: 0.875rem;"><?= htmlspecialchars($row['farmer_name']) ?></span>
                             </div>
                         </td>
-                        <td class="px-6 py-5">
-                            <a href="../billing/view_bill.php?id=<?= $row['bill_id'] ?>" class="text-sm font-semibold text-primary hover:underline hover:text-primary-container transition-colors">INV-<?= str_pad($row['bill_id'], 4, '0', STR_PAD_LEFT) ?></a>
+                        <td>
+                            <a href="../billing/view_bill.php?id=<?= $row['bill_id'] ?>" style="font-size: 0.875rem; font-weight: 600; color: var(--color-primary); text-decoration: underline;">INV-<?= str_pad($row['bill_id'], 4, '0', STR_PAD_LEFT) ?></a>
                         </td>
-                        <td class="px-6 py-5">
+                        <td>
                             <?php 
                             $icon = 'payments';
-                            if(strtolower($row['method']) == 'upi' || strtolower($row['method']) == 'online') $icon = 'qr_code_2';
-                            if(strtolower($row['method']) == 'bank transfer') $icon = 'account_balance';
+                            $method = strtolower($row['method']);
+                            if($method == 'upi' || $method == 'online') $icon = 'qr_code_2';
+                            if($method == 'bank transfer' || $method == 'bank') $icon = 'account_balance';
                             ?>
-                            <span class="inline-flex items-center gap-1.5 text-[10px] font-bold py-1 px-2 rounded bg-surface-container-high text-on-surface-variant uppercase border border-outline-variant/20">
-                                <span class="material-symbols-outlined text-[14px]"><?= $icon ?></span> <?= htmlspecialchars($row['method']) ?>
+                            <span class="badge" style="background-color: var(--color-surface-container-high); color: var(--color-on-surface-variant); border: 1px solid rgba(112, 120, 129, 0.2); display: inline-flex; align-items: center; gap: 0.25rem;">
+                                <span class="material-symbols-outlined" style="font-size: 0.875rem;"><?= $icon ?></span> <?= htmlspecialchars($row['method']) ?>
                             </span>
                         </td>
-                        <td class="px-6 py-5 text-right font-headline">
-                            <span class="text-sm font-extrabold text-secondary">+ ₹<?= number_format($row['amount'], 2) ?></span>
+                        <td style="padding-right: 1.5rem; text-align: right; font-family: var(--font-headline); font-weight: 800; color: var(--color-secondary);">
+                            + ₹<?= number_format($row['amount'], 2) ?>
                         </td>
                     </tr>
                     <?php endforeach; ?>

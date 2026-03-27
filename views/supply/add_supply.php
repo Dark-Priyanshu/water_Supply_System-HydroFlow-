@@ -13,151 +13,160 @@ $motors = $motorModel->getAllMotors();
 ?>
 
 <!-- Header Section -->
-<div class="flex justify-between items-end mb-8 mt-4">
+<div class="flex" style="justify-content: space-between; align-items: flex-end; margin-bottom: 2rem; margin-top: 1rem;">
     <div>
-        <h2 class="text-headline-lg font-bold text-slate-900 font-headline tracking-tight">Water Supply Recording</h2>
-        <p class="text-slate-500 mt-1 font-body">Log new irrigation activity and calculate usage metrics.</p>
+        <nav class="breadcrumb">
+            <span>Directory</span>
+            <span class="material-symbols-outlined" style="font-size: 0.875rem;">chevron_right</span>
+            <a href="supply_history.php">Supply</a>
+            <span class="material-symbols-outlined" style="font-size: 0.875rem;">chevron_right</span>
+            <span style="color: var(--color-primary); font-weight: 500;">New Recording</span>
+        </nav>
+        <h2 style="font-size: 1.875rem; font-family: var(--font-headline); font-weight: 800; color: var(--color-on-surface); letter-spacing: -0.025em; margin-bottom: 0.5rem;">Water Supply Recording</h2>
+        <p style="font-size: 1rem; color: var(--color-on-surface-variant); max-width: 40rem;">Log new irrigation activity and calculate usage metrics.</p>
     </div>
-    <a href="supply_history.php" class="flex items-center gap-2 px-4 py-2 bg-surface-container-high text-on-surface-variant rounded-xl font-semibold hover:bg-surface-container-highest transition-colors">
-        <span class="material-symbols-outlined text-[20px]">history</span>
-        <span class="text-sm">History</span>
+    <a href="supply_history.php" class="btn-secondary" style="display: flex; align-items: center; gap: 0.5rem; text-decoration: none;">
+        <span class="material-symbols-outlined" style="font-size: 1.25rem;">history</span>
+        <span>View History</span>
     </a>
 </div>
 
 <?php if (isset($_SESSION['error_msg'])): ?>
-<div class="mb-8 p-4 bg-error-container text-on-error-container rounded-xl flex items-center gap-3 border border-error/20">
+<div class="error-alert" style="margin-bottom: 2rem;">
     <span class="material-symbols-outlined">error</span>
-    <span class="text-sm font-bold"><?= $_SESSION['error_msg'] ?></span>
+    <span style="font-weight: 700;"><?= $_SESSION['error_msg'] ?></span>
 </div>
 <?php unset($_SESSION['error_msg']); endif; ?>
 
-<div class="grid grid-cols-1 xl:grid-cols-3 gap-8 items-start mb-12">
+<div style="display: grid; grid-template-columns: 2fr 1fr; gap: 2rem; align-items: start;">
     <!-- Main Form Section -->
-    <div class="xl:col-span-2 space-y-6">
-        <div class="bg-surface-container-lowest rounded-xl p-8 shadow-[0_8px_32px_rgba(25,28,30,0.04)] border border-outline-variant/10">
-            <div class="flex items-center gap-4 mb-8">
-                <div class="w-1 bg-primary h-6 rounded-full"></div>
-                <h3 class="text-xl font-bold font-headline text-slate-800">Recording Details</h3>
+    <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+        <div class="form-card" style="max-width: none;">
+            <div class="form-body">
+                <form action="../../controllers/supplyController.php" method="POST" id="supplyForm">
+                    <h3 style="font-size: 1.125rem; font-weight: 700; font-family: var(--font-headline); color: var(--color-on-surface); margin-bottom: 2rem; border-left: 4px solid var(--color-primary); padding-left: 1rem;">Recording Details</h3>
+                    
+                    <div class="form-grid form-grid-2">
+                        <!-- Customer Selection -->
+                        <div class="input-group">
+                            <label class="form-label">Customer (Farmer) <span class="required">*</span></label>
+                            <div class="input-wrapper">
+                                <span class="material-symbols-outlined input-icon">person</span>
+                                <select name="customer_id" required class="input-field" style="appearance: none; cursor: pointer;">
+                                    <option value="">Select Customer</option>
+                                    <?php while($row = $customers->fetch_assoc()): ?>
+                                        <option value="<?= $row['customer_id'] ?>"><?= htmlspecialchars($row['farmer_name']) ?><?= !empty($row['connection_no']) ? ' (' . htmlspecialchars($row['connection_no']) . ')' : '' ?></option>
+                                    <?php endwhile; ?>
+                                </select>
+                                <span class="material-symbols-outlined" style="position: absolute; right: 0.875rem; pointer-events: none; color: var(--color-outline);">expand_more</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Motor Selection -->
+                        <div class="input-group">
+                            <label class="form-label">Motor Used <span class="required">*</span></label>
+                            <div class="input-wrapper">
+                                <span class="material-symbols-outlined input-icon">water_pump</span>
+                                <select name="motor_id" required class="input-field" style="appearance: none; cursor: pointer;">
+                                    <option value="">Select Motor</option>
+                                    <?php while($row = $motors->fetch_assoc()): ?>
+                                        <option value="<?= $row['motor_id'] ?>"><?= htmlspecialchars($row['motor_name']) ?> (<?= number_format($row['horsepower'], 1) ?> HP)</option>
+                                    <?php endwhile; ?>
+                                </select>
+                                <span class="material-symbols-outlined" style="position: absolute; right: 0.875rem; pointer-events: none; color: var(--color-outline);">expand_more</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Date Picker -->
+                        <div class="input-group">
+                            <label class="form-label">Supply Date <span class="required">*</span></label>
+                            <div class="input-wrapper">
+                                <span class="material-symbols-outlined input-icon">calendar_today</span>
+                                <input type="date" name="date" required value="<?= date('Y-m-d') ?>" class="input-field"/>
+                            </div>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label class="form-label">Rate (₹/hour) <span class="required">*</span></label>
+                            <div class="input-wrapper">
+                                <span class="material-symbols-outlined input-icon">payments</span>
+                                <input type="number" step="0.5" name="rate" id="rate" value="125" required class="input-field" style="font-weight: 700;"/>
+                            </div>
+                        </div>
+                        
+                        <!-- Time Range -->
+                        <div class="input-group">
+                            <label class="form-label">Start Time <span class="required">*</span></label>
+                            <div class="input-wrapper">
+                                <span class="material-symbols-outlined input-icon">schedule</span>
+                                <input type="time" name="start_time" id="start_time" required class="input-field"/>
+                            </div>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label class="form-label">End Time <span class="required">*</span></label>
+                            <div class="input-wrapper">
+                                <span class="material-symbols-outlined input-icon">schedule</span>
+                                <input type="time" name="end_time" id="end_time" required class="input-field"/>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-footer">
+                        <button type="submit" name="record_supply" class="btn bg-gradient-primary" style="flex: 1; padding: 1rem; border-radius: 0.75rem;">
+                            <span class="material-symbols-outlined" style="font-size: 1.125rem;">save</span>
+                            Save Supply Record
+                        </button>
+                    </div>
+                    
+                    <input type="hidden" name="total_hours" id="hidden_total_hours" value="0">
+                    <input type="hidden" name="total_amount" id="hidden_total_amount" value="0">
+                </form>
             </div>
-            
-            <form action="../../controllers/supplyController.php" method="POST" id="supplyForm" class="space-y-8">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
-                    <!-- Customer Selection -->
-                    <div class="space-y-2">
-                        <label class="text-label-sm font-semibold text-on-surface-variant uppercase tracking-wider block">Customer (Farmer) <span class="text-error">*</span></label>
-                        <div class="relative">
-                            <select name="customer_id" required class="w-full pl-4 pr-10 py-3 bg-surface-container border-none rounded-lg focus:ring-2 focus:ring-primary/40 appearance-none font-body text-on-surface transition-all text-sm">
-                                <option value="">Select Customer</option>
-                                <?php while($row = $customers->fetch_assoc()): ?>
-                                    <option value="<?= $row['customer_id'] ?>"><?= htmlspecialchars($row['farmer_name']) ?><?= !empty($row['connection_no']) ? ' (' . htmlspecialchars($row['connection_no']) . ')' : '' ?></option>
-                                <?php endwhile; ?>
-                            </select>
-                            <span class="absolute right-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-slate-400 pointer-events-none">expand_more</span>
-                        </div>
-                    </div>
-                    
-                    <!-- Motor Selection -->
-                    <div class="space-y-2">
-                        <label class="text-label-sm font-semibold text-on-surface-variant uppercase tracking-wider block">Motor Used <span class="text-error">*</span></label>
-                        <div class="relative">
-                            <select name="motor_id" required class="w-full pl-4 pr-10 py-3 bg-surface-container border-none rounded-lg focus:ring-2 focus:ring-primary/40 appearance-none font-body text-on-surface transition-all text-sm">
-                                <option value="">Select Motor</option>
-                                <?php while($row = $motors->fetch_assoc()): ?>
-                                    <option value="<?= $row['motor_id'] ?>"><?= htmlspecialchars($row['motor_name']) ?> (<?= number_format($row['horsepower'], 1) ?> HP)</option>
-                                <?php endwhile; ?>
-                            </select>
-                            <span class="absolute right-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-slate-400 pointer-events-none">expand_more</span>
-                        </div>
-                    </div>
-                    
-                    <!-- Date Picker -->
-                    <div class="space-y-2">
-                        <label class="text-label-sm font-semibold text-on-surface-variant uppercase tracking-wider block">Supply Date <span class="text-error">*</span></label>
-                        <input type="date" name="date" required value="<?= date('Y-m-d') ?>" class="w-full px-4 py-3 bg-surface-container border-none rounded-lg focus:ring-2 focus:ring-primary/40 font-body text-on-surface transition-all text-sm"/>
-                    </div>
-                    
-                    <div class="space-y-2">
-                        <label class="text-label-sm font-semibold text-on-surface-variant uppercase tracking-wider block">Rate (₹/hour) <span class="text-error">*</span></label>
-                        <div class="relative">
-                            <span class="absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant font-bold">₹</span>
-                            <input type="number" step="0.5" name="rate" id="rate" value="125" required class="w-full pl-8 pr-4 py-3 bg-surface-container border-none rounded-lg focus:ring-2 focus:ring-primary/40 font-body text-on-surface transition-all text-sm font-bold"/>
-                        </div>
-                    </div>
-                    
-                    <!-- Time Range -->
-                    <div class="space-y-2">
-                        <label class="text-label-sm font-semibold text-on-surface-variant uppercase tracking-wider block">Start Time <span class="text-error">*</span></label>
-                        <input type="time" name="start_time" id="start_time" required class="w-full px-4 py-3 bg-surface-container border-none rounded-lg focus:ring-2 focus:ring-primary/40 font-body text-on-surface transition-all text-sm"/>
-                    </div>
-                    
-                    <div class="space-y-2">
-                        <label class="text-label-sm font-semibold text-on-surface-variant uppercase tracking-wider block">End Time <span class="text-error">*</span></label>
-                        <input type="time" name="end_time" id="end_time" required class="w-full px-4 py-3 bg-surface-container border-none rounded-lg focus:ring-2 focus:ring-primary/40 font-body text-on-surface transition-all text-sm"/>
-                    </div>
-                </div>
-                
-                <div class="pt-6 border-t border-slate-100 flex items-center justify-end">
-                    <button type="submit" name="record_supply" class="px-10 py-3 rounded-xl bg-gradient-to-r from-primary to-primary-container text-white font-bold text-sm shadow-lg shadow-primary/20 hover:shadow-xl transition-all active:scale-[0.98] flex items-center gap-2">
-                        <span class="material-symbols-outlined text-[18px]">save</span>
-                        Save Supply Record
-                    </button>
-                </div>
-                
-                <!-- Hidden inputs for calculated fields (if needed by backend) -->
-                <input type="hidden" name="total_hours" id="hidden_total_hours" value="0">
-                <input type="hidden" name="total_amount" id="hidden_total_amount" value="0">
-            </form>
         </div>
         
-        <!-- Informational Bento -->
-        <div class="grid grid-cols-2 gap-6">
-            <div class="bg-surface-container-low rounded-xl p-6 relative overflow-hidden group">
-                <div class="relative z-10">
-                    <span class="material-symbols-outlined text-primary mb-3 text-3xl">info</span>
-                    <h4 class="font-bold text-slate-800 font-headline">Operating Protocol</h4>
-                    <p class="text-sm text-slate-500 mt-2 leading-relaxed">Ensure the pressure valve is adjusted before starting high-HP motors to prevent pipe fatigue.</p>
-                </div>
+        <!-- Info Cards -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+            <div class="card" style="padding: 1.5rem; background: var(--color-surface-container-low);">
+                <span class="material-symbols-outlined" style="font-size: 2rem; color: var(--color-primary); margin-bottom: 0.75rem;">info</span>
+                <h4 style="font-weight: 700; color: var(--color-on-surface); margin-bottom: 0.5rem; font-family: var(--font-headline);">Operating Protocol</h4>
+                <p style="font-size: 0.8125rem; color: var(--color-on-surface-variant); line-height: 1.5;">Ensure the pressure valve is adjusted before starting high-HP motors to prevent pipe fatigue.</p>
             </div>
-            <div class="bg-surface-container-low rounded-xl p-6 relative overflow-hidden group">
-                <div class="relative z-10">
-                    <span class="material-symbols-outlined text-secondary mb-3 text-3xl">eco</span>
-                    <h4 class="font-bold text-slate-800 font-headline">Conservation Tip</h4>
-                    <p class="text-sm text-slate-500 mt-2 leading-relaxed">Early morning supply reduces evaporation by up to 22% compared to afternoon irrigation.</p>
-                </div>
+            <div class="card" style="padding: 1.5rem; background: var(--color-surface-container-low);">
+                <span class="material-symbols-outlined" style="font-size: 2rem; color: var(--color-secondary); margin-bottom: 0.75rem;">eco</span>
+                <h4 style="font-weight: 700; color: var(--color-on-surface); margin-bottom: 0.5rem; font-family: var(--font-headline);">Conservation Tip</h4>
+                <p style="font-size: 0.8125rem; color: var(--color-on-surface-variant); line-height: 1.5;">Early morning supply reduces evaporation by up to 22% compared to afternoon irrigation.</p>
             </div>
         </div>
     </div>
     
-    <!-- Preview & Actions Sidebar -->
-    <div class="space-y-6">
-        <!-- Calculated Preview Card -->
-        <div class="bg-slate-900 rounded-2xl p-8 text-white relative overflow-hidden shadow-xl">
-            <!-- Decorative Water Wave -->
-            <div class="absolute inset-0 bg-gradient-to-t from-primary/30 to-transparent pointer-events-none"></div>
-            <div class="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-primary-fixed-dim to-transparent opacity-50"></div>
-            
-            <div class="relative z-10">
-                <div class="flex justify-between items-start mb-10">
-                    <p class="text-slate-400 text-[11px] uppercase tracking-widest font-semibold flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span> Live Calculator</p>
-                    <span class="material-symbols-outlined text-primary-fixed-dim">analytics</span>
+    <!-- Sidebar -->
+    <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+        <div class="card" style="background: #191c1e; color: white; padding: 2rem; border: none; position: relative; overflow: hidden;">
+            <div style="position: absolute; inset: 0; background: linear-gradient(135deg, rgba(0, 93, 144, 0.2) 0%, transparent 100%);"></div>
+            <div style="position: relative; z-index: 1;">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 2rem;">
+                    <p style="font-size: 0.625rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; color: rgba(255,255,255,0.6); display: flex; align-items: center; gap: 0.5rem;">
+                        <span style="width: 8px; height: 8px; border-radius: 50%; background: var(--color-secondary);"></span> Live Calculator
+                    </p>
+                    <span class="material-symbols-outlined" style="color: var(--color-primary-container);">analytics</span>
                 </div>
                 
-                <div class="space-y-6">
+                <div style="display: flex; flex-direction: column; gap: 2rem;">
                     <div>
-                        <p class="text-slate-400 text-xs font-medium">Total Duration</p>
-                        <h4 class="text-3xl font-bold font-headline mt-1 tracking-tight" id="durationDisplay">0h 0m</h4>
-                        <p class="text-[10px] text-slate-500 mt-1" id="hoursDisplay">0.00 hrs</p>
+                        <p style="font-size: 0.75rem; color: rgba(255,255,255,0.6); margin-bottom: 0.5rem;">Total Duration</p>
+                        <h4 id="durationDisplay" style="font-size: 2.25rem; font-weight: 800; font-family: var(--font-headline); margin: 0;">0h 0m</h4>
+                        <p id="hoursDisplay" style="font-size: 0.625rem; color: rgba(255,255,255,0.4); margin-top: 0.25rem;">0.00 hrs</p>
                     </div>
                     
-                    <div class="pt-6 border-t border-slate-800">
-                        <p class="text-slate-400 text-xs font-medium mb-1">Estimated Amount Invoice</p>
-                        <div class="flex items-baseline gap-2">
-                            <h2 class="text-4xl font-extrabold font-headline text-primary-fixed-dim" id="amountDisplay">₹0.00</h2>
-                            <span class="text-[10px] text-slate-500 font-bold uppercase tracking-tighter">Gross</span>
+                    <div style="padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.1);">
+                        <p style="font-size: 0.75rem; color: rgba(255,255,255,0.6); margin-bottom: 0.5rem;">Estimated Amount</p>
+                        <div style="display: flex; align-items: baseline; gap: 0.5rem;">
+                            <h2 id="amountDisplay" style="font-size: 2.5rem; font-weight: 900; font-family: var(--font-headline); color: var(--color-primary-container); margin: 0;">₹0.00</h2>
+                            <span style="font-size: 0.625rem; font-weight: 700; text-transform: uppercase; color: rgba(255,255,255,0.4);">Gross</span>
                         </div>
                     </div>
                 </div>
-                <!-- Submit button handled by form text above, giving preview vibes here -->
             </div>
         </div>
     </div>
@@ -192,12 +201,13 @@ document.addEventListener('DOMContentLoaded', function() {
         durationDisplay.textContent = `${hours}h ${minutes}m`;
         hoursDisplay.textContent = `${diffHrs.toFixed(2)} hrs`;
         
-        // Let's populate hidden inputs if backend needs them, else backend recalculates anyway (our backend calculates it usually, but keeping form standard)
-        
         let rate = parseFloat(rateInput.value) || 0;
         let amount = diffHrs * rate;
         
         amountDisplay.textContent = `₹${amount.toFixed(2)}`;
+        
+        document.getElementById('hidden_total_hours').value = diffHrs.toFixed(2);
+        document.getElementById('hidden_total_amount').value = amount.toFixed(2);
     }
 
     startTime.addEventListener('change', calculate);

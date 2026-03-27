@@ -1,4 +1,5 @@
 <?php include '../../includes/header.php'; ?>
+<?php include '../../includes/sidebar.php'; ?>
 <?php require_once '../../config/database.php'; ?>
 
 <?php
@@ -23,62 +24,69 @@ while($row = $result->fetch_assoc()) {
 $months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 ?>
 
-<div class="d-flex justify-content-between align-items-center mb-4 d-print-none">
-    <h2 class="fw-bold m-0">Annual Revenue Report</h2>
-    <div class="d-flex gap-2">
-        <form action="" method="GET" class="d-flex gap-2">
-            <select name="year" class="form-select" onchange="this.form.submit()">
+<!-- Header -->
+<div class="flex no-print" style="justify-content: space-between; align-items: flex-end; margin-bottom: 2rem; margin-top: 1rem;">
+    <div>
+        <nav class="breadcrumb">
+            <span>Reports</span>
+            <span class="material-symbols-outlined" style="font-size: 0.875rem;">chevron_right</span>
+            <span style="color: var(--color-primary); font-weight: 500;">Annual Revenue</span>
+        </nav>
+        <h2 style="font-size: 1.875rem; font-family: var(--font-headline); font-weight: 800; color: var(--color-on-surface); letter-spacing: -0.025em; margin-bottom: 0.5rem;">Annual Revenue Report</h2>
+        <p style="font-size: 1rem; color: var(--color-on-surface-variant); max-width: 40rem;">Collection analysis and trends for the fiscal year <?= $year ?>.</p>
+    </div>
+    <div style="display: flex; gap: 0.75rem; align-items: center;">
+        <form action="" method="GET" style="display: flex; gap: 0.5rem; align-items: center;">
+            <select name="year" onchange="this.form.submit()" style="padding: 0.625rem 1rem; border-radius: 0.75rem; border: 1px solid rgba(112, 120, 129, 0.2); background: white; font-size: 0.875rem; font-weight: 600; color: var(--color-on-surface); cursor: pointer; outline: none;">
                 <?php for($i=date('Y'); $i>=date('Y')-5; $i--): ?>
                     <option value="<?= $i ?>" <?= $i==$year ? 'selected' : '' ?>><?= $i ?></option>
                 <?php endfor; ?>
             </select>
         </form>
-        <button onclick="window.print()" class="btn btn-primary"><i class="fas fa-print me-2"></i>Print</button>
+        <button class="btn-secondary" style="display: flex; align-items: center; gap: 0.5rem;" onclick="window.print()">
+            <span class="material-symbols-outlined" style="font-size: 1.25rem;">print</span>
+            <span>Print Report</span>
+        </button>
     </div>
 </div>
 
-<div class="row g-4 mb-4">
-    <div class="col-md-12">
-        <div class="card border-0 shadow-sm invoice-box p-4" style="max-width: 100%;">
-            <div class="text-center mb-4">
-                <h4 class="text-muted text-uppercase mb-2">Total Collection in <?= $year ?></h4>
-                <h1 class="fw-bold text-success display-4">₹<?= number_format($total_collected, 2) ?></h1>
-            </div>
-            
-            <div class="mt-4" style="height: 300px;">
-                <canvas id="revenueChart"></canvas>
-            </div>
+<div style="display: grid; grid-template-columns: 1fr; gap: 2rem;">
+    <div class="card" style="padding: 2.5rem; text-align: center;">
+        <h4 style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.2em; color: var(--color-outline); font-weight: 800; margin-bottom: 0.75rem;">Total Collection in <?= $year ?></h4>
+        <h1 style="font-size: 3.5rem; font-weight: 900; color: var(--color-secondary); font-family: var(--font-headline); margin: 0; letter-spacing: -0.05em;">₹<?= number_format($total_collected, 2) ?></h1>
+        
+        <div style="margin-top: 3rem; height: 350px;">
+            <canvas id="revenueChart"></canvas>
         </div>
     </div>
-</div>
 
-<div class="card border-0 shadow-sm invoice-box" style="max-width: 100%;">
-    <div class="card-body p-4">
-        <table class="table table-bordered">
-            <thead class="bg-light">
+    <div class="card" style="padding: 0; overflow: hidden; border: 1px solid rgba(112, 120, 129, 0.1);">
+        <table class="table-custom">
+            <thead>
                 <tr>
                     <th>Month</th>
-                    <th class="text-end">Revenue Collected</th>
+                    <th style="text-align: right;">Revenue Collected</th>
                 </tr>
             </thead>
             <tbody>
                 <?php foreach($revenue as $m => $amount): ?>
                 <tr>
-                    <td class="fw-semibold"><?= date('F', mktime(0, 0, 0, $m, 10)) ?></td>
-                    <td class="text-end fw-bold <?= $amount > 0 ? 'text-success' : 'text-muted' ?>">₹<?= number_format($amount, 2) ?></td>
+                    <td style="font-weight: 700;"><?= date('F', mktime(0, 0, 0, $m, 10)) ?></td>
+                    <td style="text-align: right; font-weight: 800; color: <?= $amount > 0 ? 'var(--color-secondary)' : 'var(--color-outline)' ?>;">₹<?= number_format($amount, 2) ?></td>
                 </tr>
                 <?php endforeach; ?>
             </tbody>
-            <tfoot class="bg-light fw-bold">
-                <tr>
-                    <td>Total</td>
-                    <td class="text-end fs-5 text-success">₹<?= number_format($total_collected, 2) ?></td>
+            <tfoot>
+                <tr style="background: var(--color-surface-container-low);">
+                    <td style="font-weight: 900; font-family: var(--font-headline);">Total Annual Collection</td>
+                    <td style="text-align: right; font-weight: 900; font-size: 1.25rem; font-family: var(--font-headline); color: var(--color-secondary);">₹<?= number_format($total_collected, 2) ?></td>
                 </tr>
             </tfoot>
         </table>
     </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
 document.addEventListener("DOMContentLoaded", function() {
     const ctx = document.getElementById('revenueChart').getContext('2d');
@@ -89,11 +97,16 @@ document.addEventListener("DOMContentLoaded", function() {
             datasets: [{
                 label: 'Revenue (₹)',
                 data: <?= json_encode(array_values($revenue)) ?>,
-                borderColor: '#198754',
-                backgroundColor: 'rgba(25, 135, 84, 0.1)',
-                borderWidth: 3,
-                tension: 0.3,
-                fill: true
+                borderColor: '#2c694e',
+                backgroundColor: 'rgba(44, 105, 78, 0.1)',
+                borderWidth: 4,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#2c694e',
+                pointBorderColor: '#fff',
+                pointBorderWidth: 2,
+                pointRadius: 5,
+                pointHoverRadius: 7
             }]
         },
         options: {
@@ -105,7 +118,15 @@ document.addEventListener("DOMContentLoaded", function() {
             scales: {
                 y: {
                     beginAtZero: true,
-                    ticks: { callback: function(value) { return '₹' + value; } }
+                    grid: { color: 'rgba(0,0,0,0.05)' },
+                    ticks: { 
+                        font: { weight: '600', family: 'Inter' },
+                        callback: function(value) { return '₹' + value; } 
+                    }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { font: { weight: '600', family: 'Inter' } }
                 }
             }
         }
@@ -115,10 +136,10 @@ document.addEventListener("DOMContentLoaded", function() {
 
 <style>
 @media print {
-    body { background-color: #fff; }
-    #sidebar-wrapper, .navbar, .d-print-none { display: none !important; }
-    #page-content-wrapper { margin: 0; padding: 0 !important; width: 100%; }
-    .invoice-box { box-shadow: none !important; margin: 0 !important; padding: 0 !important; }
+    body { background: white !important; }
+    .no-print, aside, header, .sidebar_custom, .header_custom { display: none !important; }
+    main { margin: 0 !important; padding: 0 !important; width: 100% !important; max-width: 100% !important; display: block !important; }
+    .card { box-shadow: none !important; border: 1px solid #eee !important; margin: 0 !important; padding: 0 !important; border-radius: 0 !important; }
 }
 </style>
 

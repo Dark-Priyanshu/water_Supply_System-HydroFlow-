@@ -18,53 +18,65 @@ if (!$motor) {
 }
 ?>
 
-<!-- Header Section -->
-<div class="flex justify-between items-end mb-8 mt-4">
+<!-- Header -->
+<div class="flex" style="justify-content: space-between; align-items: flex-end; margin-bottom: 2rem; margin-top: 1rem;">
     <div>
-        <h2 class="text-headline-lg font-headline font-extrabold text-on-surface tracking-tight mb-2">Edit Motor Details</h2>
-        <p class="text-body-md text-on-surface-variant max-w-2xl">Update information for this motor.</p>
+        <nav class="breadcrumb">
+            <span>Directory</span>
+            <span class="material-symbols-outlined" style="font-size: 0.875rem;">chevron_right</span>
+            <a href="motor_list.php">Motors</a>
+            <span class="material-symbols-outlined" style="font-size: 0.875rem;">chevron_right</span>
+            <span style="color: var(--color-primary); font-weight: 500;">Edit Details</span>
+        </nav>
+        <h2 style="font-size: 1.875rem; font-family: var(--font-headline); font-weight: 800; color: var(--color-on-surface); letter-spacing: -0.025em; margin-bottom: 0.5rem;">Edit Motor Details</h2>
+        <p style="font-size: 1rem; color: var(--color-on-surface-variant); max-width: 40rem;">Update information for this specific pump or borewell.</p>
     </div>
-    <a href="motor_list.php" class="flex items-center gap-2 px-4 py-2 bg-surface-container-high text-on-surface-variant rounded-xl font-semibold hover:bg-surface-container-highest transition-colors">
-        <span class="material-symbols-outlined text-xl">arrow_back</span>
-        <span class="text-sm">Back to List</span>
+    <a href="motor_list.php" class="btn-secondary" style="display: flex; align-items: center; gap: 0.5rem; text-decoration: none;">
+        <span class="material-symbols-outlined" style="font-size: 1.25rem;">arrow_back</span>
+        <span>Back to List</span>
     </a>
 </div>
 
 <?php if (isset($_SESSION['error_msg'])): ?>
-<div class="mb-8 p-4 bg-error/10 border border-error/20 rounded-xl flex items-center justify-between">
-    <div class="flex items-center gap-3">
-        <span class="material-symbols-outlined text-error">error</span>
-        <span class="text-error font-medium"><?= $_SESSION['error_msg'] ?></span>
-    </div>
-    <button type="button" class="text-error/60 hover:text-error p-1" onclick="this.parentElement.remove()">
-        <span class="material-symbols-outlined">close</span>
-    </button>
+<div class="error-alert" style="max-width: 40rem; margin: 0 auto 1.5rem;">
+    <span class="material-symbols-outlined">error</span>
+    <span style="font-weight: 700;"><?= $_SESSION['error_msg'] ?></span>
 </div>
 <?php unset($_SESSION['error_msg']); endif; ?>
 
-<div class="bg-surface-container-lowest rounded-xl shadow-sm border border-outline-variant/15 overflow-hidden max-w-2xl mx-auto mt-4">
-    <div class="p-8">
-        <form action="../../controllers/motorController.php" method="POST" class="space-y-6">
+<!-- Form Card -->
+<div class="form-card" style="max-width: 40rem; margin: 0 auto;">
+    <div class="form-body">
+        <form action="../../controllers/motorController.php" method="POST" style="display: flex; flex-direction: column; gap: 1.5rem;">
             <input type="hidden" name="motor_id" value="<?= htmlspecialchars($motor['motor_id']) ?>">
             
-            <div>
-                <label class="block text-sm font-semibold text-on-surface mb-2">Motor Name <span class="text-error">*</span></label>
-                <input type="text" name="motor_name" value="<?= htmlspecialchars($motor['motor_name']) ?>" required class="w-full bg-surface border border-outline-variant/30 rounded-lg px-4 py-3 focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all text-sm">
+            <div class="input-group">
+                <label class="form-label">Motor Name <span class="required">*</span></label>
+                <div class="input-wrapper">
+                    <span class="material-symbols-outlined input-icon">water_pump</span>
+                    <input type="text" name="motor_name" value="<?= htmlspecialchars($motor['motor_name']) ?>" required class="input-field">
+                </div>
             </div>
             
-            <div>
-                <label class="block text-sm font-semibold text-on-surface mb-2">Horsepower (HP) <span class="text-error">*</span></label>
-                <input type="number" step="0.5" name="horsepower" value="<?= htmlspecialchars($motor['horsepower']) ?>" required class="w-full bg-surface border border-outline-variant/30 rounded-lg px-4 py-3 focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all text-sm">
+            <div class="input-group">
+                <label class="form-label">Horsepower (HP) <span class="required">*</span></label>
+                <div class="input-wrapper">
+                    <span class="material-symbols-outlined input-icon">bolt</span>
+                    <input type="number" step="0.5" name="horsepower" value="<?= htmlspecialchars($motor['horsepower']) ?>" required class="input-field">
+                </div>
             </div>
             
-            <div>
-                <label class="block text-sm font-semibold text-on-surface mb-2">Location</label>
-                <textarea name="location" rows="3" class="w-full bg-surface border border-outline-variant/30 rounded-lg px-4 py-3 focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all text-sm"><?= htmlspecialchars($motor['location']) ?></textarea>
+            <div class="input-group">
+                <label class="form-label">Location</label>
+                <div class="input-wrapper">
+                    <span class="material-symbols-outlined input-icon" style="top: 1rem; transform: none;">location_on</span>
+                    <textarea name="location" rows="3" class="input-field" style="padding-top: 0.75rem; min-height: 100px; resize: vertical;"><?= htmlspecialchars($motor['location']) ?></textarea>
+                </div>
             </div>
             
-            <div class="pt-4">
-                <button type="submit" name="update_motor" class="w-full flex justify-center items-center gap-2 px-6 py-3 bg-gradient-to-br from-primary to-primary-container text-white rounded-xl font-bold transition-transform active:scale-[0.98] shadow-lg shadow-primary/20 hover:shadow-xl">
-                    <span class="material-symbols-outlined">save</span>
+            <div class="form-footer" style="margin-top: 1rem; padding-top: 1.5rem;">
+                <button type="submit" name="update_motor" class="btn bg-gradient-primary" style="width: 100%; padding: 1rem; border-radius: 0.75rem;">
+                    <span class="material-symbols-outlined" style="font-size: 1.25rem;">save</span>
                     Update Motor Details
                 </button>
             </div>

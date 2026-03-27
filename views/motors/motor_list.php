@@ -24,96 +24,101 @@ if($total_motors > 0) {
 ?>
 
 <!-- Editorial Header Section -->
-<section class="mb-10 flex justify-between items-end mt-4">
+<section style="margin-bottom: 2.5rem; display: flex; justify-content: space-between; align-items: flex-end; margin-top: 1rem;">
     <div>
-        <span class="text-secondary font-bold tracking-widest text-xs uppercase mb-2 block">System Infrastructure</span>
-        <h2 class="text-4xl font-headline font-extrabold text-on-surface tracking-tight">Motor Management</h2>
-        <p class="text-on-surface-variant mt-2 max-w-lg">Monitor and manage your hydrological network. Record borewell pumps and distribution motors.</p>
+        <span style="color: var(--color-secondary); font-weight: 700; letter-spacing: 0.2em; font-size: 0.75rem; text-transform: uppercase; margin-bottom: 0.5rem; display: block;">System Infrastructure</span>
+        <h2 style="font-size: 2.25rem; font-family: var(--font-headline); font-weight: 800; color: var(--color-on-surface); letter-spacing: -0.025em;">Motor Management</h2>
+        <p style="color: var(--color-on-surface-variant); margin-top: 0.5rem; max-width: 32rem;">Monitor and manage your hydrological network. Record borewell pumps and distribution motors.</p>
     </div>
-    <a href="add_motor.php" class="bg-gradient-to-r from-primary to-primary-container text-white px-6 py-3 rounded-xl font-headline font-bold text-sm shadow-lg shadow-primary/20 flex items-center gap-2 hover:scale-[1.02] transition-transform">
+    <a href="add_motor.php" class="btn bg-gradient-primary" style="padding: 0.75rem 1.5rem; border-radius: 0.75rem;">
         <span class="material-symbols-outlined">add_circle</span> Add New Motor
     </a>
 </section>
 
 <?php if (isset($_SESSION['success_msg'])): ?>
-<div class="mb-8 p-4 bg-secondary/10 border border-secondary/20 rounded-xl flex items-center justify-between">
-    <div class="flex items-center gap-3">
-        <span class="material-symbols-outlined text-secondary">check_circle</span>
-        <span class="text-secondary font-medium"><?= $_SESSION['success_msg'] ?></span>
+<div class="error-alert" style="background-color: var(--color-secondary-container); color: var(--color-on-secondary-container); border-color: rgba(44, 105, 78, 0.2); margin-bottom: 2rem;">
+    <div class="flex" style="align-items: center; gap: 0.75rem; width: 100%;">
+        <span class="material-symbols-outlined">check_circle</span>
+        <span style="font-weight: 500; font-size: 0.875rem; flex: 1;"><?= $_SESSION['success_msg'] ?></span>
+        <button type="button" style="background: transparent; border: none; cursor: pointer; color: inherit; opacity: 0.6;" onclick="this.parentElement.parentElement.remove()">
+            <span class="material-symbols-outlined" style="font-size: 1.125rem;">close</span>
+        </button>
     </div>
-    <button type="button" class="text-secondary/60 hover:text-secondary p-1" onclick="this.parentElement.remove()">
-        <span class="material-symbols-outlined">close</span>
-    </button>
 </div>
 <?php unset($_SESSION['success_msg']); endif; ?>
 
-<!-- Metrics Overview (Bento Style) -->
-<div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-10">
-    <div class="bg-surface-container-lowest p-6 rounded-xl relative overflow-hidden group border border-outline-variant/10">
-        <div class="absolute bottom-0 left-0 w-full h-1 bg-secondary/20"></div>
-        <div class="flex items-start justify-between">
+<!-- Metrics Overview -->
+<div class="grid-4" style="margin-bottom: 2.5rem;">
+    <div class="card" style="padding: 1.5rem; border-bottom: 4px solid rgba(44, 105, 78, 0.2);">
+        <div class="flex" style="justify-content: space-between; align-items: flex-start;">
             <div>
-                <p class="text-sm font-label text-on-surface-variant mb-4">Active Motors</p>
-                <h3 class="text-3xl font-headline font-bold"><?= $active_motors ?> / <?= $total_motors ?></h3>
+                <p style="font-size: 0.875rem; color: var(--color-on-surface-variant); margin-bottom: 1rem;">Active Motors</p>
+                <h3 style="font-size: 1.875rem; font-family: var(--font-headline); font-weight: 700;"><?= $active_motors ?> / <?= $total_motors ?></h3>
             </div>
-            <span class="material-symbols-outlined text-secondary text-3xl opacity-50">bolt</span>
+            <span class="material-symbols-outlined" style="color: var(--color-secondary); font-size: 2rem; opacity: 0.5;">bolt</span>
         </div>
     </div>
-    <div class="bg-surface-container-lowest p-6 rounded-xl relative overflow-hidden group border border-outline-variant/10">
-        <div class="absolute bottom-0 left-0 w-full h-1 bg-primary/20"></div>
-        <div class="flex items-start justify-between">
+    <div class="card" style="padding: 1.5rem; border-bottom: 4px solid rgba(0, 93, 144, 0.2);">
+        <div class="flex" style="justify-content: space-between; align-items: flex-start;">
             <div>
-                <p class="text-sm font-label text-on-surface-variant mb-4">Total Capacity</p>
-                <h3 class="text-3xl font-headline font-bold"><?= $total_hp ?> HP</h3>
+                <p style="font-size: 0.875rem; color: var(--color-on-surface-variant); margin-bottom: 1rem;">Total Capacity</p>
+                <h3 style="font-size: 1.875rem; font-family: var(--font-headline); font-weight: 700;"><?= $total_hp ?> HP</h3>
             </div>
-            <span class="material-symbols-outlined text-primary text-3xl opacity-50">speed</span>
+            <span class="material-symbols-outlined" style="color: var(--color-primary); font-size: 2rem; opacity: 0.5;">speed</span>
         </div>
     </div>
 </div>
 
 <!-- Motor Inventory Grid -->
-<div class="grid grid-cols-1 xl:grid-cols-2 gap-8 mb-12">
-    <?php if ($total_motors > 0): ?>
-        <?php foreach ($motors_data as $motor): ?>
-        <div class="searchable-item bg-surface-container-lowest rounded-xl overflow-hidden group flex flex-col md:flex-row shadow-sm hover:shadow-md transition-shadow border border-outline-variant/10">
-             <div class="md:w-32 h-32 md:h-auto relative overflow-hidden bg-surface-container-highest flex items-center justify-center">
-                 <span class="material-symbols-outlined text-6xl text-outline/30 group-hover:scale-110 transition-transform duration-500">water_pump</span>
-                 <?php if($motor['status'] == 'active'): ?>
-                 <div class="absolute top-3 left-3 px-3 py-1 bg-secondary text-white text-[10px] font-bold rounded-full tracking-wider uppercase shadow-sm">Active</div>
-                 <?php else: ?>
-                 <div class="absolute top-3 left-3 px-3 py-1 bg-error text-white text-[10px] font-bold rounded-full tracking-wider uppercase shadow-sm">Inactive</div>
-                 <?php endif; ?>
-             </div>
-             <div class="flex-1 p-6 flex flex-col justify-between">
-                 <div>
-                     <div class="flex justify-between items-start mb-2">
-                         <h4 class="text-xl font-headline font-extrabold text-on-surface"><?= htmlspecialchars($motor['motor_name']) ?> <span class="text-sm font-medium text-outline ml-2">#<?= $motor['motor_id'] ?></span></h4>
-                         <span class="text-xs font-bold text-primary bg-primary-fixed px-2 py-1 rounded"><?= number_format($motor['horsepower'], 1) ?> HP</span>
+<div class="grid" style="grid-template-columns: repeat(1, 1fr); gap: 2rem; margin-bottom: 3rem;">
+    <style>
+        @media (min-width: 1280px) {
+            .motor-grid { grid-template-columns: repeat(2, 1fr) !important; }
+        }
+    </style>
+    <div class="grid motor-grid" style="display: grid; grid-template-columns: 1fr; gap: 2rem;">
+        <?php if ($total_motors > 0): ?>
+            <?php foreach ($motors_data as $motor): ?>
+            <div class="searchable-item card" style="flex-direction: row; padding: 0; overflow: hidden; border: 1px solid rgba(112, 120, 129, 0.1);">
+                 <div style="width: 8rem; background-color: var(--color-surface-container-highest); display: flex; align-items: center; justify-content: center; position: relative; flex-shrink: 0;">
+                     <span class="material-symbols-outlined" style="font-size: 3.5rem; color: rgba(112, 120, 129, 0.3);">water_pump</span>
+                     <?php if($motor['status'] == 'active'): ?>
+                     <div style="position: absolute; top: 0.75rem; left: 0.75rem; padding: 0.25rem 0.5rem; background-color: var(--color-secondary); color: white; font-size: 0.625rem; font-weight: 700; border-radius: 9999px; text-transform: uppercase;">Active</div>
+                     <?php else: ?>
+                     <div style="position: absolute; top: 0.75rem; left: 0.75rem; padding: 0.25rem 0.5rem; background-color: var(--color-error); color: white; font-size: 0.625rem; font-weight: 700; border-radius: 9999px; text-transform: uppercase;">Inactive</div>
+                     <?php endif; ?>
+                 </div>
+                 <div style="flex: 1; padding: 1.5rem; display: flex; flex-direction: column; justify-content: space-between;">
+                     <div>
+                         <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
+                             <h4 style="font-size: 1.25rem; font-family: var(--font-headline); font-weight: 800; color: var(--color-on-surface);"><?= htmlspecialchars($motor['motor_name']) ?> <span style="font-size: 0.875rem; font-weight: 500; color: var(--color-outline); margin-left: 0.5rem;">#<?= $motor['motor_id'] ?></span></h4>
+                             <span class="badge" style="background-color: var(--color-primary-fixed); color: var(--color-primary);"><?= number_format($motor['horsepower'], 1) ?> HP</span>
+                         </div>
+                         <div style="display: flex; align-items: center; gap: 0.25rem; color: var(--color-on-surface-variant); font-size: 0.875rem;">
+                             <span class="material-symbols-outlined" style="font-size: 0.875rem;">location_on</span>
+                             <span><?= htmlspecialchars($motor['location'] ?: 'Location not specified') ?></span>
+                         </div>
                      </div>
-                     <div class="flex items-center gap-1 text-on-surface-variant text-sm mb-4">
-                         <span class="material-symbols-outlined text-sm">location_on</span>
-                         <span><?= htmlspecialchars($motor['location']) ?: 'Location not specified' ?></span>
+                     <div style="display: flex; align-items: center; justify-content: flex-end; gap: 0.75rem; padding-top: 1rem; border-top: 1px solid rgba(112, 120, 129, 0.1); margin-top: 0.5rem;">
+                         <a href="edit_motor.php?id=<?= $motor['motor_id'] ?>" style="padding: 0.5rem; color: var(--color-on-surface-variant); display: flex; border-radius: 0.5rem;" onmouseover="this.style.backgroundColor='rgba(0, 93, 144, 0.1)'; this.style.color='var(--color-primary)';" onmouseout="this.style.backgroundColor='transparent'; this.style.color='var(--color-on-surface-variant)';" title="Edit Motor"><span class="material-symbols-outlined">edit_note</span></a>
+                         <a href="../../controllers/motorController.php?action=toggle_status&id=<?= $motor['motor_id'] ?>" style="padding: 0.5rem; color: var(--color-on-surface-variant); display: flex; border-radius: 0.5rem;" onmouseover="this.style.backgroundColor='rgba(0, 93, 144, 0.1)'; this.style.color='var(--color-primary)';" onmouseout="this.style.backgroundColor='transparent'; this.style.color='var(--color-on-surface-variant)';" title="<?= $motor['status'] == 'active' ? 'Deactivate Motor' : 'Activate Motor' ?>">
+                            <span class="material-symbols-outlined"><?= $motor['status'] == 'active' ? 'visibility_off' : 'visibility' ?></span>
+                         </a>
                      </div>
                  </div>
-                 <div class="flex items-center justify-end gap-3 pt-4 border-t border-outline-variant/10 mt-2">
-                     <a href="edit_motor.php?id=<?= $motor['motor_id'] ?>" class="p-2 text-on-surface-variant hover:text-primary hover:bg-primary-fixed/50 rounded-lg transition-colors" title="Edit Motor"><span class="material-symbols-outlined">edit_note</span></a>
-                     <a href="../../controllers/motorController.php?action=toggle_status&id=<?= $motor['motor_id'] ?>" class="p-2 text-on-surface-variant hover:text-primary hover:bg-primary-fixed/50 rounded-lg transition-colors" title="<?= $motor['status'] == 'active' ? 'Deactivate Motor' : 'Activate Motor' ?>">
-                        <span class="material-symbols-outlined"><?= $motor['status'] == 'active' ? 'visibility_off' : 'visibility' ?></span>
-                     </a>
-                 </div>
-             </div>
-        </div>
-        <?php endforeach; ?>
-    <?php else: ?>
-        <div class="col-span-full bg-surface-container-lowest rounded-xl p-12 text-center border border-outline-variant/10">
-             <span class="material-symbols-outlined text-5xl text-outline mb-4">water_pump</span>
-             <h3 class="text-xl font-headline font-bold text-on-surface mb-2">No Motors Found</h3>
-             <p class="text-on-surface-variant mb-6">You haven't added any motors to the system yet.</p>
-             <a href="add_motor.php" class="inline-flex items-center gap-2 px-6 py-3 bg-primary text-white rounded-xl font-semibold transition-transform active:scale-95">
-                 Add Your First Motor
-             </a>
-        </div>
-    <?php endif; ?>
+            </div>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <div style="grid-column: 1 / -1; background-color: var(--color-surface-container-lowest); border-radius: 0.75rem; padding: 3rem; text-align: center; border: 1px solid rgba(112, 120, 129, 0.1);">
+                 <span class="material-symbols-outlined" style="font-size: 3rem; color: var(--color-outline); margin-bottom: 1rem;">water_pump</span>
+                 <h3 style="font-size: 1.25rem; font-family: var(--font-headline); font-weight: 700; color: var(--color-on-surface); margin-bottom: 0.5rem;">No Motors Found</h3>
+                 <p style="color: var(--color-on-surface-variant); margin-bottom: 1.5rem;">You haven't added any motors to the system yet.</p>
+                 <a href="add_motor.php" class="btn btn-primary" style="padding: 0.75rem 1.5rem;">
+                     Add Your First Motor
+                 </a>
+            </div>
+        <?php endif; ?>
+    </div>
 </div>
 
 <?php include '../../includes/footer.php'; ?>
