@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 if (session_status() === PHP_SESSION_NONE) session_start();
 if (!isset($_SESSION['admin_id'])) {
     header("Location: ../../views/login.php");
@@ -6,7 +6,8 @@ if (!isset($_SESSION['admin_id'])) {
 }
 $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http";
 $host = $_SERVER['HTTP_HOST'];
-$base_url = $protocol . "://" . $host . "/waterS/";
+$project_root = str_replace(['/views', '/includes', '/controllers', '/models'], '', dirname($_SERVER['SCRIPT_NAME']));
+$base_url = $protocol . "://" . $host . rtrim($project_root, '/') . '/';
 include '../includes/header.php';
 include '../includes/sidebar.php';
 ?>

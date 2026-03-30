@@ -5,7 +5,8 @@ if (session_status() === PHP_SESSION_NONE) {
 // Robust dynamic base_url resolution
 $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http";
 $host = $_SERVER['HTTP_HOST'];
-$base_url = $protocol . "://" . $host . "/waterS/";
+$project_root = str_replace(['/views', '/includes', '/controllers', '/models'], '', dirname($_SERVER['SCRIPT_NAME']));
+$base_url = $protocol . "://" . $host . rtrim($project_root, '/') . '/';
 ?>
 <!DOCTYPE html>
 <html class="light" lang="en">
