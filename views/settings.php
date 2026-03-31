@@ -49,7 +49,7 @@ include '../includes/sidebar.php';
                     <!-- Avatar + Current Info -->
                     <div class="profile-avatar-section">
                         <div class="profile-avatar-wrap">
-                            <img id="profileAvatar" src="https://ui-avatars.com/api/?name=Admin&background=005d90&color=fff&size=128" alt="Admin Avatar" class="profile-avatar-img">
+                            <div id="profileAvatar" class="avatar-initials profile-avatar-img" style="font-size: 2.5rem;" aria-label="Admin Avatar">AD</div>
                             <div class="profile-avatar-badge">
                                 <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">verified</span>
                             </div>
@@ -911,7 +911,7 @@ include '../includes/sidebar.php';
 
 <!-- ─── SCRIPTS ────────────────────────────────────────────────── -->
 <!-- SheetJS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="<?= BASE_URL ?>assets/vendor/xlsx.full.min.js"></script>
 <script>
 const i18n = {
     darkModeEnabled: '<?= __('dark_mode_enabled') ?>',
@@ -1070,8 +1070,7 @@ const i18n = {
             if (data.success) {
                 document.getElementById('profileDisplayName').textContent = data.username;
                 document.getElementById('newUsername').value = data.username;
-                document.getElementById('profileAvatar').src =
-                    'https://ui-avatars.com/api/?name=' + encodeURIComponent(data.username) + '&background=005d90&color=fff&size=128';
+                document.getElementById('profileAvatar').textContent = data.username.substring(0, 2).toUpperCase();
             }
         } catch(e) { /* silent */ }
     })();
@@ -1087,8 +1086,7 @@ const i18n = {
             const data = await res.json();
             if (data.success) {
                 document.getElementById('profileDisplayName').textContent = newUser;
-                document.getElementById('profileAvatar').src =
-                    'https://ui-avatars.com/api/?name=' + encodeURIComponent(newUser) + '&background=005d90&color=fff&size=128';
+                document.getElementById('profileAvatar').textContent = newUser.substring(0, 2).toUpperCase();
                 showToast(data.message);
             } else {
                 showToast(data.message, true);

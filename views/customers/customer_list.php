@@ -113,9 +113,9 @@ $customer_count = $customers->num_rows;
                     </td>
                     <td style="padding-right: 1.5rem; text-align: right;">
                         <div class="flex" style="justify-content: flex-end; gap: 0.5rem;">
-                            <a href="#" style="padding: 0.375rem; color: #94a3b8;" onmouseover="this.style.color='var(--color-primary)';" onmouseout="this.style.color='#94a3b8';"><span class="material-symbols-outlined" style="font-size: 1.125rem;">visibility</span></a>
-                            <a href="edit_customer.php?id=<?= $row['customer_id'] ?>" style="padding: 0.375rem; color: #94a3b8;" onmouseover="this.style.color='var(--color-secondary)';" onmouseout="this.style.color='#94a3b8';"><span class="material-symbols-outlined" style="font-size: 1.125rem;">edit</span></a>
-                            <a href="#" style="padding: 0.375rem; color: #94a3b8;" onmouseover="this.style.color='var(--color-error)';" onmouseout="this.style.color='#94a3b8';"><span class="material-symbols-outlined" style="font-size: 1.125rem;">delete</span></a>
+                            <a href="#" style="padding: 0.375rem; color: #94a3b8;" onmouseover="this.style.color='var(--color-primary)';" onmouseout="this.style.color='#94a3b8';" data-tooltip="<?= __('tooltip_view') ?>"><span class="material-symbols-outlined" style="font-size: 1.125rem;">visibility</span></a>
+                            <a href="edit_customer.php?id=<?= $row['customer_id'] ?>" style="padding: 0.375rem; color: #94a3b8;" onmouseover="this.style.color='var(--color-secondary)';" onmouseout="this.style.color='#94a3b8';" data-tooltip="<?= __('tooltip_edit') ?>"><span class="material-symbols-outlined" style="font-size: 1.125rem;">edit</span></a>
+                            <a href="#" style="padding: 0.375rem; color: #94a3b8;" onmouseover="this.style.color='var(--color-error)';" onmouseout="this.style.color='#94a3b8';" data-tooltip="<?= __('tooltip_delete') ?>"><span class="material-symbols-outlined" style="font-size: 1.125rem;">delete</span></a>
                         </div>
                     </td>
                 </tr>

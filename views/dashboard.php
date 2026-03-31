@@ -100,7 +100,7 @@ $recent_logs = $conn->query("SELECT ws.*, c.farmer_name as customer_name, m.moto
                 <p style="font-size: 0.875rem; color: var(--color-on-surface-variant);"><?= __('common_tasks') ?></p>
             </div>
             <div style="display: flex; flex-direction: column; gap: 1rem; flex: 1; justify-content: center;">
-                <a href="<?= BASE_URL ?>views/supply/add_supply.php" class="flex" style="align-items: center; gap: 1rem; padding: 1rem; border: 1px solid rgba(191, 199, 209, 0.3); border-radius: 0.75rem;">
+                <a href="<?= BASE_URL ?>views/supply/add_supply.php" class="flex" style="align-items: center; gap: 1rem; padding: 1rem; border: 1px solid rgba(191, 199, 209, 0.3); border-radius: 0.75rem;" data-tooltip="<?= __('tooltip_add_supply') ?>">
                     <div style="width: 3rem; height: 3rem; background-color: var(--color-primary-fixed); color: var(--color-primary); border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
                         <span class="material-symbols-outlined">waves</span>
                     </div>
@@ -109,7 +109,7 @@ $recent_logs = $conn->query("SELECT ws.*, c.farmer_name as customer_name, m.moto
                         <p style="font-size: 0.75rem; color: var(--color-on-surface-variant);"><?= __('new_supply_desc') ?></p>
                     </div>
                 </a>
-                <a href="<?= BASE_URL ?>views/billing/generate_bill.php" class="flex" style="align-items: center; gap: 1rem; padding: 1rem; border: 1px solid rgba(191, 199, 209, 0.3); border-radius: 0.75rem;">
+                <a href="<?= BASE_URL ?>views/billing/generate_bill.php" class="flex" style="align-items: center; gap: 1rem; padding: 1rem; border: 1px solid rgba(191, 199, 209, 0.3); border-radius: 0.75rem;" data-tooltip="<?= __('tooltip_generate_bill') ?>">
                     <div style="width: 3rem; height: 3rem; background-color: var(--color-secondary-fixed); color: var(--color-secondary); border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
                         <span class="material-symbols-outlined">receipt_long</span>
                     </div>
@@ -118,7 +118,7 @@ $recent_logs = $conn->query("SELECT ws.*, c.farmer_name as customer_name, m.moto
                         <p style="font-size: 0.75rem; color: var(--color-on-surface-variant);"><?= __('gen_bill_desc') ?></p>
                     </div>
                 </a>
-                <a href="<?= BASE_URL ?>views/customers/add_customer.php" class="flex" style="align-items: center; gap: 1rem; padding: 1rem; border: 1px solid rgba(191, 199, 209, 0.3); border-radius: 0.75rem;">
+                <a href="<?= BASE_URL ?>views/customers/add_customer.php" class="flex" style="align-items: center; gap: 1rem; padding: 1rem; border: 1px solid rgba(191, 199, 209, 0.3); border-radius: 0.75rem;" data-tooltip="<?= __('tooltip_add_customer') ?>">
                     <div style="width: 3rem; height: 3rem; background-color: var(--color-tertiary-fixed); color: var(--color-tertiary); border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
                         <span class="material-symbols-outlined">person_add</span>
                     </div>

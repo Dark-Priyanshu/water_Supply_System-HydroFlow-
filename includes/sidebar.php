@@ -79,8 +79,9 @@
                         $adm_row = $adm_stmt->get_result()->fetch_assoc();
                         if ($adm_row) $admin_username = htmlspecialchars($adm_row['username']);
                     }
+                    $initials = strtoupper(substr($admin_username, 0, 2));
                 ?>
-                <img style="width: 2.5rem; height: 2.5rem; border-radius: 50%; object-fit: cover;" src="https://ui-avatars.com/api/?name=<?= urlencode($admin_username) ?>&background=005d90&color=fff" alt="Admin Avatar"/>
+                <div class="avatar-initials" style="width: 2.5rem; height: 2.5rem; font-size: 1rem; flex-shrink: 0;" aria-label="Admin Avatar"><?= $initials ?></div>
                 <div style="overflow: hidden;">
                     <p style="font-size: 0.875rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><?= $admin_username ?></p>
                     <p style="font-size: 0.625rem; color: var(--color-on-surface-variant); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><?= __('system_admin') ?></p>
@@ -117,13 +118,13 @@
                         }
                     ?>
                 </h2>
-                <div style="position: relative;" class="hidden-md">
+                <div style="position: relative;" class="hidden-md" data-tooltip="<?= __('tooltip_search') ?>" data-tooltip-pos="right">
                     <span class="material-symbols-outlined" style="position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%); color: var(--color-outline);">search</span>
                     <input id="topGlobalSearch" style="background-color: var(--color-surface-container-high); border: none; border-radius: 0.5rem; padding: 0.5rem 1rem 0.5rem 2.5rem; width: 18rem; font-size: 0.875rem; transition: all 0.3s ease;" placeholder="<?= __('search_records') ?>" type="text"/>
                 </div>
             </div>
             <div style="display: flex; align-items: center; gap: 1rem;">
-                <button style="width: 2.5rem; height: 2.5rem; display: flex; align-items: center; justify-content: center; border-radius: 50%; border: none; background: transparent; cursor: pointer;" onmouseover="this.style.backgroundColor='rgba(241, 245, 249, 0.5)';" onmouseout="this.style.backgroundColor='transparent';">
+                <button style="width: 2.5rem; height: 2.5rem; display: flex; align-items: center; justify-content: center; border-radius: 50%; border: none; background: transparent; cursor: pointer;" onmouseover="this.style.backgroundColor='rgba(241, 245, 249, 0.5)';" onmouseout="this.style.backgroundColor='transparent';" data-tooltip="<?= __('tooltip_notifications') ?>">
                     <span class="material-symbols-outlined" style="color: #475569;">notifications</span>
                 </button>
             </div>

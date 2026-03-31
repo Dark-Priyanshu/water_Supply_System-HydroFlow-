@@ -2,11 +2,11 @@
     </main> <!-- End Main Content Wrapper -->
 
     <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="<?= BASE_URL ?>assets/vendor/jquery.min.js"></script>
     <!-- DataTables -->
-    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="<?= BASE_URL ?>assets/vendor/jquery.dataTables.min.js"></script>
     <!-- Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="<?= BASE_URL ?>assets/vendor/chart.min.js"></script>
     <!-- Custom Script -->
     <script>
         // Mobile Sidebar Toggle Logic

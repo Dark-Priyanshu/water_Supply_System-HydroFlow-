@@ -510,3 +510,74 @@
 .btn-secondary:hover {
   background-color: var(--color-surface-container-low);
 }
+
+/* ──────────────────────────────────────────────────
+   Modern Tooltip System
+   Usage: <element data-tooltip="Text Content">
+   ────────────────────────────────────────────────── */
+[data-tooltip] {
+  position: relative;
+  cursor: help;
+}
+
+[data-tooltip]::before {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%) translateY(8px);
+  padding: 0.5rem 0.875rem;
+  background-color: #1a1c1e;
+  color: #ffffff;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: 0.625rem;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1000;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  pointer-events: none;
+}
+
+[data-tooltip]::after {
+  content: '';
+  position: absolute;
+  bottom: 110%;
+  left: 50%;
+  transform: translateX(-50%) translateY(8px);
+  border: 6px solid transparent;
+  border-top-color: #1a1c1e;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1000;
+  pointer-events: none;
+}
+
+[data-tooltip]:hover::before,
+[data-tooltip]:hover::after {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Position adjustments */
+[data-tooltip-pos="right"]::before { bottom: 50%; left: 120%; transform: translateY(50%) translateX(-8px); }
+[data-tooltip-pos="right"]::after  { bottom: 50%; left: 110%; transform: translateY(50%) translateX(-8px); border-top-color: transparent; border-right-color: #1a1c1e; }
+[data-tooltip-pos="right"]:hover::before, [data-tooltip-pos="right"]:hover::after { transform: translateY(50%) translateX(0); }
+
+/* Avatar Initials Helpers */
+.avatar-initials {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-primary);
+  color: var(--color-on-primary);
+  border-radius: 50%;
+  font-weight: 700;
+  font-family: var(--font-headline);
+  text-transform: uppercase;
+  user-select: none;
+}
