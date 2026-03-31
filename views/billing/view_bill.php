@@ -1,9 +1,8 @@
-<?php include '../../includes/header.php'; ?>
-<?php include '../../includes/sidebar.php'; ?>
-<?php require_once '../../models/Bill.php'; ?>
-<?php require_once '../../config/database.php'; ?>
+<?php 
+require_once '../../config/config.php';
+require_once '../../config/database.php';
+require_once '../../models/Bill.php';
 
-<?php
 if (!isset($_GET['id'])) {
     header("Location: bill_history.php");
     exit();
@@ -14,10 +13,15 @@ $billModel = new Bill($conn);
 $bill = $billModel->getBillById($bill_id);
 
 if (!$bill) {
+    include '../../includes/header.php';
+    include '../../includes/sidebar.php';
     echo "<div style='padding: 2.5rem; text-align: center; color: var(--color-error); font-weight: 700; font-family: var(--font-headline);'>" . __('bill_not_found') . "</div>";
     include '../../includes/footer.php';
     exit();
 }
+
+include '../../includes/header.php';
+include '../../includes/sidebar.php';
 ?>
 
 <style>

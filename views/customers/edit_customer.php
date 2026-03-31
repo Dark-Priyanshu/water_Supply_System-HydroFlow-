@@ -1,19 +1,23 @@
-<?php include '../../includes/header.php'; ?>
-<?php include '../../includes/sidebar.php'; ?>
-<?php require_once '../../config/database.php'; ?>
-<?php require_once '../../models/Customer.php'; ?>
+<?php 
+require_once '../../config/config.php';
+require_once '../../config/database.php';
+require_once '../../models/Customer.php';
 
-<?php
 if (!isset($_GET['id'])) {
     header("Location: customer_list.php");
     exit();
 }
+
 $customerModel = new Customer($conn);
 $customer = $customerModel->getCustomerById($_GET['id']);
+
 if (!$customer) {
     header("Location: customer_list.php");
     exit();
 }
+
+include '../../includes/header.php';
+include '../../includes/sidebar.php';
 ?>
 
 <!-- Header -->

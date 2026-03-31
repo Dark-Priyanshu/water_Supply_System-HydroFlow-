@@ -15,7 +15,7 @@ $admin_id = $_SESSION['admin_id'];
 
 // ── Get current admin info ────────────────────────────────────────
 if ($action === 'get') {
-    $stmt = $conn->prepare("SELECT username, language, theme, ui_scale FROM admins WHERE admin_id = ?");
+    $stmt = $conn->prepare("SELECT username, language, theme, ui_scale, font_weight FROM admins WHERE admin_id = ?");
     $stmt->bind_param("i", $admin_id);
     $stmt->execute();
     $row = $stmt->get_result()->fetch_assoc();

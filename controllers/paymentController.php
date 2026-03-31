@@ -3,8 +3,10 @@ require_once __DIR__ . '/../config/config.php';
 require_once __DIR__ . '/../config/database.php';
 
 if (isset($_POST['add_payment'])) {
-    $bill_id = $_POST['bill_id'];
-    $amount = $_POST['amount'];
+    require_once __DIR__ . '/../models/Bill.php';
+    $billModel = new Bill($conn);
+    $bill_id = (int)$_POST['bill_id'];
+    $amount = (double)$_POST['amount'];
     $payment_date = $_POST['payment_date'];
     $method = $_POST['method'];
 
@@ -13,7 +15,7 @@ if (isset($_POST['add_payment'])) {
     
     if ($stmt->execute()) {
         // Also update bill status to paid
-        $conn->query("UPDATE bills SET status = 'paid' WHERE bill_id = $bill_id");
+        $billModel->updateBillStatus($bill_id, 'paid');
         $_SESSION['success_msg'] = __('msg_payment_success');
         header("Location: " . BASE_URL . "views/payments/payment_history.php");
         exit();

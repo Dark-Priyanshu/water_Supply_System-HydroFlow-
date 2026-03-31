@@ -1,4 +1,5 @@
 <?php
+ob_start();
 /**
  * HydroFlow Configuration
  * Centralized settings for the project including dynamic BASE_URL resolution.

@@ -34,5 +34,18 @@ class Bill {
         $stmt->execute();
         return $stmt->get_result()->fetch_assoc();
     }
+
+    public function checkBillExists($supply_id) {
+        $stmt = $this->conn->prepare("SELECT bill_id FROM bills WHERE supply_id = ?");
+        $stmt->bind_param("i", $supply_id);
+        $stmt->execute();
+        return $stmt->get_result();
+    }
+
+    public function updateBillStatus($bill_id, $status) {
+        $stmt = $this->conn->prepare("UPDATE bills SET status = ? WHERE bill_id = ?");
+        $stmt->bind_param("si", $status, $bill_id);
+        return $stmt->execute();
+    }
 }
 ?>

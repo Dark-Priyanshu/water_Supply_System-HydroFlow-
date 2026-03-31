@@ -1,6 +1,5 @@
-<?php include '../../includes/header.php'; ?>
-<?php include '../../includes/sidebar.php'; ?>
-<?php
+<?php 
+require_once '../../config/config.php';
 require_once '../../config/database.php';
 require_once '../../models/Motor.php';
 
@@ -16,6 +15,9 @@ if (!$motor) {
     header("Location: motor_list.php");
     exit();
 }
+
+include '../../includes/header.php';
+include '../../includes/sidebar.php';
 ?>
 
 <!-- Header -->
