@@ -6,6 +6,10 @@ CREATE TABLE admins (
     username VARCHAR(50) UNIQUE NOT NULL,
     password VARCHAR(255) NOT NULL,
     role VARCHAR(20) DEFAULT 'admin',
+    language VARCHAR(10) DEFAULT 'en',
+    theme VARCHAR(20) DEFAULT 'light',
+    ui_scale INT DEFAULT 100,
+    font_weight VARCHAR(20) DEFAULT 'normal',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 

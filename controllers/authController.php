@@ -6,25 +6,25 @@ if (isset($_POST['login'])) {
     $username = trim($_POST['username']);
     $password = $_POST['password'];
 
-    $stmt = $conn->prepare("SELECT admin_id, password, role FROM admins WHERE username = ?");
+    // Single efficient query to fetch credentials and UI preferences
+    $stmt = $conn->prepare("SELECT admin_id, password, role, language, theme, ui_scale, font_weight FROM admins WHERE username = ?");
     $stmt->bind_param("s", $username);
     $stmt->execute();
     $result = $stmt->get_result();
 
     if ($result->num_rows === 1) {
         $user = $result->fetch_assoc();
+        
+        // Match hashed password
         if (password_verify($password, $user['password'])) {
-            $stmt = $conn->prepare("SELECT language, theme, ui_scale, font_weight FROM admins WHERE admin_id = ?");
-            $stmt->bind_param("i", $user['admin_id']);
-            $stmt->execute();
-            $settings = $stmt->get_result()->fetch_assoc();
-
             $_SESSION['admin_id'] = $user['admin_id'];
             $_SESSION['role'] = $user['role'];
-            $_SESSION['lang'] = $settings['language'] ?? 'en';
-            $_SESSION['theme'] = $settings['theme'] ?? 'light';
-            $_SESSION['ui_scale'] = $settings['ui_scale'] ?? 100;
-            $_SESSION['font_weight'] = $settings['font_weight'] ?? 'normal';
+            
+            // Set user preferences with fallback to en/light/100/normal
+            $_SESSION['lang'] = $user['language'] ?? 'en';
+            $_SESSION['theme'] = $user['theme'] ?? 'light';
+            $_SESSION['ui_scale'] = $user['ui_scale'] ?? 100;
+            $_SESSION['font_weight'] = $user['font_weight'] ?? 'normal';
 
             header("Location: " . BASE_URL . "dashboard.php");
             exit();
