@@ -318,6 +318,14 @@
   margin-bottom: 1rem;
 }
 
+@media (min-width: 768px) {
+  .dt-container-row {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
 /* Overlays */
 .active-overlay {
   display: block !important;
