@@ -9,7 +9,7 @@
             </div>
             <div>
                 <h1 style="font-size: 1.25rem; font-weight: 700; color: var(--color-primary); letter-spacing: -0.025em; font-family: var(--font-headline);">HydroFlow</h1>
-                <p style="font-size: 0.625rem; text-transform: uppercase; letter-spacing: 0.2em; color: #94a3b8; font-weight: 600;">Precision Supply</p>
+                <p style="font-size: 0.625rem; text-transform: uppercase; letter-spacing: 0.2em; color: #94a3b8; font-weight: 600;"><?= __('precision_supply') ?></p>
             </div>
         </div>
         <nav style="flex: 1; display: flex; flex-direction: column; gap: 0.25rem;">
@@ -28,41 +28,41 @@
             ?>
             <a class="<?= getLinkClass(['dashboard.php'], $current_page) ?>" href="<?= BASE_URL ?>views/dashboard.php">
                 <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
-                <span>Dashboard</span>
+                <span><?= __('dashboard') ?></span>
             </a>
             <a class="<?= getLinkClass(['customer_list.php', 'add_customer.php'], $current_page) ?>" href="<?= BASE_URL ?>views/customers/customer_list.php">
                 <span class="material-symbols-outlined">agriculture</span>
-                <span>Customers / Farms</span>
+                <span><?= __('customers') ?></span>
             </a>
             <a class="<?= getLinkClass(['motor_list.php', 'add_motor.php'], $current_page) ?>" href="<?= BASE_URL ?>views/motors/motor_list.php">
                 <span class="material-symbols-outlined">water_pump</span>
-                <span>Motor Management</span>
+                <span><?= __('motors') ?></span>
             </a>
             <a class="<?= getLinkClass(['supply_history.php', 'add_supply.php'], $current_page) ?>" href="<?= BASE_URL ?>views/supply/supply_history.php">
                 <span class="material-symbols-outlined">waves</span>
-                <span>Water Supply Record</span>
+                <span><?= __('supply_record') ?></span>
             </a>
             <a class="<?= getLinkClass(['bill_history.php', 'generate_bill.php', 'view_bill.php'], $current_page) ?>" href="<?= BASE_URL ?>views/billing/bill_history.php">
                 <span class="material-symbols-outlined">receipt_long</span>
-                <span>Billing / Invoices</span>
+                <span><?= __('billing') ?></span>
             </a>
             <a class="<?= getLinkClass(['payment_history.php', 'add_payment.php'], $current_page) ?>" href="<?= BASE_URL ?>views/payments/payment_history.php">
                 <span class="material-symbols-outlined">payments</span>
-                <span>Payments Tracking</span>
+                <span><?= __('payments') ?></span>
             </a>
             <a class="<?= getLinkClass(['daily_report.php'], $current_page) ?>" href="<?= BASE_URL ?>views/reports/daily_report.php">
                 <span class="material-symbols-outlined">bar_chart</span>
-                <span>Reports</span>
+                <span><?= __('reports') ?></span>
             </a>
             <a class="<?= getLinkClass(['settings.php'], $current_page) ?>" href="<?= BASE_URL ?>views/settings.php">
                 <span class="material-symbols-outlined">settings</span>
-                <span>Settings</span>
+                <span><?= __('settings') ?></span>
             </a>
             
             <div style="padding-top: 1rem; margin-top: 1rem; border-top: 1px solid rgba(226, 232, 240, 0.5);">
                 <a class="nav-link" style="color: #64748b;" onmouseover="this.style.color='#ba1a1a'; this.style.backgroundColor='rgba(254, 226, 226, 0.5)';" onmouseout="this.style.color='#64748b'; this.style.backgroundColor='transparent';" href="<?= BASE_URL ?>logout.php">
                     <span class="material-symbols-outlined">logout</span>
-                    <span>Logout</span>
+                    <span><?= __('logout') ?></span>
                 </a>
             </div>
         </nav>
@@ -83,7 +83,7 @@
                 <img style="width: 2.5rem; height: 2.5rem; border-radius: 50%; object-fit: cover;" src="https://ui-avatars.com/api/?name=<?= urlencode($admin_username) ?>&background=005d90&color=fff" alt="Admin Avatar"/>
                 <div style="overflow: hidden;">
                     <p style="font-size: 0.875rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><?= $admin_username ?></p>
-                    <p style="font-size: 0.625rem; color: var(--color-on-surface-variant); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">System Administrator</p>
+                    <p style="font-size: 0.625rem; color: var(--color-on-surface-variant); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><?= __('system_admin') ?></p>
                 </div>
             </div>
         </div>
@@ -105,21 +105,21 @@
                 <h2 style="font-family: var(--font-headline); font-size: 1.125rem; font-weight: 600; color: #0f172a;" class="hidden-sm">
                     <?php 
                         switch($current_page) {
-                            case 'dashboard.php': echo 'Dashboard Overview'; break;
-                            case 'customer_list.php': echo 'Customers / Farms'; break;
-                            case 'motor_list.php': echo 'Motor Management'; break;
-                            case 'supply_history.php': echo 'Water Supply Records'; break;
-                            case 'bill_history.php': echo 'Billing & Invoices'; break;
-                            case 'payment_history.php': echo 'Payments Tracking'; break;
-                            case 'daily_report.php': echo 'Reports & Analytics'; break;
-                            case 'settings.php': echo 'Settings'; break;
-                            default: echo 'Management System'; break;
+                            case 'dashboard.php': echo __('dashboard'); break;
+                            case 'customer_list.php': echo __('customers'); break;
+                            case 'motor_list.php': echo __('motors'); break;
+                            case 'supply_history.php': echo __('supply_record'); break;
+                            case 'bill_history.php': echo __('billing'); break;
+                            case 'payment_history.php': echo __('payments'); break;
+                            case 'daily_report.php': echo __('reports'); break;
+                            case 'settings.php': echo __('settings'); break;
+                            default: echo __('mgmt_system'); break;
                         }
                     ?>
                 </h2>
                 <div style="position: relative;" class="hidden-md">
                     <span class="material-symbols-outlined" style="position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%); color: var(--color-outline);">search</span>
-                    <input id="topGlobalSearch" style="background-color: var(--color-surface-container-high); border: none; border-radius: 0.5rem; padding: 0.5rem 1rem 0.5rem 2.5rem; width: 18rem; font-size: 0.875rem; transition: all 0.3s ease;" placeholder="Search records..." type="text"/>
+                    <input id="topGlobalSearch" style="background-color: var(--color-surface-container-high); border: none; border-radius: 0.5rem; padding: 0.5rem 1rem 0.5rem 2.5rem; width: 18rem; font-size: 0.875rem; transition: all 0.3s ease;" placeholder="<?= __('search_records') ?>" type="text"/>
                 </div>
             </div>
             <div style="display: flex; align-items: center; gap: 1rem;">

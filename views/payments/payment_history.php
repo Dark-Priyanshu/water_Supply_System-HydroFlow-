@@ -38,16 +38,16 @@ $pending_sum = $pending_bills->fetch_assoc()['pending_sum'] ?? 0;
     <div class="flex no-print" style="justify-content: space-between; align-items: flex-end; margin-bottom: 2rem;">
         <div>
             <nav class="flex" style="align-items: center; gap: 0.5rem; font-size: 0.75rem; color: var(--color-on-surface-variant); margin-bottom: 0.5rem;">
-                <span>Finance</span>
+                <span><?= __('finance') ?></span>
                 <span class="material-symbols-outlined" style="font-size: 0.875rem;">chevron_right</span>
-                <span style="color: var(--color-primary); font-weight: 500;">Ledger</span>
+                <span style="color: var(--color-primary); font-weight: 500;"><?= __('ledger') ?></span>
             </nav>
-            <h2 style="font-size: 2.25rem; font-family: var(--font-headline); font-weight: 800; color: var(--color-on-surface); letter-spacing: -0.025em;">Payment Ledger</h2>
-            <p style="color: var(--color-on-surface-variant); margin-top: 0.5rem; font-weight: 500;">Manage revenue streams and track hydrological billing cycles.</p>
+            <h2 style="font-size: 2.25rem; font-family: var(--font-headline); font-weight: 800; color: var(--color-on-surface); letter-spacing: -0.025em;"><?= __('payment_ledger') ?></h2>
+            <p style="color: var(--color-on-surface-variant); margin-top: 0.5rem; font-weight: 500;"><?= __('ledger_desc') ?></p>
         </div>
         <div class="flex" style="gap: 0.75rem;">
             <a href="add_payment.php" class="btn bg-gradient-primary" style="padding: 0.75rem 1.5rem; border-radius: 0.75rem;">
-                <span class="material-symbols-outlined" style="font-size: 1.125rem;">add_circle</span> Record Payment
+                <span class="material-symbols-outlined" style="font-size: 1.125rem;">add_circle</span> <?= __('record_payment') ?>
             </a>
         </div>
     </div>
@@ -70,9 +70,9 @@ $pending_sum = $pending_bills->fetch_assoc()['pending_sum'] ?? 0;
             <div class="card" style="padding: 1.5rem; border-bottom: 4px solid rgba(0, 93, 144, 0.2);">
                 <div class="flex" style="justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
                     <span class="material-symbols-outlined" style="padding: 0.75rem; background-color: rgba(0, 93, 144, 0.1); color: var(--color-primary); border-radius: 0.5rem;">account_balance_wallet</span>
-                    <span style="font-size: 0.625rem; font-weight: 700; color: var(--color-on-surface-variant); border: 1px solid rgba(112, 120, 129, 0.2); padding: 0.25rem 0.5rem; border-radius: 0.25rem; text-transform: uppercase;">Overall</span>
+                    <span style="font-size: 0.625rem; font-weight: 700; color: var(--color-on-surface-variant); border: 1px solid rgba(112, 120, 129, 0.2); padding: 0.25rem 0.5rem; border-radius: 0.25rem; text-transform: uppercase;"><?= __('overall') ?></span>
                 </div>
-                <p style="font-size: 0.625rem; font-weight: 700; color: var(--color-on-surface-variant); text-transform: uppercase; letter-spacing: 0.1em;">Total Collections</p>
+                <p style="font-size: 0.625rem; font-weight: 700; color: var(--color-on-surface-variant); text-transform: uppercase; letter-spacing: 0.1em;"><?= __('total_collections') ?></p>
                 <h3 style="font-family: var(--font-headline); font-size: 1.875rem; font-weight: 800; margin-top: 0.5rem;">₹<?= number_format($total_collections, 2) ?></h3>
             </div>
             
@@ -81,10 +81,10 @@ $pending_sum = $pending_bills->fetch_assoc()['pending_sum'] ?? 0;
                 <div class="flex" style="justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
                     <span class="material-symbols-outlined" style="padding: 0.75rem; background-color: rgba(186, 26, 26, 0.1); color: var(--color-error); border-radius: 0.5rem;">pending_actions</span>
                     <span style="font-size: 0.75rem; font-weight: 700; color: var(--color-error); display: flex; align-items: center; gap: 0.25rem;">
-                        <span class="material-symbols-outlined" style="font-size: 0.875rem;">warning</span> High Priority
+                        <span class="material-symbols-outlined" style="font-size: 0.875rem;">warning</span> <?= __('high_priority') ?>
                     </span>
                 </div>
-                <p style="font-size: 0.625rem; font-weight: 700; color: var(--color-on-surface-variant); text-transform: uppercase; letter-spacing: 0.1em;">Pending Receivables</p>
+                <p style="font-size: 0.625rem; font-weight: 700; color: var(--color-on-surface-variant); text-transform: uppercase; letter-spacing: 0.1em;"><?= __('pending_receivables') ?></p>
                 <h3 style="font-family: var(--font-headline); font-size: 1.875rem; font-weight: 800; margin-top: 0.5rem;">₹<?= number_format($pending_sum, 2) ?></h3>
             </div>
             
@@ -92,9 +92,9 @@ $pending_sum = $pending_bills->fetch_assoc()['pending_sum'] ?? 0;
             <div class="card" style="padding: 1.5rem; border-bottom: 4px solid rgba(44, 105, 78, 0.2);">
                 <div class="flex" style="justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
                     <span class="material-symbols-outlined" style="padding: 0.75rem; background-color: rgba(44, 105, 78, 0.1); color: var(--color-secondary); border-radius: 0.5rem;">splitscreen</span>
-                    <span style="font-size: 0.625rem; font-weight: 700; color: var(--color-on-surface-variant); text-transform: uppercase;">Method Ratio</span>
+                    <span style="font-size: 0.625rem; font-weight: 700; color: var(--color-on-surface-variant); text-transform: uppercase;"><?= __('method_ratio') ?></span>
                 </div>
-                <p style="font-size: 0.625rem; font-weight: 700; color: var(--color-on-surface-variant); text-transform: uppercase; letter-spacing: 0.1em;">Cash vs Online</p>
+                <p style="font-size: 0.625rem; font-weight: 700; color: var(--color-on-surface-variant); text-transform: uppercase; letter-spacing: 0.1em;"><?= __('cash_vs_online') ?></p>
                 <div style="margin-top: 0.5rem;">
                     <h3 style="font-family: var(--font-headline); font-size: 1.5rem; font-weight: 800;"><?= $cash_count ?> <span style="font-size: 0.875rem; font-weight: 400; color: var(--color-on-surface-variant);">/ <?= $digital_count ?></span></h3>
                     <?php 
@@ -116,19 +116,19 @@ $pending_sum = $pending_bills->fetch_assoc()['pending_sum'] ?? 0;
 <section style="margin-bottom: 3rem;">
     <div class="table-container">
         <div class="table-header">
-            <h4 style="font-family: var(--font-headline); font-size: 1.125rem; font-weight: 700;">Transaction History</h4>
-            <span class="badge" style="background-color: rgba(0, 93, 144, 0.1); color: var(--color-primary); border: 1px solid rgba(0, 93, 144, 0.1);">All Records</span>
+            <h4 style="font-family: var(--font-headline); font-size: 1.125rem; font-weight: 700;"><?= __('transaction_history') ?></h4>
+            <span class="badge" style="background-color: rgba(0, 93, 144, 0.1); color: var(--color-primary); border: 1px solid rgba(0, 93, 144, 0.1);"><?= __('all_records') ?></span>
         </div>
         <div style="overflow-x: auto;">
             <table class="table-custom datatable">
                 <thead>
                     <tr>
-                        <th style="padding-left: 1.5rem;">Receipt ID</th>
-                        <th>Date</th>
-                        <th>Customer</th>
-                        <th>Ref Invoice</th>
-                        <th>Method</th>
-                        <th style="padding-right: 1.5rem; text-align: right;">Amount</th>
+                        <th style="padding-left: 1.5rem;"><?= __('th_receipt_id') ?></th>
+                        <th><?= __('th_date') ?></th>
+                        <th><?= __('th_customer') ?></th>
+                        <th><?= __('th_ref_invoice') ?></th>
+                        <th><?= __('th_method') ?></th>
+                        <th style="padding-right: 1.5rem; text-align: right;"><?= __('th_amount') ?></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -138,8 +138,8 @@ $pending_sum = $pending_bills->fetch_assoc()['pending_sum'] ?? 0;
                         <td style="font-size: 0.875rem; color: var(--color-on-surface-variant); font-weight: 500;"><?= date('M d, Y', strtotime($row['payment_date'])) ?></td>
                         <td>
                             <div class="flex" style="align-items: center; gap: 0.75rem;">
-                                <div style="width: 2rem; height: 2rem; border-radius: 50%; background-color: var(--color-surface-container-highest); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.75rem; text-transform: uppercase;"><?= substr($row['farmer_name'], 0, 2) ?></div>
-                                <span style="font-weight: 700; font-size: 0.875rem;"><?= htmlspecialchars($row['farmer_name']) ?></span>
+                                <div style="width: 2rem; height: 2rem; border-radius: 50%; background-color: var(--color-surface-container-highest); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.75rem; text-transform: uppercase;"><?= substr($row['farmer_name'] ?? __('na_placeholder'), 0, 2) ?></div>
+                                <span style="font-weight: 700; font-size: 0.875rem;"><?= htmlspecialchars($row['farmer_name'] ?? __('na_placeholder')) ?></span>
                             </div>
                         </td>
                         <td>
@@ -153,7 +153,7 @@ $pending_sum = $pending_bills->fetch_assoc()['pending_sum'] ?? 0;
                             if($method == 'bank transfer' || $method == 'bank') $icon = 'account_balance';
                             ?>
                             <span class="badge" style="background-color: var(--color-surface-container-high); color: var(--color-on-surface-variant); border: 1px solid rgba(112, 120, 129, 0.2); display: inline-flex; align-items: center; gap: 0.25rem;">
-                                <span class="material-symbols-outlined" style="font-size: 0.875rem;"><?= $icon ?></span> <?= htmlspecialchars($row['method']) ?>
+                                <span class="material-symbols-outlined" style="font-size: 0.875rem;"><?= $icon ?></span> <?= __($method, $row['method']) ?>
                             </span>
                         </td>
                         <td style="padding-right: 1.5rem; text-align: right; font-family: var(--font-headline); font-weight: 800; color: var(--color-secondary);">

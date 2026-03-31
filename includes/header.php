@@ -22,7 +22,7 @@ if (!isset($conn)) {
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>HydroFlow | Precision Water Management</title>
+    <title>HydroFlow | <?= __('precision_supply') ?></title>
     <!-- Favicon -->
     <link rel="icon" href="<?= BASE_URL ?>assets/images/icon.png" type="image/png">
     <!-- Fonts -->
@@ -45,6 +45,32 @@ if (!isset($conn)) {
             var s = parseInt(localStorage.getItem('hydroScale') || '100', 10);
             if (s !== 100) document.documentElement.style.fontSize = (s / 100 * 16) + 'px';
         })();
+        
+        // Global DataTables Language Config
+        const dtLanguage = {
+            "search": "_INPUT_",
+            "searchPlaceholder": "<?= __('search_records') ?>",
+            "lengthMenu": "<?= __('dt_show') ?> _MENU_ <?= __('dt_entries') ?>",
+            "info": "<?= __('dt_showing') ?> _START_ <?= __('dt_to') ?> _END_ <?= __('dt_of') ?> _TOTAL_ <?= __('dt_entries') ?>",
+            "infoEmpty": "<?= __('dt_showing') ?> 0 <?= __('dt_to') ?> 0 <?= __('dt_of') ?> 0 <?= __('dt_entries') ?>",
+            "infoFiltered": "(<?= __('dt_of') ?> _MAX_ <?= __('dt_entries') ?>)",
+            "paginate": {
+                "next": "<?= __('dt_next') ?>",
+                "previous": "<?= __('dt_prev') ?>",
+                "first": "<?= __('dt_first') ?>",
+                "last": "<?= __('dt_last') ?>"
+            },
+            "emptyTable": `<div class="dt-empty-state">
+                <span class="material-symbols-outlined dt-empty-icon">folder_off</span>
+                <p style="font-size: 0.9375rem; font-weight: 600; color: var(--color-on-surface-variant);"><?= __('dt_no_records') ?></p>
+                <p style="font-size: 0.75rem; color: var(--color-outline); margin-top: 0.25rem;"><?= __('dt_no_records_desc') ?></p>
+            </div>`,
+            "zeroRecords": `<div class="dt-empty-state">
+                <span class="material-symbols-outlined dt-empty-icon">search_off</span>
+                <p style="font-size: 0.9375rem; font-weight: 600; color: var(--color-on-surface-variant);"><?= __('dt_no_match') ?></p>
+                <p style="font-size: 0.75rem; color: var(--color-outline); margin-top: 0.25rem;"><?= __('dt_no_match_desc') ?></p>
+            </div>`
+        };
     </script>
 </head>
 <body class="bg-surface font-body text-on-surface antialiased">

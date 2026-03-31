@@ -19,8 +19,8 @@ include '../includes/sidebar.php';
                 <span class="material-symbols-outlined">settings</span>
             </div>
             <div>
-                <h1 class="settings-title">Settings</h1>
-                <p class="settings-subtitle">Customize your HydroFlow experience</p>
+                <h1 class="settings-title"><?= __('settings') ?></h1>
+                <p class="settings-subtitle"><?= __('settings_subtitle') ?></p>
             </div>
         </div>
     </div>
@@ -37,8 +37,8 @@ include '../includes/sidebar.php';
                     <span class="material-symbols-outlined">manage_accounts</span>
                 </div>
                 <div style="flex: 1;">
-                    <h2 class="settings-card-title">Profile</h2>
-                    <p class="settings-card-desc">Change your admin name and password</p>
+                    <h2 class="settings-card-title"><?= __('profile') ?></h2>
+                    <p class="settings-card-desc"><?= __('profile_desc') ?></p>
                 </div>
                 <span class="material-symbols-outlined settings-chevron">expand_more</span>
             </div>
@@ -56,7 +56,7 @@ include '../includes/sidebar.php';
                         </div>
                         <div class="profile-info-text">
                             <p id="profileDisplayName" class="profile-name">Loading…</p>
-                            <p class="profile-role">System Administrator</p>
+                            <p class="profile-role"><?= __('sys_admin') ?></p>
                             <span class="profile-badge">Admin</span>
                         </div>
                     </div>
@@ -68,17 +68,17 @@ include '../includes/sidebar.php';
                         <div class="profile-form-section">
                             <p class="profile-form-title">
                                 <span class="material-symbols-outlined">person_edit</span>
-                                Username Change
+                                <?= __('username_change') ?>
                             </p>
                             <div class="profile-input-group">
-                                <label for="newUsername">New Username</label>
+                                <label for="newUsername"><?= __('new_username') ?></label>
                                 <div class="profile-input-wrap">
                                     <span class="material-symbols-outlined profile-input-icon">person</span>
-                                    <input type="text" id="newUsername" class="profile-input" placeholder="Enter new username" autocomplete="off">
+                                    <input type="text" id="newUsername" class="profile-input" placeholder="<?= __('placeholder_new_username') ?>" autocomplete="off">
                                 </div>
                             </div>
                             <button class="profile-save-btn" onclick="updateUsername()">
-                                <span class="material-symbols-outlined">save</span> Save Username
+                                <span class="material-symbols-outlined">save</span> <?= __('save_username') ?>
                             </button>
                         </div>
 
@@ -88,33 +88,33 @@ include '../includes/sidebar.php';
                         <div class="profile-form-section">
                             <p class="profile-form-title">
                                 <span class="material-symbols-outlined">lock_reset</span>
-                                Password Change
+                                <?= __('password_change') ?>
                             </p>
                             <div class="profile-input-group">
-                                <label for="currentPass">Current Password</label>
+                                <label for="currentPass"><?= __('current_password') ?></label>
                                 <div class="profile-input-wrap">
                                     <span class="material-symbols-outlined profile-input-icon">lock</span>
-                                    <input type="password" id="currentPass" class="profile-input" placeholder="Current password">
+                                    <input type="password" id="currentPass" class="profile-input" placeholder="<?= __('placeholder_current_password') ?>">
                                     <button type="button" class="pass-eye-btn" onclick="togglePasswordVisibility('currentPass', this)">
                                         <span class="material-symbols-outlined">visibility</span>
                                     </button>
                                 </div>
                             </div>
                             <div class="profile-input-group">
-                                <label for="newPass">New Password</label>
+                                <label for="newPass"><?= __('new_password') ?></label>
                                 <div class="profile-input-wrap">
                                     <span class="material-symbols-outlined profile-input-icon">lock_open</span>
-                                    <input type="password" id="newPass" class="profile-input" placeholder="New password (min 6 chars)">
+                                    <input type="password" id="newPass" class="profile-input" placeholder="<?= __('placeholder_new_password') ?>">
                                     <button type="button" class="pass-eye-btn" onclick="togglePasswordVisibility('newPass', this)">
                                         <span class="material-symbols-outlined">visibility</span>
                                     </button>
                                 </div>
                             </div>
                             <div class="profile-input-group">
-                                <label for="confirmPass">Confirm New Password</label>
+                                <label for="confirmPass"><?= __('confirm_new_password') ?></label>
                                 <div class="profile-input-wrap">
                                     <span class="material-symbols-outlined profile-input-icon">lock_open</span>
-                                    <input type="password" id="confirmPass" class="profile-input" placeholder="Re-enter new password">
+                                    <input type="password" id="confirmPass" class="profile-input" placeholder="<?= __('placeholder_confirm_password') ?>">
                                     <button type="button" class="pass-eye-btn" onclick="togglePasswordVisibility('confirmPass', this)">
                                         <span class="material-symbols-outlined">visibility</span>
                                     </button>
@@ -128,7 +128,7 @@ include '../includes/sidebar.php';
                                 <p class="pass-strength-label" id="passStrengthLabel">Weak</p>
                             </div>
                             <button class="profile-save-btn profile-save-danger" onclick="updatePassword()">
-                                <span class="material-symbols-outlined">key</span> Password Update
+                                <span class="material-symbols-outlined">key</span> <?= __('password_update') ?>
                             </button>
                         </div>
                     </div>
@@ -145,8 +145,8 @@ include '../includes/sidebar.php';
                     <span class="material-symbols-outlined">palette</span>
                 </div>
                 <div style="flex: 1;">
-                    <h2 class="settings-card-title">Appearance</h2>
-                    <p class="settings-card-desc">Adjust the look and feel of the interface</p>
+                    <h2 class="settings-card-title"><?= __('appearance') ?></h2>
+                    <p class="settings-card-desc"><?= __('appearance_desc') ?></p>
                 </div>
                 <span class="material-symbols-outlined settings-chevron">expand_more</span>
             </div>
@@ -157,8 +157,8 @@ include '../includes/sidebar.php';
                     <div class="settings-row-info">
                         <span class="material-symbols-outlined settings-row-icon" id="darkModeIcon">dark_mode</span>
                         <div>
-                            <p class="settings-row-label">Dark Mode</p>
-                            <p class="settings-row-hint">Switch between light and dark themes</p>
+                            <p class="settings-row-label"><?= __('dark_mode') ?></p>
+                            <p class="settings-row-hint"><?= __('dark_mode_hint') ?></p>
                         </div>
                     </div>
                     <label class="toggle-switch" for="darkModeToggle" title="Toggle dark mode">
@@ -169,13 +169,30 @@ include '../includes/sidebar.php';
 
                 <div class="settings-divider"></div>
 
+                <!-- Language Selection -->
+                <div class="settings-row">
+                    <div class="settings-row-info">
+                        <span class="material-symbols-outlined settings-row-icon">language</span>
+                        <div>
+                            <p class="settings-row-label"><?= __('language') ?></p>
+                            <p class="settings-row-hint"><?= __('lang_hint') ?></p>
+                        </div>
+                    </div>
+                    <div class="flex" style="gap: 0.5rem;">
+                        <button class="scale-preset-btn <?= $_SESSION['lang'] == 'en' ? 'active' : '' ?>" style="width: auto; padding: 0.5rem 1rem;" onclick="setLanguage('en')">English</button>
+                        <button class="scale-preset-btn <?= $_SESSION['lang'] == 'hi' ? 'active' : '' ?>" style="width: auto; padding: 0.5rem 1rem;" onclick="setLanguage('hi')">हिन्दी</button>
+                    </div>
+                </div>
+
+                <div class="settings-divider"></div>
+
                 <!-- UI Scale -->
                 <div class="settings-row settings-row-col">
-                    <div class="settings-row-info">
+                    <div class="settings-row-info" style="margin-bottom: 1rem;">
                         <span class="material-symbols-outlined settings-row-icon">text_fields</span>
                         <div>
-                            <p class="settings-row-label">UI Scale</p>
-                            <p class="settings-row-hint">Adjust the overall size of the interface</p>
+                            <p class="settings-row-label"><?= __('ui_scale') ?></p>
+                            <p class="settings-row-hint"><?= __('ui_scale_hint') ?></p>
                         </div>
                     </div>
                     <div class="scale-control">
@@ -186,10 +203,10 @@ include '../includes/sidebar.php';
                         </div>
                         <input type="range" id="uiScaleSlider" min="80" max="130" step="5" value="100" class="scale-slider">
                         <div class="scale-presets">
-                            <button class="scale-preset-btn" onclick="setScale(80)">Small</button>
-                            <button class="scale-preset-btn active" onclick="setScale(100)" id="scaleDefault">Default</button>
-                            <button class="scale-preset-btn" onclick="setScale(115)">Large</button>
-                            <button class="scale-preset-btn" onclick="setScale(130)">Extra Large</button>
+                            <button class="scale-preset-btn" style="flex:1" onclick="setScale(80)"><?= __('scale_80') ?></button>
+                            <button class="scale-preset-btn active" style="flex:1" onclick="setScale(100)" id="scaleDefault"><?= __('scale_100') ?></button>
+                            <button class="scale-preset-btn" style="flex:1" onclick="setScale(115)"><?= __('scale_115') ?></button>
+                            <button class="scale-preset-btn" style="flex:1" onclick="setScale(130)"><?= __('scale_130') ?></button>
                         </div>
                     </div>
                 </div>
@@ -205,8 +222,8 @@ include '../includes/sidebar.php';
                     <span class="material-symbols-outlined">download</span>
                 </div>
                 <div style="flex: 1;">
-                    <h2 class="settings-card-title">Export Data</h2>
-                    <p class="settings-card-desc">Download all records as Excel (.xlsx) files</p>
+                    <h2 class="settings-card-title"><?= __('export_data') ?></h2>
+                    <p class="settings-card-desc"><?= __('export_data_desc') ?></p>
                 </div>
                 <span class="material-symbols-outlined settings-chevron">expand_more</span>
             </div>
@@ -218,12 +235,12 @@ include '../includes/sidebar.php';
                         <div class="export-item-info">
                             <span class="material-symbols-outlined export-item-icon customer-col">agriculture</span>
                             <div>
-                                <p class="export-item-title">Customers</p>
-                                <p class="export-item-hint">All farmer & farm records</p>
+                                <p class="export-item-title"><?= __('customers') ?></p>
+                                <p class="export-item-hint"><?= __('hint_customers') ?></p>
                             </div>
                         </div>
                         <button class="export-btn" onclick="exportToExcel('customers','HydroFlow_Customers')">
-                            <span class="material-symbols-outlined">download</span> Export
+                            <span class="material-symbols-outlined">download</span> <?= __('export') ?>
                         </button>
                     </div>
 
@@ -231,12 +248,12 @@ include '../includes/sidebar.php';
                         <div class="export-item-info">
                             <span class="material-symbols-outlined export-item-icon motor-col">water_pump</span>
                             <div>
-                                <p class="export-item-title">Motors</p>
-                                <p class="export-item-hint">Motor management data</p>
+                                <p class="export-item-title"><?= __('motors') ?></p>
+                                <p class="export-item-hint"><?= __('hint_motors') ?></p>
                             </div>
                         </div>
                         <button class="export-btn" onclick="exportToExcel('motors','HydroFlow_Motors')">
-                            <span class="material-symbols-outlined">download</span> Export
+                            <span class="material-symbols-outlined">download</span> <?= __('export') ?>
                         </button>
                     </div>
 
@@ -244,12 +261,12 @@ include '../includes/sidebar.php';
                         <div class="export-item-info">
                             <span class="material-symbols-outlined export-item-icon supply-col">waves</span>
                             <div>
-                                <p class="export-item-title">Supply Records</p>
-                                <p class="export-item-hint">Water supply history</p>
+                                <p class="export-item-title"><?= __('supply_record') ?></p>
+                                <p class="export-item-hint"><?= __('hint_supply') ?></p>
                             </div>
                         </div>
                         <button class="export-btn" onclick="exportToExcel('supply','HydroFlow_Supply')">
-                            <span class="material-symbols-outlined">download</span> Export
+                            <span class="material-symbols-outlined">download</span> <?= __('export') ?>
                         </button>
                     </div>
 
@@ -257,12 +274,12 @@ include '../includes/sidebar.php';
                         <div class="export-item-info">
                             <span class="material-symbols-outlined export-item-icon bill-col">receipt_long</span>
                             <div>
-                                <p class="export-item-title">Bills & Invoices</p>
-                                <p class="export-item-hint">All billing records</p>
+                                <p class="export-item-title"><?= __('billing_invoices') ?></p>
+                                <p class="export-item-hint"><?= __('hint_bills') ?></p>
                             </div>
                         </div>
                         <button class="export-btn" onclick="exportToExcel('bills','HydroFlow_Bills')">
-                            <span class="material-symbols-outlined">download</span> Export
+                            <span class="material-symbols-outlined">download</span> <?= __('export') ?>
                         </button>
                     </div>
 
@@ -270,12 +287,12 @@ include '../includes/sidebar.php';
                         <div class="export-item-info">
                             <span class="material-symbols-outlined export-item-icon payment-col">payments</span>
                             <div>
-                                <p class="export-item-title">Payments</p>
-                                <p class="export-item-hint">Payment tracking data</p>
+                                <p class="export-item-title"><?= __('payments') ?></p>
+                                <p class="export-item-hint"><?= __('hint_payments') ?></p>
                             </div>
                         </div>
                         <button class="export-btn" onclick="exportToExcel('payments','HydroFlow_Payments')">
-                            <span class="material-symbols-outlined">download</span> Export
+                            <span class="material-symbols-outlined">download</span> <?= __('export') ?>
                         </button>
                     </div>
 
@@ -283,12 +300,12 @@ include '../includes/sidebar.php';
                         <div class="export-item-info">
                             <span class="material-symbols-outlined export-item-icon all-col">folder_zip</span>
                             <div>
-                                <p class="export-item-title">Export All</p>
-                                <p class="export-item-hint">All tables in one workbook</p>
+                                <p class="export-item-title"><?= __('export_all') ?></p>
+                                <p class="export-item-hint"><?= __('hint_export_all') ?></p>
                             </div>
                         </div>
                         <button class="export-btn export-all-btn" onclick="exportAllSheets()">
-                            <span class="material-symbols-outlined">download</span> Export All
+                            <span class="material-symbols-outlined">download</span> <?= __('export_all') ?>
                         </button>
                     </div>
 
@@ -313,8 +330,8 @@ include '../includes/sidebar.php';
                     <span class="material-symbols-outlined">upload</span>
                 </div>
                 <div style="flex: 1;">
-                    <h2 class="settings-card-title">Import Data</h2>
-                    <p class="settings-card-desc">Upload an Excel file to import records</p>
+                    <h2 class="settings-card-title"><?= __('import_data') ?></h2>
+                    <p class="settings-card-desc"><?= __('import_data_desc') ?></p>
                 </div>
                 <span class="material-symbols-outlined settings-chevron">expand_more</span>
             </div>
@@ -323,10 +340,10 @@ include '../includes/sidebar.php';
                 <!-- Import Target -->
                 <div class="import-controls">
                     <div class="import-target-wrap">
-                        <label class="settings-row-label" for="importTableSelect">Import into:</label>
+                        <label class="settings-row-label" for="importTableSelect"><?= __('import_into') ?>:</label>
                         <select id="importTableSelect" class="import-select">
-                            <option value="customers">Customers</option>
-                            <option value="motors">Motors</option>
+                            <option value="customers"><?= __('customers') ?></option>
+                            <option value="motors"><?= __('motors') ?></option>
                         </select>
                     </div>
 
@@ -334,9 +351,9 @@ include '../includes/sidebar.php';
                     <div id="dropZone" class="drop-zone">
                         <div class="drop-zone-content" id="dropZoneContent">
                             <span class="material-symbols-outlined drop-zone-icon">upload_file</span>
-                            <p class="drop-zone-label">Drop your Excel file here</p>
-                            <p class="drop-zone-hint">or click to browse</p>
-                            <p class="drop-zone-types">.xlsx, .xls supported</p>
+                            <p class="drop-zone-label"><?= __('drop_file') ?></p>
+                            <p class="drop-zone-hint"><?= __('click_browse') ?></p>
+                            <p class="drop-zone-types"><?= __('supported_formats') ?></p>
                         </div>
                         <input type="file" id="excelImportFile" accept=".xlsx,.xls" style="display:none;">
                     </div>
@@ -344,8 +361,8 @@ include '../includes/sidebar.php';
                     <!-- Template Download -->
                     <div class="import-template-row">
                         <span class="material-symbols-outlined" style="font-size:18px;color:var(--color-primary)">info</span>
-                        <span class="import-template-text">Need a template? </span>
-                        <button class="link-btn" onclick="downloadTemplate()">Download sample Excel</button>
+                        <span class="import-template-text"><?= __('need_template') ?> </span>
+                        <button class="link-btn" onclick="downloadTemplate()"><?= __('download_sample') ?></button>
                     </div>
                 </div>
 
@@ -354,10 +371,10 @@ include '../includes/sidebar.php';
                     <div class="import-preview-header">
                         <p class="import-preview-title">
                             <span class="material-symbols-outlined">table_view</span>
-                            Preview — <span id="importRowCount">0</span> rows found
+                            <?= __('preview') ?> — <span id="importRowCount">0</span> <?= __('rows_found') ?>
                         </p>
                         <button class="btn-ghost-sm" onclick="clearImport()">
-                            <span class="material-symbols-outlined">close</span> Clear
+                            <span class="material-symbols-outlined">close</span> <?= __('clear') ?>
                         </button>
                     </div>
                     <div class="import-preview-table-wrap">
@@ -369,10 +386,10 @@ include '../includes/sidebar.php';
                     <div class="import-actions">
                         <p class="import-warning">
                             <span class="material-symbols-outlined">warning</span>
-                            Duplicate entries may be created if records already exist.
+                            <?= __('import_warning') ?>
                         </p>
                         <button class="btn-import" onclick="confirmImport()" id="confirmImportBtn">
-                            <span class="material-symbols-outlined">check_circle</span> Confirm Import
+                            <span class="material-symbols-outlined">check_circle</span> <?= __('confirm_import') ?>
                         </button>
                     </div>
                 </div>
@@ -385,7 +402,7 @@ include '../includes/sidebar.php';
 <!-- ─── Toast Notification ─────────────────────────────────────── -->
 <div id="settingsToast" class="settings-toast hidden" role="alert">
     <span class="material-symbols-outlined" id="toastIcon">check_circle</span>
-    <span id="toastMsg">Done!</span>
+    <span id="toastMsg"><?= __('toast_done') ?></span>
 </div>
 
 <!-- ─── STYLES (Settings-specific) ───────────────────────────────── -->
@@ -896,6 +913,36 @@ include '../includes/sidebar.php';
 <!-- SheetJS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script>
+const i18n = {
+    darkModeEnabled: '<?= __('dark_mode_enabled') ?>',
+    lightModeEnabled: '<?= __('light_mode_enabled') ?>',
+    uiScaleSet: '<?= __('ui_scale_set') ?>',
+    usernameEmpty: '<?= __('username_empty') ?>',
+    fillAllFields: '<?= __('fill_all_fields') ?>',
+    passMismatch: '<?= __('pass_mismatch') ?>',
+    fetchingData: '<?= __('fetching_data') ?>',
+    buildingExcel: '<?= __('building_excel') ?>',
+    savingFile: '<?= __('saving_file') ?>',
+    exportSuccess: '<?= __('export_success') ?>',
+    exportFailed: '<?= __('export_failed') ?>',
+    prepWorkbook: '<?= __('prep_workbook') ?>',
+    noDataExport: '<?= __('no_data_export') ?>',
+    writingExcel: '<?= __('writing_excel') ?>',
+    sheetsExported: '<?= __('sheets_exported') ?>',
+    importing: '<?= __('importing') ?>',
+    invalidFile: '<?= __('invalid_file') ?>',
+    noDataFile: '<?= __('no_data_file') ?>',
+    moreRows: '<?= __('more_rows') ?>',
+    templateDownloaded: '<?= __('template_downloaded') ?>',
+    strength: [
+        '<?= __('vec_weak') ?>',
+        '<?= __('weak') ?>',
+        '<?= __('fair') ?>',
+        '<?= __('strong') ?>',
+        '<?= __('very_strong') ?>'
+    ]
+};
+
 (function() {
     'use strict';
 
@@ -911,6 +958,12 @@ include '../includes/sidebar.php';
             states[cardId] = card.classList.contains('collapsed');
             localStorage.setItem('settings_collapse_states', JSON.stringify(states));
         }
+    };
+
+    window.setLanguage = function(lang) {
+        const url = new URL(window.location.href);
+        url.searchParams.set('lang', lang);
+        window.location.href = url.href;
     };
 
     // Restore collapse states
@@ -952,7 +1005,7 @@ include '../includes/sidebar.php';
         const theme = this.checked ? 'dark' : 'light';
         localStorage.setItem('hydroTheme', theme);
         applyTheme(theme);
-        showToast(theme === 'dark' ? 'Dark mode enabled' : 'Light mode enabled');
+        showToast(theme === 'dark' ? i18n.darkModeEnabled : i18n.lightModeEnabled);
     });
 
     function applyTheme(theme) {
@@ -980,12 +1033,13 @@ include '../includes/sidebar.php';
         scaleBadge.textContent = val + '%';
     }
     function updatePresetButtons(val) {
-        document.querySelectorAll('.scale-preset-btn').forEach(btn => {
+        document.querySelectorAll('.scale-control .scale-preset-btn').forEach(btn => {
             btn.classList.remove('active');
         });
         const presets = { 80: 0, 100: 1, 115: 2, 130: 3 };
-        if (presets[val] !== undefined) {
-            document.querySelectorAll('.scale-preset-btn')[presets[val]]?.classList.add('active');
+        const buttons = document.querySelectorAll('.scale-control .scale-preset-btn');
+        if (presets[val] !== undefined && buttons[presets[val]]) {
+            buttons[presets[val]].classList.add('active');
         }
     }
 
@@ -995,7 +1049,7 @@ include '../includes/sidebar.php';
         updateScaleBadge(val);
         updatePresetButtons(val);
         localStorage.setItem('hydroScale', val);
-        showToast('UI Scale set to ' + val + '%');
+        showToast(i18n.uiScaleSet + ' ' + val + '%');
     };
 
     /* ══════════════════════════════════════════════════════
@@ -1024,7 +1078,7 @@ include '../includes/sidebar.php';
 
     window.updateUsername = async function() {
         const newUser = document.getElementById('newUsername').value.trim();
-        if (!newUser) { showToast('Username cannot be empty.', true); return; }
+        if (!newUser) { showToast(i18n.usernameEmpty, true); return; }
         const fd = new FormData();
         fd.append('action', 'update_username');
         fd.append('username', newUser);
@@ -1046,8 +1100,8 @@ include '../includes/sidebar.php';
         const cur  = document.getElementById('currentPass').value;
         const nw   = document.getElementById('newPass').value;
         const conf = document.getElementById('confirmPass').value;
-        if (!cur || !nw || !conf) { showToast('Please fill in all password fields.', true); return; }
-        if (nw !== conf) { showToast('New password and confirm password do not match.', true); return; }
+        if (!cur || !nw || !conf) { showToast(i18n.fillAllFields, true); return; }
+        if (nw !== conf) { showToast(i18n.passMismatch, true); return; }
         const fd = new FormData();
         fd.append('action', 'update_password');
         fd.append('current_password', cur);
@@ -1106,9 +1160,23 @@ include '../includes/sidebar.php';
         const lvl = levels[Math.min(strength, 4)];
         fill.style.width      = lvl.pct;
         fill.style.background = lvl.color;
-        lbl.textContent       = lvl.label;
+        lbl.textContent       = i18n.strength[Math.min(strength, 4)];
         lbl.style.color       = lvl.color;
     });
+
+    window.setLanguage = function(lang) {
+        fetch(baseUrl + 'controllers/update_language.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: 'lang=' + lang
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.status === 'success') {
+                window.location.reload();
+            }
+        });
+    };
 
     window.exportToExcel = async function(table, filename) {
         showProgress(true, 'Fetching ' + table + ' data…');
@@ -1121,12 +1189,12 @@ include '../includes/sidebar.php';
             styleWorksheet(ws, data);
             const wb  = XLSX.utils.book_new();
             XLSX.utils.book_append_sheet(wb, ws, table.charAt(0).toUpperCase() + table.slice(1));
-            updateProgress(90, 'Saving file…');
+            updateProgress(90, i18n.savingFile);
             XLSX.writeFile(wb, filename + '_' + today() + '.xlsx');
             updateProgress(100, 'Done!');
-            showToast(filename + ' exported successfully!');
+            showToast(filename + ' ' + i18n.exportSuccess);
         } catch(e) {
-            showToast('Export failed: ' + e.message, true);
+            showToast(i18n.exportFailed + ' ' + e.message, true);
         } finally {
             setTimeout(() => showProgress(false), 1500);
         }
@@ -1220,7 +1288,7 @@ include '../includes/sidebar.php';
     function handleFile(file) {
         const ext = file.name.split('.').pop().toLowerCase();
         if (!['xlsx','xls'].includes(ext)) {
-            showToast('Please upload a valid .xlsx or .xls file', true);
+            showToast(i18n.invalidFile, true);
             return;
         }
         const reader = new FileReader();
@@ -1235,7 +1303,7 @@ include '../includes/sidebar.php';
 
     function renderPreview(rows) {
         if (!rows || rows.length === 0) {
-            showToast('No data found in the file', true);
+            showToast(i18n.noDataFile, true);
             return;
         }
         const headers = Object.keys(rows[0]);
@@ -1250,7 +1318,7 @@ include '../includes/sidebar.php';
             '<tr>' + headers.map(h => `<td>${row[h] ?? ''}</td>`).join('') + '</tr>'
         ).join('');
         if (rows.length > 10) {
-            tbody.innerHTML += `<tr><td colspan="${headers.length}" style="text-align:center;color:var(--color-on-surface-variant);font-style:italic;padding:0.5rem">... and ${rows.length - 10} more rows</td></tr>`;
+            tbody.innerHTML += `<tr><td colspan="${headers.length}" style="text-align:center;color:var(--color-on-surface-variant);font-style:italic;padding:0.5rem">... and ${rows.length - 10} ${i18n.moreRows}</td></tr>`;
         }
         document.getElementById('importPreviewSection').classList.remove('hidden');
     }
@@ -1266,7 +1334,7 @@ include '../includes/sidebar.php';
         const table = document.getElementById('importTableSelect').value;
         const btn   = document.getElementById('confirmImportBtn');
         btn.disabled = true;
-        btn.innerHTML = '<span class="material-symbols-outlined" style="animation:spin 1s linear infinite">autorenew</span> Importing…';
+        btn.innerHTML = `<span class="material-symbols-outlined" style="animation:spin 1s linear infinite">autorenew</span> ${i18n.importing}`;
 
         try {
             const fd = new FormData();
@@ -1281,10 +1349,10 @@ include '../includes/sidebar.php';
                 showToast(resp.message, true);
             }
         } catch(e) {
-            showToast('Import failed: ' + e.message, true);
+            showToast(i18n.exportFailed + ' ' + e.message, true);
         } finally {
             btn.disabled = false;
-            btn.innerHTML = '<span class="material-symbols-outlined">check_circle</span> Confirm Import';
+            btn.innerHTML = `<span class="material-symbols-outlined">check_circle</span> <?= __('confirm_import') ?>`;
         }
     };
 
@@ -1303,7 +1371,7 @@ include '../includes/sidebar.php';
         const wb   = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb, ws, 'Template');
         XLSX.writeFile(wb, 'HydroFlow_' + table + '_template.xlsx');
-        showToast('📄 Template downloaded!');
+        showToast('📄 ' + i18n.templateDownloaded);
     };
 
     /* ══════════════════════════════════════════════════════

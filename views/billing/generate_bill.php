@@ -39,18 +39,18 @@ $supply = $result->fetch_assoc();
 <div class="flex" style="justify-content: space-between; align-items: flex-end; margin-bottom: 2rem; margin-top: 1rem;">
     <div>
         <nav class="breadcrumb">
-            <span>Directory</span>
+            <span><?= __('directory') ?></span>
             <span class="material-symbols-outlined" style="font-size: 0.875rem;">chevron_right</span>
-            <a href="../supply/supply_history.php">Supply</a>
+            <a href="../supply/supply_history.php"><?= __('supply_record') ?></a>
             <span class="material-symbols-outlined" style="font-size: 0.875rem;">chevron_right</span>
-            <span style="color: var(--color-primary); font-weight: 500;">Generate Bill</span>
+            <span style="color: var(--color-primary); font-weight: 500;"><?= __('generate_bill') ?></span>
         </nav>
-        <h2 style="font-size: 1.875rem; font-family: var(--font-headline); font-weight: 800; color: var(--color-on-surface); letter-spacing: -0.025em; margin-bottom: 0.5rem;">Confirm Bill Generation</h2>
-        <p style="font-size: 1rem; color: var(--color-on-surface-variant); max-width: 40rem;">Review supply details before creating the final invoice.</p>
+        <h2 style="font-size: 1.875rem; font-family: var(--font-headline); font-weight: 800; color: var(--color-on-surface); letter-spacing: -0.025em; margin-bottom: 0.5rem;"><?= __('confirm_bill_generation') ?></h2>
+        <p style="font-size: 1rem; color: var(--color-on-surface-variant); max-width: 40rem;"><?= __('bill_gen_desc') ?></p>
     </div>
     <a href="../supply/supply_history.php" class="btn-secondary" style="display: flex; align-items: center; gap: 0.5rem; text-decoration: none;">
         <span class="material-symbols-outlined" style="font-size: 1.25rem;">close</span>
-        <span>Cancel</span>
+        <span><?= __('cancel') ?></span>
     </a>
 </div>
 
@@ -59,12 +59,12 @@ $supply = $result->fetch_assoc();
     <div style="padding: 3rem;">
         <div style="text-align: center; margin-bottom: 2.5rem;">
             <h3 style="font-size: 1.75rem; font-weight: 800; font-family: var(--font-headline); color: var(--color-primary); margin: 0;">HydroFlow</h3>
-            <p style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.2em; color: var(--color-outline); font-weight: 700; margin-top: 0.25rem;">Proforma Invoice Preview</p>
+            <p style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.2em; color: var(--color-outline); font-weight: 700; margin-top: 0.25rem;"><?= __('invoice_preview') ?></p>
         </div>
         
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid rgba(112, 120, 129, 0.1);">
             <div>
-                <h6 style="font-size: 0.625rem; text-transform: uppercase; font-weight: 800; color: var(--color-on-surface-variant); letter-spacing: 0.15em; margin-bottom: 0.75rem;">Billed To:</h6>
+                <h6 style="font-size: 0.625rem; text-transform: uppercase; font-weight: 800; color: var(--color-on-surface-variant); letter-spacing: 0.15em; margin-bottom: 0.75rem;"><?= __('billed_to') ?>:</h6>
                 <div style="display: flex; flex-direction: column; gap: 0.25rem;">
                     <p style="font-size: 1.125rem; font-weight: 700; color: var(--color-on-surface); margin: 0;"><?= htmlspecialchars($supply['farmer_name']) ?></p>
                     <p style="font-size: 0.875rem; color: var(--color-on-surface-variant); margin: 0;"><?= htmlspecialchars($supply['village']) ?></p>
@@ -72,26 +72,26 @@ $supply = $result->fetch_assoc();
                 </div>
             </div>
             <div style="text-align: right;">
-                <h6 style="font-size: 0.625rem; text-transform: uppercase; font-weight: 800; color: var(--color-on-surface-variant); letter-spacing: 0.15em; margin-bottom: 0.75rem;">Supply Details:</h6>
+                <h6 style="font-size: 0.625rem; text-transform: uppercase; font-weight: 800; color: var(--color-on-surface-variant); letter-spacing: 0.15em; margin-bottom: 0.75rem;"><?= __('supply_details') ?>:</h6>
                 <div style="display: flex; flex-direction: column; gap: 0.25rem;">
-                    <p style="font-size: 0.875rem; color: var(--color-on-surface-variant); margin: 0;"><span style="font-weight: 600; margin-right: 0.5rem;">Date:</span> <?= date('d M, Y', strtotime($supply['date'])) ?></p>
-                    <p style="font-size: 0.875rem; color: var(--color-on-surface-variant); margin: 0;"><span style="font-weight: 600; margin-right: 0.5rem;">Motor:</span> <?= htmlspecialchars($supply['motor_name']) ?></p>
-                    <p style="font-size: 0.875rem; color: var(--color-on-surface-variant); margin: 0;"><span style="font-weight: 600; margin-right: 0.5rem;">Time:</span> <?= date('h:i A', strtotime($supply['start_time'])) ?> - <?= date('h:i A', strtotime($supply['end_time'])) ?></p>
+                    <p style="font-size: 0.875rem; color: var(--color-on-surface-variant); margin: 0;"><span style="font-weight: 600; margin-right: 0.5rem;"><?= __('th_date') ?>:</span> <?= date('d M, Y', strtotime($supply['date'])) ?></p>
+                    <p style="font-size: 0.875rem; color: var(--color-on-surface-variant); margin: 0;"><span style="font-weight: 600; margin-right: 0.5rem;"><?= __('th_motor_used') ?>:</span> <?= htmlspecialchars($supply['motor_name']) ?></p>
+                    <p style="font-size: 0.875rem; color: var(--color-on-surface-variant); margin: 0;"><span style="font-weight: 600; margin-right: 0.5rem;"><?= __('th_duration') ?>:</span> <?= date('h:i A', strtotime($supply['start_time'])) ?> - <?= date('h:i A', strtotime($supply['end_time'])) ?></p>
                 </div>
             </div>
         </div>
 
         <div style="background: var(--color-surface-container-low); border-radius: 1rem; padding: 1.5rem; margin-bottom: 2.5rem; border: 1px solid rgba(112, 120, 129, 0.1);">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                <span style="font-size: 0.875rem; font-weight: 600; color: var(--color-on-surface-variant);">Usage (Hours)</span>
+                <span style="font-size: 0.875rem; font-weight: 600; color: var(--color-on-surface-variant);"><?= __('usage_hours') ?></span>
                 <span style="font-weight: 700; color: var(--color-on-surface);"><?= number_format($supply['total_hours'], 2) ?> h</span>
             </div>
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; border-bottom: 1px solid rgba(112, 120, 129, 0.1); padding-bottom: 1rem;">
-                <span style="font-size: 0.875rem; font-weight: 600; color: var(--color-on-surface-variant);">Rate/Hour</span>
+                <span style="font-size: 0.875rem; font-weight: 600; color: var(--color-on-surface-variant);"><?= __('rate_per_hour') ?></span>
                 <span style="font-weight: 700; color: var(--color-on-surface);">₹<?= number_format($supply['rate'], 2) ?></span>
             </div>
             <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem;">
-                <span style="font-size: 1.125rem; font-weight: 800; font-family: var(--font-headline); color: var(--color-primary);">Est. Amount</span>
+                <span style="font-size: 1.125rem; font-weight: 800; font-family: var(--font-headline); color: var(--color-primary);"><?= __('est_amount') ?></span>
                 <span style="font-size: 1.75rem; font-weight: 900; font-family: var(--font-headline); color: var(--color-primary);">₹<?= number_format($supply['total_amount'], 2) ?></span>
             </div>
         </div>
@@ -105,7 +105,7 @@ $supply = $result->fetch_assoc();
             
             <button type="submit" name="generate_bill" class="btn bg-gradient-primary" style="width: 100%; padding: 1.25rem; border-radius: 0.875rem; font-size: 1rem; box-shadow: 0 12px 24px -6px rgba(0, 93, 144, 0.3);">
                 <span class="material-symbols-outlined" style="font-size: 1.5rem;">receipt_long</span>
-                Generate Final Bill
+                <?= __('generate_final_bill') ?>
             </button>
         </form>
     </div>

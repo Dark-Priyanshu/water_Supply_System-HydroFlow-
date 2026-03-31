@@ -35,20 +35,7 @@
                     "dom": "<'dt-container-row'lf>" +
                            "<'table-container'tr>" +
                            "<'dt-container-row'ip>",
-                    "language": {
-                        "search": "_INPUT_",
-                        "searchPlaceholder": "Search records...",
-                        "emptyTable": `<div class="dt-empty-state">
-                            <span class="material-symbols-outlined dt-empty-icon">folder_off</span>
-                            <p style="font-size: 0.9375rem; font-weight: 600; color: var(--color-on-surface-variant);">No records available.</p>
-                            <p style="font-size: 0.75rem; color: var(--color-outline); margin-top: 0.25rem;">Try adjusting your filters or adding new data.</p>
-                        </div>`,
-                        "zeroRecords": `<div class="dt-empty-state">
-                            <span class="material-symbols-outlined dt-empty-icon">search_off</span>
-                            <p style="font-size: 0.9375rem; font-weight: 600; color: var(--color-on-surface-variant);">No matching records found.</p>
-                            <p style="font-size: 0.75rem; color: var(--color-outline); margin-top: 0.25rem;">Please try a different search query.</p>
-                        </div>`
-                    }
+                    "language": dtLanguage
                 });
             }
             // Bind top global search to DataTables and generic cards

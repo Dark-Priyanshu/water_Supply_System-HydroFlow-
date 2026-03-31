@@ -15,7 +15,7 @@ $chart_data = [];
 for ($i = 6; $i >= 0; $i--) {
     $date = date('Y-m-d', strtotime("-$i days"));
     $label = date('D', strtotime($date));
-    if ($i == 0) $label = 'Today';
+    if ($i == 0) $label = __('today');
     $chart_labels[] = $label;
     
     $res = $conn->query("SELECT SUM(total_hours) as hours FROM water_supply WHERE date = '$date'")->fetch_assoc();
@@ -35,12 +35,12 @@ $recent_logs = $conn->query("SELECT ws.*, c.farmer_name as customer_name, m.moto
     <!-- Total Customers -->
     <div class="card stat-card card-h-40">
         <div class="flex" style="justify-content: space-between; align-items: flex-start;">
-            <p class="stat-label">Total Customers</p>
+            <p class="stat-label"><?= __('total_customers') ?></p>
             <span class="material-symbols-outlined text-primary stat-icon bg-primary-fixed">groups</span>
         </div>
         <div>
             <h3 class="stat-value"><?= $customers_count ?></h3>
-            <p style="font-size: 0.75rem; color: var(--color-secondary); font-weight: 600; margin-top: 0.25rem;">Registered clients</p>
+            <p style="font-size: 0.75rem; color: var(--color-secondary); font-weight: 600; margin-top: 0.25rem;"><?= __('reg_clients') ?></p>
         </div>
         <div class="absolute" style="bottom: 0; left: 0; right: 0; height: 33%; opacity: 0.4; pointer-events: none; background: linear-gradient(180deg, rgba(44, 105, 78, 0) 0%, rgba(44, 105, 78, 0.05) 100%);"></div>
     </div>
@@ -48,12 +48,12 @@ $recent_logs = $conn->query("SELECT ws.*, c.farmer_name as customer_name, m.moto
     <!-- Total Motors -->
     <div class="card stat-card card-h-40">
         <div class="flex" style="justify-content: space-between; align-items: flex-start;">
-            <p class="stat-label">Total Motors</p>
+            <p class="stat-label"><?= __('total_motors') ?></p>
             <span class="material-symbols-outlined text-secondary stat-icon bg-secondary-fixed">water_pump</span>
         </div>
         <div>
             <h3 class="stat-value"><?= $motors_count ?></h3>
-            <p style="font-size: 0.75rem; color: var(--color-on-surface-variant); margin-top: 0.25rem;">Active pumps/borewells</p>
+            <p style="font-size: 0.75rem; color: var(--color-on-surface-variant); margin-top: 0.25rem;"><?= __('active_pumps') ?></p>
         </div>
         <div class="absolute" style="bottom: 0; left: 0; right: 0; height: 33%; opacity: 0.4; pointer-events: none; background: linear-gradient(180deg, rgba(44, 105, 78, 0) 0%, rgba(44, 105, 78, 0.05) 100%);"></div>
     </div>
@@ -61,12 +61,12 @@ $recent_logs = $conn->query("SELECT ws.*, c.farmer_name as customer_name, m.moto
     <!-- Total Hours Supplied -->
     <div class="card stat-card card-h-40">
         <div class="flex" style="justify-content: space-between; align-items: flex-start;">
-            <p class="stat-label">Today's Hours</p>
+            <p class="stat-label"><?= __('todays_hours') ?></p>
             <span class="material-symbols-outlined text-tertiary stat-icon bg-tertiary-fixed">speed</span>
         </div>
         <div>
-            <h3 class="stat-value"><?= number_format($today_supply['hours'], 2) ?> <span style="font-size: 1.125rem; font-weight: 500; color: var(--color-on-surface-variant);">Hrs</span></h3>
-            <p style="font-size: 0.75rem; color: var(--color-secondary); font-weight: 600; margin-top: 0.25rem;">Water supply today</p>
+            <h3 class="stat-value"><?= number_format($today_supply['hours'], 2) ?> <span style="font-size: 1.125rem; font-weight: 500; color: var(--color-on-surface-variant);"><?= __('hours') ?></span></h3>
+            <p style="font-size: 0.75rem; color: var(--color-secondary); font-weight: 600; margin-top: 0.25rem;"><?= __('water_supply_today') ?></p>
         </div>
         <div class="absolute" style="bottom: 0; left: 0; right: 0; height: 33%; opacity: 0.4; pointer-events: none; background: linear-gradient(180deg, rgba(44, 105, 78, 0) 0%, rgba(44, 105, 78, 0.05) 100%);"></div>
     </div>
@@ -74,12 +74,12 @@ $recent_logs = $conn->query("SELECT ws.*, c.farmer_name as customer_name, m.moto
     <!-- Today's Revenue -->
     <div class="card stat-card card-h-40">
         <div class="flex" style="justify-content: space-between; align-items: flex-start;">
-            <p class="stat-label">Today's Revenue</p>
+            <p class="stat-label"><?= __('todays_revenue') ?></p>
             <span class="material-symbols-outlined text-on-secondary-container stat-icon bg-secondary-container">payments</span>
         </div>
         <div>
             <h3 class="stat-value">₹<?= number_format($today_supply['rev'], 2) ?></h3>
-            <p style="font-size: 0.75rem; color: var(--color-on-surface-variant); margin-top: 0.25rem;">Collection today</p>
+            <p style="font-size: 0.75rem; color: var(--color-on-surface-variant); margin-top: 0.25rem;"><?= __('collection_today') ?></p>
         </div>
         <div class="absolute" style="bottom: 0; left: 0; right: 0; height: 33%; opacity: 0.4; pointer-events: none; background: linear-gradient(180deg, rgba(44, 105, 78, 0) 0%, rgba(44, 105, 78, 0.05) 100%);"></div>
     </div>
@@ -96,8 +96,8 @@ $recent_logs = $conn->query("SELECT ws.*, c.farmer_name as customer_name, m.moto
         <!-- Quick Actions -->
         <div class="card" style="padding: 2rem; height: 100%;">
             <div style="margin-bottom: 1.5rem;">
-                <h4 style="font-size: 1.125rem;">Quick Actions</h4>
-                <p style="font-size: 0.875rem; color: var(--color-on-surface-variant);">Common tasks</p>
+                <h4 style="font-size: 1.125rem;"><?= __('quick_actions') ?></h4>
+                <p style="font-size: 0.875rem; color: var(--color-on-surface-variant);"><?= __('common_tasks') ?></p>
             </div>
             <div style="display: flex; flex-direction: column; gap: 1rem; flex: 1; justify-content: center;">
                 <a href="<?= BASE_URL ?>views/supply/add_supply.php" class="flex" style="align-items: center; gap: 1rem; padding: 1rem; border: 1px solid rgba(191, 199, 209, 0.3); border-radius: 0.75rem;">
@@ -105,8 +105,8 @@ $recent_logs = $conn->query("SELECT ws.*, c.farmer_name as customer_name, m.moto
                         <span class="material-symbols-outlined">waves</span>
                     </div>
                     <div>
-                        <h5 style="font-weight: 700;">New Water Supply</h5>
-                        <p style="font-size: 0.75rem; color: var(--color-on-surface-variant);">Record a new supply log</p>
+                        <h5 style="font-weight: 700;"><?= __('new_supply') ?></h5>
+                        <p style="font-size: 0.75rem; color: var(--color-on-surface-variant);"><?= __('new_supply_desc') ?></p>
                     </div>
                 </a>
                 <a href="<?= BASE_URL ?>views/billing/generate_bill.php" class="flex" style="align-items: center; gap: 1rem; padding: 1rem; border: 1px solid rgba(191, 199, 209, 0.3); border-radius: 0.75rem;">
@@ -114,8 +114,8 @@ $recent_logs = $conn->query("SELECT ws.*, c.farmer_name as customer_name, m.moto
                         <span class="material-symbols-outlined">receipt_long</span>
                     </div>
                     <div>
-                        <h5 style="font-weight: 700;">Generate Bill</h5>
-                        <p style="font-size: 0.75rem; color: var(--color-on-surface-variant);">Create invoices for customers</p>
+                        <h5 style="font-weight: 700;"><?= __('generate_bill') ?></h5>
+                        <p style="font-size: 0.75rem; color: var(--color-on-surface-variant);"><?= __('gen_bill_desc') ?></p>
                     </div>
                 </a>
                 <a href="<?= BASE_URL ?>views/customers/add_customer.php" class="flex" style="align-items: center; gap: 1rem; padding: 1rem; border: 1px solid rgba(191, 199, 209, 0.3); border-radius: 0.75rem;">
@@ -123,8 +123,8 @@ $recent_logs = $conn->query("SELECT ws.*, c.farmer_name as customer_name, m.moto
                         <span class="material-symbols-outlined">person_add</span>
                     </div>
                     <div>
-                        <h5 style="font-weight: 700;">Add Customer</h5>
-                        <p style="font-size: 0.75rem; color: var(--color-on-surface-variant);">Register a new client or farm</p>
+                        <h5 style="font-weight: 700;"><?= __('add_customer') ?></h5>
+                        <p style="font-size: 0.75rem; color: var(--color-on-surface-variant);"><?= __('add_cust_desc') ?></p>
                     </div>
                 </a>
             </div>
@@ -133,8 +133,8 @@ $recent_logs = $conn->query("SELECT ws.*, c.farmer_name as customer_name, m.moto
         <!-- Chart -->
         <div class="card" style="padding: 2rem;">
             <div style="margin-bottom: 1.5rem;">
-                <h4 style="font-size: 1.125rem;">Weekly Supply Hours</h4>
-                <p style="font-size: 0.875rem; color: var(--color-on-surface-variant);">Trends over the last 7 days</p>
+                <h4 style="font-size: 1.125rem;"><?= __('weekly_trend') ?></h4>
+                <p style="font-size: 0.875rem; color: var(--color-on-surface-variant);"><?= __('weekly_trend_desc') ?></p>
             </div>
             <div style="width: 100%;">
                 <canvas id="supplyChart" height="150"></canvas>
@@ -146,20 +146,20 @@ $recent_logs = $conn->query("SELECT ws.*, c.farmer_name as customer_name, m.moto
 <!-- Recent Supply Logs Table -->
 <section class="table-container shadow-sm">
     <div class="table-header">
-        <h4 style="font-size: 1.125rem;">Recent Supply Logs</h4>
+        <h4 style="font-size: 1.125rem;"><?= __('recent_supply') ?></h4>
         <a href="<?= BASE_URL ?>views/supply/add_supply.php" class="btn btn-primary" style="padding: 0.5rem 1rem;">
-            <span class="material-symbols-outlined" style="font-size: 1rem;">add</span> New Entry
+            <span class="material-symbols-outlined" style="font-size: 1rem;">add</span> <?= __('new_entry') ?>
         </a>
     </div>
     <div style="overflow-x: auto;">
         <table class="table-custom">
             <thead>
                 <tr>
-                    <th style="padding-left: 2rem;">Farm / Customer</th>
-                    <th>Pump Source</th>
-                    <th>Date & Time</th>
-                    <th>Duration</th>
-                    <th style="padding-right: 2rem; text-align: right;">Amount</th>
+                    <th style="padding-left: 2rem; white-space: nowrap;"><?= __('th_customer') ?></th>
+                    <th style="white-space: nowrap;"><?= __('pump_source') ?></th>
+                    <th style="white-space: nowrap;"><?= __('th_date') ?> / <?= __('time') ?></th>
+                    <th style="white-space: nowrap;"><?= __('th_duration') ?></th>
+                    <th style="padding-right: 2rem; text-align: right; white-space: nowrap;"><?= __('th_amount') ?></th>
                 </tr>
             </thead>
             <tbody>
@@ -175,11 +175,11 @@ $recent_logs = $conn->query("SELECT ws.*, c.farmer_name as customer_name, m.moto
                                 </div>
                             </td>
                             <td style="color: var(--color-on-surface-variant);"><?= htmlspecialchars($log['motor_name']) ?></td>
-                            <td style="color: var(--color-on-surface-variant);">
+                            <td style="color: var(--color-on-surface-variant); white-space: nowrap;">
                                 <?= date('M d, Y', strtotime($log['date'])) ?><br>
                                 <span style="font-size: 0.75rem;"><?= date('h:i A', strtotime($log['start_time'])) ?></span>
                             </td>
-                            <td style="color: var(--color-on-surface-variant);"><?= number_format($log['total_hours'], 2) ?> Hours</td>
+                            <td style="color: var(--color-on-surface-variant); white-space: nowrap;"><?= number_format($log['total_hours'], 2) ?> <?= __('hours') ?></td>
                             <td style="padding-right: 2rem; text-align: right; font-weight: 600; color: var(--color-secondary);">
                                 ₹<?= number_format($log['total_amount'], 2) ?>
                             </td>
@@ -187,14 +187,14 @@ $recent_logs = $conn->query("SELECT ws.*, c.farmer_name as customer_name, m.moto
                     <?php endwhile; ?>
                 <?php else: ?>
                     <tr>
-                        <td colspan="5" style="padding: 2rem; text-align: center; color: var(--color-on-surface-variant);">No recent supply logs found.</td>
+                        <td colspan="5" style="padding: 2rem; text-align: center; color: var(--color-on-surface-variant);"><?= __('no_logs_found') ?></td>
                     </tr>
                 <?php endif; ?>
             </tbody>
         </table>
     </div>
     <div style="padding: 1rem 2rem; background-color: rgba(242, 244, 246, 0.1);">
-        <a href="<?= BASE_URL ?>views/supply/supply_history.php" style="color: var(--color-primary); font-weight: 600; font-size: 0.875rem;">View All History</a>
+        <a href="<?= BASE_URL ?>views/supply/supply_history.php" style="color: var(--color-primary); font-weight: 600; font-size: 0.875rem;"><?= __('view_all') ?></a>
     </div>
 </section>
 
@@ -213,7 +213,7 @@ document.addEventListener("DOMContentLoaded", function() {
             data: {
                 labels: <?= json_encode($chart_labels) ?>,
                 datasets: [{
-                    label: 'Hours Supplied',
+                    label: '<?= __('hours_supplied') ?>',
                     data: <?= json_encode($chart_data) ?>,
                     backgroundColor: 'rgba(0, 93, 144, 0.2)', // primary color with opacity
                     borderColor: 'rgba(0, 93, 144, 1)',

@@ -30,8 +30,34 @@ if (!defined('BASE_URL')) {
     define('BASE_URL', $protocol . "://" . $host . $base_path . '/');
 }
 
-// Session security
+// Session security & preferences
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
+}
+
+// Multi-language Support
+if (isset($_GET['lang'])) {
+    $requested_lang = $_GET['lang'];
+    if (in_array($requested_lang, ['en', 'hi'])) {
+        $_SESSION['lang'] = $requested_lang;
+    }
+    // Redirect to clear the GET parameter from URL
+    $clean_url = strtok($_SERVER['REQUEST_URI'], '?');
+    header("Location: " . $clean_url);
+    exit();
+}
+
+if (!isset($_SESSION['lang'])) {
+    $_SESSION['lang'] = 'en'; // Default language
+}
+
+$lang = $_SESSION['lang'];
+$lang_file = __DIR__ . "/../lang/{$lang}.php";
+$translations = file_exists($lang_file) ? include $lang_file : include __DIR__ . '/../lang/en.php';
+
+// Global translation helper function
+function __($key, $default = null) {
+    global $translations;
+    return $translations[$key] ?? ($default ?? $key);
 }
 ?>

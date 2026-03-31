@@ -52,11 +52,11 @@ if($summary_query) {
     <div class="flex action-bar-row" style="width: 100%; justify-content: space-between; gap: 1rem;">
         <div>
             <nav class="flex" style="align-items: center; gap: 0.5rem; font-size: 0.75rem; color: var(--color-on-surface-variant); margin-bottom: 0.5rem;">
-                <span>Analytics</span>
+                <span><?= __('analytics') ?></span>
                 <span class="material-symbols-outlined" style="font-size: 0.875rem;">chevron_right</span>
-                <span style="color: var(--color-primary); font-weight: 500;">Daily Report</span>
+                <span style="color: var(--color-primary); font-weight: 500;"><?= __('daily_report') ?></span>
             </nav>
-            <h2 style="font-size: 2.25rem; font-family: var(--font-headline); font-weight: 800; color: var(--color-on-surface); letter-spacing: -0.025em;">Supply Report</h2>
+            <h2 style="font-size: 2.25rem; font-family: var(--font-headline); font-weight: 800; color: var(--color-on-surface); letter-spacing: -0.025em;"><?= __('supply_report') ?></h2>
         </div>
         
         <div class="flex" style="align-items: center; gap: 0.75rem;">
@@ -65,7 +65,7 @@ if($summary_query) {
             </form>
             <button class="btn" style="padding: 0.625rem 1.25rem; background-color: var(--color-surface-container-lowest); color: var(--color-on-surface-variant); border: 1px solid rgba(112, 120, 129, 0.2); border-radius: 0.75rem; display: flex; align-items: center; gap: 0.5rem;" onclick="window.print()">
                 <span class="material-symbols-outlined" style="font-size: 1.25rem;">print</span>
-                <span>Print</span>
+                <span><?= __('print') ?></span>
             </button>
         </div>
     </div>
@@ -79,10 +79,10 @@ if($summary_query) {
     <div class="report-paper" style="padding: 3rem;">
         <!-- Header -->
         <div style="text-align: center; border-bottom: 1px solid rgba(112, 120, 129, 0.2); padding-bottom: 2rem; margin-bottom: 2rem;">
-            <h3 style="font-size: 2rem; font-weight: 800; color: var(--color-primary); font-family: var(--font-headline); letter-spacing: -0.025em; margin-bottom: 0.5rem;">Daily Supply Report</h3>
-            <p style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; color: var(--color-on-surface-variant);">HydroFlow Management System</p>
+            <h3 style="font-size: 2rem; font-weight: 800; color: var(--color-primary); font-family: var(--font-headline); letter-spacing: -0.025em; margin-bottom: 0.5rem;"><?= __('title_daily_supply_report') ?></h3>
+            <p style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; color: var(--color-on-surface-variant);"><?= __('title_hydroflow_management') ?></p>
             <div style="display: inline-block; margin-top: 1rem; padding: 0.5rem 1.5rem; background-color: var(--color-surface-container-high); border-radius: 9999px; border: 1px solid rgba(112, 120, 129, 0.2);">
-                <span style="font-size: 0.875rem; font-weight: 500; color: var(--color-on-surface-variant); margin-right: 0.5rem;">Date:</span>
+                <span style="font-size: 0.875rem; font-weight: 500; color: var(--color-on-surface-variant); margin-right: 0.5rem;"><?= __('lbl_date') ?>:</span>
                 <span style="font-size: 0.875rem; font-weight: 800; color: var(--color-on-surface);"><?= date('F d, Y', strtotime($date)) ?></span>
             </div>
         </div>
@@ -100,8 +100,8 @@ if($summary_query) {
                         <span class="material-symbols-outlined" style="font-size: 2rem;">timer</span>
                     </div>
                     <div>
-                        <h5 style="font-size: 0.625rem; font-weight: 700; color: var(--color-on-surface-variant); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.25rem;">Total Hours Supplied</h5>
-                        <h2 style="font-size: 1.875rem; font-family: var(--font-headline); font-weight: 800; color: var(--color-primary);"><?= number_format($summary['hours'] ?? 0, 2) ?> <span style="font-size: 1.125rem; font-weight: 500; opacity: 0.7;">Hrs</span></h2>
+                        <h5 style="font-size: 0.625rem; font-weight: 700; color: var(--color-on-surface-variant); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.25rem;"><?= __('total_hours_supplied') ?></h5>
+                        <h2 style="font-size: 1.875rem; font-family: var(--font-headline); font-weight: 800; color: var(--color-primary);"><?= number_format($summary['hours'] ?? 0, 2) ?> <span style="font-size: 1.125rem; font-weight: 500; opacity: 0.7;"><?= __('hours') ?></span></h2>
                     </div>
                 </div>
                 
@@ -110,7 +110,7 @@ if($summary_query) {
                         <span class="material-symbols-outlined" style="font-size: 2rem;">payments</span>
                     </div>
                     <div>
-                        <h5 style="font-size: 0.625rem; font-weight: 700; color: var(--color-on-surface-variant); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.25rem;">Total Revenue Generated</h5>
+                        <h5 style="font-size: 0.625rem; font-weight: 700; color: var(--color-on-surface-variant); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.25rem;"><?= __('total_revenue_generated') ?></h5>
                         <h2 style="font-size: 1.875rem; font-family: var(--font-headline); font-weight: 800; color: var(--color-secondary);">₹<?= number_format($summary['amount'] ?? 0, 2) ?></h2>
                     </div>
                 </div>
@@ -122,11 +122,11 @@ if($summary_query) {
             <table class="table-custom" style="width: 100%; text-align: left; background-color: white;">
                 <thead style="background-color: var(--color-surface-container-low); border-bottom: 1px solid rgba(112, 120, 129, 0.2);">
                     <tr>
-                        <th style="padding-left: 1.5rem;">Time Slot</th>
-                        <th>Customer</th>
-                        <th>Motor / Pump</th>
-                        <th style="text-align: center;">Duration</th>
-                        <th style="padding-right: 1.5rem; text-align: right;">Amount Billed</th>
+                        <th style="padding-left: 1.5rem;"><?= __('th_time_slot') ?></th>
+                        <th><?= __('th_customer') ?></th>
+                        <th><?= __('th_motor_pump') ?></th>
+                        <th style="text-align: center;"><?= __('th_duration') ?></th>
+                        <th style="padding-right: 1.5rem; text-align: right;"><?= __('th_amount_billed') ?></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -136,8 +136,8 @@ if($summary_query) {
                             <td style="padding-left: 1.5rem; color: var(--color-on-surface-variant); font-size: 0.875rem; font-weight: 500;">
                                 <?= date('h:i A', strtotime($row['start_time'])) ?> - <?= date('h:i A', strtotime($row['end_time'])) ?>
                             </td>
-                            <td style="font-weight: 700; font-size: 0.875rem;"><?= htmlspecialchars($row['farmer_name'] ?? 'N/A') ?></td>
-                            <td style="font-size: 0.875rem; color: var(--color-on-surface-variant);"><?= htmlspecialchars($row['motor_name'] ?? 'N/A') ?></td>
+                            <td style="font-weight: 700; font-size: 0.875rem;"><?= htmlspecialchars($row['farmer_name'] ?? __('na_placeholder')) ?></td>
+                            <td style="font-size: 0.875rem; color: var(--color-on-surface-variant);"><?= htmlspecialchars($row['motor_name'] ?? __('na_placeholder')) ?></td>
                             <td style="text-align: center; font-weight: 700; font-size: 0.875rem; color: var(--color-primary);"><?= number_format($row['total_hours'], 2) ?> h</td>
                             <td style="padding-right: 1.5rem; text-align: right; font-weight: 800; font-size: 0.875rem; color: var(--color-secondary);">₹<?= number_format($row['total_amount'], 2) ?></td>
                         </tr>
@@ -146,7 +146,7 @@ if($summary_query) {
                         <tr>
                             <td colspan="5" style="padding: 3rem; text-align: center; color: var(--color-on-surface-variant);">
                                 <span class="material-symbols-outlined" style="font-size: 2.5rem; opacity: 0.5; margin-bottom: 0.75rem; display: block;">search_off</span>
-                                <p style="font-weight: 500; font-size: 0.875rem;">No supply recorded on this date.</p>
+                                <p style="font-weight: 500; font-size: 0.875rem;"><?= __('no_supply_recorded') ?></p>
                             </td>
                         </tr>
                     <?php endif; ?>
@@ -154,7 +154,7 @@ if($summary_query) {
                 <?php if($result && $result->num_rows > 0): ?>
                 <tfoot style="background-color: var(--color-surface-container-lowest); border-top: 2px solid rgba(112, 120, 129, 0.2);">
                     <tr>
-                        <td colspan="3" style="padding: 1rem 1.5rem; text-align: right; font-weight: 700; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-on-surface-variant);">Daily Totals</td>
+                        <td colspan="3" style="padding: 1rem 1.5rem; text-align: right; font-weight: 700; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-on-surface-variant);"><?= __('daily_totals') ?></td>
                         <td style="padding: 1rem; text-align: center; font-weight: 800; color: var(--color-primary);"><?= number_format($summary['hours'] ?? 0, 2) ?> h</td>
                         <td style="padding: 1rem 1.5rem; text-align: right; font-weight: 800; color: var(--color-secondary); font-size: 1.125rem;">₹<?= number_format($summary['amount'] ?? 0, 2) ?></td>
                     </tr>
@@ -164,7 +164,7 @@ if($summary_query) {
         </div>
         
         <div style="margin-top: 3rem; text-align: center;" class="no-print">
-            <p style="font-size: 0.75rem; color: var(--color-outline); font-weight: 500;">Report generated via HydroFlow Analytics Engine</p>
+            <p style="font-size: 0.75rem; color: var(--color-outline); font-weight: 500;"><?= __('report_gen_footer') ?></p>
         </div>
     </div>
 </div>
