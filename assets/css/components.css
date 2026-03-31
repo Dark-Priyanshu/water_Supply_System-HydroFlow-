@@ -249,31 +249,72 @@
 .bg-tertiary-fixed { background-color: var(--color-tertiary-fixed); }
 .bg-secondary-container { background-color: var(--color-secondary-container); }
 
-/* DataTables Styles */
+/* DataTables Pagination Styles */
+.dataTables_paginate {
+  display: flex !important;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+  padding: 0.5rem 1.5rem 1.5rem;
+  justify-content: flex-end;
+}
+
+.paginate_button {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.25rem;
+  height: 2.25rem;
+  padding: 0 0.75rem !important;
+  border-radius: 0.75rem !important;
+  font-size: 0.8125rem !important;
+  font-weight: 700 !important;
+  color: var(--color-on-surface-variant) !important;
+  background: var(--color-surface-container-low) !important;
+  border: 1px solid rgba(112, 120, 129, 0.1) !important;
+  cursor: pointer;
+  transition: all 0.2s ease !important;
+  user-select: none;
+  text-decoration: none !important;
+}
+
+.paginate_button:hover:not(.disabled):not(.current) {
+  background: var(--color-surface-container-high) !important;
+  color: var(--color-primary) !important;
+  border-color: rgba(0, 93, 144, 0.2) !important;
+  transform: translateY(-1px);
+}
+
+.paginate_button.current {
+  background: var(--color-primary) !important;
+  color: white !important;
+  border-color: var(--color-primary) !important;
+  box-shadow: 0 4px 12px rgba(0, 93, 144, 0.2);
+}
+
+.paginate_button.previous,
+.paginate_button.next {
+  padding: 0 1rem !important;
+  background: var(--color-surface-container-lowest) !important;
+}
+
+.paginate_button.disabled {
+  opacity: 0.4;
+  cursor: default;
+  pointer-events: none;
+}
+
+.dataTables_info {
+  font-size: 0.8125rem;
+  color: var(--color-on-surface-variant);
+  font-weight: 500;
+  padding: 0.5rem 1.5rem 1.5rem;
+}
+
 .dt-container-row {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  margin-bottom: 1rem;
-}
-
-@media (min-width: 768px) {
-  .dt-container-row { flex-direction: row; justify-content: space-between; align-items: center; }
-}
-
-.dt-empty-state {
-  padding: 3rem 0;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.dt-empty-icon {
-  font-size: 3rem;
-  color: var(--color-outline);
-  opacity: 0.3;
   margin-bottom: 1rem;
 }
 

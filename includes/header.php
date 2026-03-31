@@ -33,8 +33,8 @@ if (!isset($conn)) {
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
     
     <!-- Core & Component Styles (Vanilla CSS Migration) -->
-    <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/main.css">
-    <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/components.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/main.css?v=1.1">
+    <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/components.css?v=1.1">
 
 
     <!-- Prevent flash: apply saved theme + scale BEFORE first paint -->
