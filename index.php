@@ -245,47 +245,48 @@ if (isset($_SESSION['admin_id'])) {
                         <img src="<?= BASE_URL ?>assets/images/icon.png" alt="HydroFlow" style="height: 2rem;">
                         <div class="text-2xl font-bold text-primary">HydroFlow</div>
                     </div>
-                    <p style="font-size: 0.875rem; color: var(--color-on-surface-variant); line-height: 1.6;">Modernizing agricultural water infrastructure through hydrological clarity and precision management.</p>
+                    <p style="font-size: 0.875rem; color: var(--color-on-surface-variant); line-height: 1.6;">A modern water supply management system designed to provide transparency and ensure zero water wastage.</p>
                     <div style="margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--color-surface-container);">
-                        <p style="font-size: 0.625rem; text-transform: uppercase; font-weight: 800; color: var(--color-on-surface-variant); margin-bottom: 0.5rem;">Developed by</p>
-                        <p style="font-size: 0.875rem; font-weight: 700; color: var(--color-primary);">Priyanshu Shakya</p>
-                        <p style="font-size: 0.75rem; color: var(--color-on-surface-variant);">Subhash Academy (9050)</p>
+                        <a href="#" class="btn btn-primary" style="padding: 0.625rem 1rem; font-size: 0.75rem; width: 100%; display: flex; justify-content: center; gap: 0.5rem; letter-spacing: 0.05em; text-transform: uppercase; font-weight: 700;">
+                            BCA Final Year Project
+                        </a>
                     </div>
                 </div>
                 <div style="grid-column: span 3; display: grid; grid-template-columns: repeat(3, 1fr); gap: 3rem;">
                     <div>
-                        <h5 style="font-weight: 800; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.1em; margin-bottom: 2rem;">Platform</h5>
+                        <h5 style="font-weight: 800; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.1em; margin-bottom: 2rem;">Academic Project</h5>
                         <ul style="display: flex; flex-direction: column; gap: 1rem; font-size: 0.875rem; color: var(--color-on-surface-variant);">
-                            <li><a href="#features">Features</a></li>
-                            <li><a href="#how-it-works">How It Works</a></li>
-                            <li><a href="#dashboard">Dashboard</a></li>
+                            <li style="display: flex; flex-direction: column; gap: 0.25rem;"><span style="font-size: 0.625rem; text-transform: uppercase; font-weight: 800; color: var(--color-primary);">Project Title</span> Water Supply Management System</li>
+                            <li style="display: flex; flex-direction: column; gap: 0.25rem;"><span style="font-size: 0.625rem; text-transform: uppercase; font-weight: 800; color: var(--color-primary);">Project Guide</span> Mr. Mahaboob Hussain</li>
+                            <li style="display: flex; flex-direction: column; gap: 0.25rem;"><span style="font-size: 0.625rem; text-transform: uppercase; font-weight: 800; color: var(--color-primary);">Objective</span> Develop web application for water supply management system</li>
                         </ul>
                     </div>
                     <div>
-                        <h5 style="font-weight: 800; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.1em; margin-bottom: 2rem;">Support</h5>
+                        <h5 style="font-weight: 800; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.1em; margin-bottom: 2rem;">Developer Details</h5>
                         <ul style="display: flex; flex-direction: column; gap: 1rem; font-size: 0.875rem; color: var(--color-on-surface-variant);">
-                            <li><a href="#">Documentation</a></li>
-                            <li><a href="#">System Status</a></li>
-                            <li><a href="#">API Access</a></li>
+                            <li style="display: flex; flex-direction: column; gap: 0.25rem;"><span style="font-size: 0.625rem; text-transform: uppercase; font-weight: 800; color: var(--color-primary);">Student Name</span> Priyanshu Shakya</li>
+                            <li style="display: flex; flex-direction: column; gap: 0.25rem;"><span style="font-size: 0.625rem; text-transform: uppercase; font-weight: 800; color: var(--color-primary);">Enrollment No.</span> AZ149050055</li>
+                            <li style="display: flex; flex-direction: column; gap: 0.25rem;"><span style="font-size: 0.625rem; text-transform: uppercase; font-weight: 800; color: var(--color-primary);">Study Center</span> Subhash Academy (9050)</li>
                         </ul>
                     </div>
                     <div>
-                        <h5 style="font-weight: 800; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.1em; margin-bottom: 2rem;">Legal</h5>
+                        <h5 style="font-weight: 800; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.1em; margin-bottom: 2rem;">Technical Info</h5>
                         <ul style="display: flex; flex-direction: column; gap: 1rem; font-size: 0.875rem; color: var(--color-on-surface-variant);">
-                            <li><a href="#">Privacy Policy</a></li>
-                            <li><a href="#">Terms of Service</a></li>
-                            <li><a href="#">Cookie Settings</a></li>
+                            <li style="display: flex; flex-direction: column; gap: 0.25rem;"><span style="font-size: 0.625rem; text-transform: uppercase; font-weight: 800; color: var(--color-primary);">Frontend</span> HTML, CSS, JS, DataTables</li>
+                            <li style="display: flex; flex-direction: column; gap: 0.25rem;"><span style="font-size: 0.625rem; text-transform: uppercase; font-weight: 800; color: var(--color-primary);">Backend & DB</span> PHP, MySQL Server</li>
+                            <li style="display: flex; flex-direction: column; gap: 0.25rem;"><span style="font-size: 0.625rem; text-transform: uppercase; font-weight: 800; color: var(--color-primary);">Environment</span> XAMPP (Apache)</li>
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
         <div class="container" style="padding: 2rem 0; border-top: 1px solid var(--color-surface-container); display: flex; justify-content: space-between; align-items: center;">
-            <p style="font-size: 0.6875rem; font-weight: 700; color: var(--color-on-surface-variant); text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.6;">© <?= date('Y') ?> HydroFlow Water Systems. Built with Clarity.</p>
+            <p style="font-size: 0.6875rem; font-weight: 700; color: var(--color-on-surface-variant); text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.6;">© <?= date('Y') ?> Academic Project - Water Supply System. By Priyanshu.</p>
             <div class="flex" style="gap: 2rem; color: var(--color-on-surface-variant);">
-                <span class="material-symbols-outlined">public</span>
-                <span class="material-symbols-outlined">mail</span>
-                <span class="material-symbols-outlined">call</span>
+                <a href="tel:7880762083" style="color: inherit; text-decoration: none; display: flex; align-items: center; gap: 0.375rem; transition: color 0.2s;" onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color='inherit'">
+                    <span class="material-symbols-outlined" style="font-size: 1.25rem;">call</span>
+                    <span style="font-size: 0.875rem; font-weight: 700;">7880762083</span>
+                </a>
             </div>
         </div>
     </footer>
