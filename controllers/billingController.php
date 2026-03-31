@@ -1,7 +1,7 @@
 <?php
-session_start();
-require_once '../config/database.php';
-require_once '../models/Bill.php';
+require_once __DIR__ . '/../config/config.php';
+require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/../models/Bill.php';
 
 $billModel = new Bill($conn);
 
@@ -17,7 +17,7 @@ if (isset($_POST['generate_bill'])) {
     $check = $conn->query("SELECT bill_id FROM bills WHERE supply_id = $supply_id");
     if($check->num_rows > 0) {
         $existing_bill = $check->fetch_assoc();
-        header("Location: ../views/billing/view_bill.php?id=" . $existing_bill['bill_id']);
+        header("Location: " . BASE_URL . "views/billing/view_bill.php?id=" . $existing_bill['bill_id']);
         exit();
     }
 
@@ -25,11 +25,11 @@ if (isset($_POST['generate_bill'])) {
     
     if ($bill_id) {
         $_SESSION['success_msg'] = "Bill generated successfully!";
-        header("Location: ../views/billing/view_bill.php?id=" . $bill_id);
+        header("Location: " . BASE_URL . "views/billing/view_bill.php?id=" . $bill_id);
         exit();
     } else {
         $_SESSION['error_msg'] = "Error generating bill.";
-        header("Location: ../views/supply/supply_history.php");
+        header("Location: " . BASE_URL . "views/supply/supply_history.php");
         exit();
     }
 }
@@ -38,7 +38,7 @@ if (isset($_GET['update_status']) && isset($_GET['id'])) {
     $status = $_GET['update_status'];
     $id = (int)$_GET['id'];
     $conn->query("UPDATE bills SET status = '$status' WHERE bill_id = $id");
-    header("Location: ../views/billing/bill_history.php");
+    header("Location: " . BASE_URL . "views/billing/bill_history.php");
     exit();
 }
-?>
+

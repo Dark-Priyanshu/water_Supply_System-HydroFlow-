@@ -5,7 +5,7 @@
     <aside id="sidebarMenu" class="side-sidebar">
         <div style="margin-bottom: 3rem; padding: 0 0.5rem; display: flex; align-items: center; gap: 0.75rem;">
             <div style="width: 2.5rem; height: 2.5rem; border-radius: 0.75rem; display: flex; align-items: center; justify-content: center;">
-                <img src="<?= $base_url ?>assets/images/icon.png" alt="HydroFlow Logo" style="width: 100%; height: 100%; object-fit: contain;">
+                <img src="<?= BASE_URL ?>assets/images/icon.png" alt="HydroFlow Logo" style="width: 100%; height: 100%; object-fit: contain;">
             </div>
             <div>
                 <h1 style="font-size: 1.25rem; font-weight: 700; color: var(--color-primary); letter-spacing: -0.025em; font-family: var(--font-headline);">HydroFlow</h1>
@@ -26,41 +26,41 @@
                 }
             }
             ?>
-            <a class="<?= getLinkClass(['dashboard.php'], $current_page) ?>" href="<?= $base_url ?>views/dashboard.php">
+            <a class="<?= getLinkClass(['dashboard.php'], $current_page) ?>" href="<?= BASE_URL ?>views/dashboard.php">
                 <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
                 <span>Dashboard</span>
             </a>
-            <a class="<?= getLinkClass(['customer_list.php', 'add_customer.php'], $current_page) ?>" href="<?= $base_url ?>views/customers/customer_list.php">
+            <a class="<?= getLinkClass(['customer_list.php', 'add_customer.php'], $current_page) ?>" href="<?= BASE_URL ?>views/customers/customer_list.php">
                 <span class="material-symbols-outlined">agriculture</span>
                 <span>Customers / Farms</span>
             </a>
-            <a class="<?= getLinkClass(['motor_list.php', 'add_motor.php'], $current_page) ?>" href="<?= $base_url ?>views/motors/motor_list.php">
+            <a class="<?= getLinkClass(['motor_list.php', 'add_motor.php'], $current_page) ?>" href="<?= BASE_URL ?>views/motors/motor_list.php">
                 <span class="material-symbols-outlined">water_pump</span>
                 <span>Motor Management</span>
             </a>
-            <a class="<?= getLinkClass(['supply_history.php', 'add_supply.php'], $current_page) ?>" href="<?= $base_url ?>views/supply/supply_history.php">
+            <a class="<?= getLinkClass(['supply_history.php', 'add_supply.php'], $current_page) ?>" href="<?= BASE_URL ?>views/supply/supply_history.php">
                 <span class="material-symbols-outlined">waves</span>
                 <span>Water Supply Record</span>
             </a>
-            <a class="<?= getLinkClass(['bill_history.php', 'generate_bill.php', 'view_bill.php'], $current_page) ?>" href="<?= $base_url ?>views/billing/bill_history.php">
+            <a class="<?= getLinkClass(['bill_history.php', 'generate_bill.php', 'view_bill.php'], $current_page) ?>" href="<?= BASE_URL ?>views/billing/bill_history.php">
                 <span class="material-symbols-outlined">receipt_long</span>
                 <span>Billing / Invoices</span>
             </a>
-            <a class="<?= getLinkClass(['payment_history.php', 'add_payment.php'], $current_page) ?>" href="<?= $base_url ?>views/payments/payment_history.php">
+            <a class="<?= getLinkClass(['payment_history.php', 'add_payment.php'], $current_page) ?>" href="<?= BASE_URL ?>views/payments/payment_history.php">
                 <span class="material-symbols-outlined">payments</span>
                 <span>Payments Tracking</span>
             </a>
-            <a class="<?= getLinkClass(['daily_report.php'], $current_page) ?>" href="<?= $base_url ?>views/reports/daily_report.php">
+            <a class="<?= getLinkClass(['daily_report.php'], $current_page) ?>" href="<?= BASE_URL ?>views/reports/daily_report.php">
                 <span class="material-symbols-outlined">bar_chart</span>
                 <span>Reports</span>
             </a>
-            <a class="<?= getLinkClass(['settings.php'], $current_page) ?>" href="<?= $base_url ?>views/settings.php">
+            <a class="<?= getLinkClass(['settings.php'], $current_page) ?>" href="<?= BASE_URL ?>views/settings.php">
                 <span class="material-symbols-outlined">settings</span>
                 <span>Settings</span>
             </a>
             
             <div style="padding-top: 1rem; margin-top: 1rem; border-top: 1px solid rgba(226, 232, 240, 0.5);">
-                <a class="nav-link" style="color: #64748b;" onmouseover="this.style.color='#ba1a1a'; this.style.backgroundColor='rgba(254, 226, 226, 0.5)';" onmouseout="this.style.color='#64748b'; this.style.backgroundColor='transparent';" href="<?= $base_url ?>logout.php">
+                <a class="nav-link" style="color: #64748b;" onmouseover="this.style.color='#ba1a1a'; this.style.backgroundColor='rgba(254, 226, 226, 0.5)';" onmouseout="this.style.color='#64748b'; this.style.backgroundColor='transparent';" href="<?= BASE_URL ?>logout.php">
                     <span class="material-symbols-outlined">logout</span>
                     <span>Logout</span>
                 </a>

@@ -1,16 +1,13 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) session_start();
+require_once __DIR__ . '/../config/config.php';
 if (!isset($_SESSION['admin_id'])) {
-    header("Location: ../../views/login.php");
+    header("Location: " . BASE_URL . "views/login.php");
     exit();
 }
-$protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http";
-$host = $_SERVER['HTTP_HOST'];
-$project_root = str_replace(['/views', '/includes', '/controllers', '/models'], '', dirname($_SERVER['SCRIPT_NAME']));
-$base_url = $protocol . "://" . $host . rtrim($project_root, '/') . '/';
 include '../includes/header.php';
 include '../includes/sidebar.php';
 ?>
+
 
 <!-- Settings Page -->
 <div class="settings-page">
@@ -35,14 +32,15 @@ include '../includes/sidebar.php';
              ║   CARD 0 – PROFILE           ║
              ╚══════════════════════════════╝ -->
         <div class="settings-card profile-full-card" id="profileCard">
-            <div class="settings-card-header">
+            <div class="settings-card-header" onclick="toggleSettingsCard('profileCard')" style="cursor: pointer;">
                 <div class="settings-card-icon profile-icon">
                     <span class="material-symbols-outlined">manage_accounts</span>
                 </div>
-                <div>
+                <div style="flex: 1;">
                     <h2 class="settings-card-title">Profile</h2>
                     <p class="settings-card-desc">Change your admin name and password</p>
                 </div>
+                <span class="material-symbols-outlined settings-chevron">expand_more</span>
             </div>
 
             <div class="settings-card-body">
@@ -142,14 +140,15 @@ include '../includes/sidebar.php';
              ║   CARD 1 – APPEARANCE        ║
              ╚══════════════════════════════╝ -->
         <div class="settings-card" id="appearanceCard">
-            <div class="settings-card-header">
+            <div class="settings-card-header" onclick="toggleSettingsCard('appearanceCard')" style="cursor: pointer;">
                 <div class="settings-card-icon appearance-icon">
                     <span class="material-symbols-outlined">palette</span>
                 </div>
-                <div>
+                <div style="flex: 1;">
                     <h2 class="settings-card-title">Appearance</h2>
                     <p class="settings-card-desc">Adjust the look and feel of the interface</p>
                 </div>
+                <span class="material-symbols-outlined settings-chevron">expand_more</span>
             </div>
 
             <div class="settings-card-body">
@@ -201,14 +200,15 @@ include '../includes/sidebar.php';
              ║   CARD 2 – EXPORT TO EXCEL   ║
              ╚══════════════════════════════╝ -->
         <div class="settings-card" id="exportCard">
-            <div class="settings-card-header">
+            <div class="settings-card-header" onclick="toggleSettingsCard('exportCard')" style="cursor: pointer;">
                 <div class="settings-card-icon export-icon">
                     <span class="material-symbols-outlined">download</span>
                 </div>
-                <div>
+                <div style="flex: 1;">
                     <h2 class="settings-card-title">Export Data</h2>
                     <p class="settings-card-desc">Download all records as Excel (.xlsx) files</p>
                 </div>
+                <span class="material-symbols-outlined settings-chevron">expand_more</span>
             </div>
 
             <div class="settings-card-body">
@@ -308,14 +308,15 @@ include '../includes/sidebar.php';
              ║   CARD 3 – IMPORT            ║
              ╚══════════════════════════════╝ -->
         <div class="settings-card" id="importCard">
-            <div class="settings-card-header">
+            <div class="settings-card-header" onclick="toggleSettingsCard('importCard')" style="cursor: pointer;">
                 <div class="settings-card-icon import-icon">
                     <span class="material-symbols-outlined">upload</span>
                 </div>
-                <div>
+                <div style="flex: 1;">
                     <h2 class="settings-card-title">Import Data</h2>
                     <p class="settings-card-desc">Upload an Excel file to import records</p>
                 </div>
+                <span class="material-symbols-outlined settings-chevron">expand_more</span>
             </div>
 
             <div class="settings-card-body">
@@ -603,10 +604,34 @@ include '../includes/sidebar.php';
     transition: transform 0.3s, box-shadow 0.3s;
     box-shadow: 0 1px 4px rgba(0,0,0,0.18);
 }
-.toggle-switch input:checked + .toggle-slider { background: var(--color-primary); }
 .toggle-switch input:checked + .toggle-slider::before {
     transform: translateX(24px);
     box-shadow: 0 2px 8px rgba(0,93,144,0.35);
+}
+
+/* ─── Collapsible Cards ────────────────────────────────────────── */
+.settings-chevron {
+    transition: transform 0.3s ease;
+    color: var(--color-on-surface-variant);
+}
+.settings-card.collapsed .settings-chevron {
+    transform: rotate(-90deg);
+}
+.settings-card-body {
+    transition: max-height 0.4s ease, opacity 0.3s ease, padding 0.4s ease;
+    max-height: 2000px; /* Large enough for content */
+    overflow: hidden;
+    opacity: 1;
+}
+.settings-card.collapsed .settings-card-body {
+    max-height: 0;
+    opacity: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    pointer-events: none;
+}
+.settings-card-header {
+    user-select: none;
 }
 
 /* ─── Scale Slider ───────────────────────────────────────────────── */
@@ -875,6 +900,35 @@ include '../includes/sidebar.php';
     'use strict';
 
     /* ══════════════════════════════════════════════════════
+       0.  COLLAPSIBLE SECTIONS
+    ══════════════════════════════════════════════════════ */
+    window.toggleSettingsCard = function(cardId) {
+        const card = document.getElementById(cardId);
+        if (card) {
+            card.classList.toggle('collapsed');
+            // Save state for some persistence
+            const states = JSON.parse(localStorage.getItem('settings_collapse_states') || '{}');
+            states[cardId] = card.classList.contains('collapsed');
+            localStorage.setItem('settings_collapse_states', JSON.stringify(states));
+        }
+    };
+
+    // Restore collapse states
+    (function restoreCollapseStates() {
+        const states = JSON.parse(localStorage.getItem('settings_collapse_states') || '{}');
+        // If first visit, collapse all except Profile and Appearance
+        if (Object.keys(states).length === 0) {
+            states['exportCard'] = true;
+            states['importCard'] = true;
+            localStorage.setItem('settings_collapse_states', JSON.stringify(states));
+        }
+        for (const [id, isCollapsed] of Object.entries(states)) {
+            const card = document.getElementById(id);
+            if (card && isCollapsed) card.classList.add('collapsed');
+        }
+    })();
+
+    /* ══════════════════════════════════════════════════════
        1.  APPEARANCE — Dark Mode & UI Scale
     ══════════════════════════════════════════════════════ */
     const darkToggle   = document.getElementById('darkModeToggle');
@@ -947,7 +1001,7 @@ include '../includes/sidebar.php';
     /* ══════════════════════════════════════════════════════
        2.  EXPORT TO EXCEL
     ══════════════════════════════════════════════════════ */
-    const baseUrl = '<?= $base_url ?>';
+    const baseUrl = '<?= BASE_URL ?>';
 
     /* ══════════════════════════════════════════════════════
        0.  PROFILE — Load + Update
@@ -1018,6 +1072,7 @@ include '../includes/sidebar.php';
     window.togglePasswordVisibility = function(fieldId, btn) {
         const input = document.getElementById(fieldId);
         const icon  = btn.querySelector('.material-symbols-outlined');
+        if (!input || !icon) return;
         if (input.type === 'password') {
             input.type = 'text';
             icon.textContent = 'visibility_off';

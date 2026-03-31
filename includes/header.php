@@ -6,11 +6,8 @@ if (!isset($_SESSION['admin_id'])) {
     header("Location: ../views/login.php");
     exit();
 }
-// Robust dynamic base_url resolution
-$protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http";
-$host = $_SERVER['HTTP_HOST'];
-$project_root = str_replace(['/views', '/includes', '/controllers', '/models'], '', dirname($_SERVER['SCRIPT_NAME']));
-$base_url = $protocol . "://" . $host . rtrim($project_root, '/') . '/';
+require_once __DIR__ . '/../config/config.php';
+
 
 // DB connection (needed by sidebar for dynamic admin name)
 if (!isset($conn)) {
@@ -27,7 +24,7 @@ if (!isset($conn)) {
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <title>HydroFlow | Precision Water Management</title>
     <!-- Favicon -->
-    <link rel="icon" href="<?= $base_url ?>assets/images/icon.png" type="image/png">
+    <link rel="icon" href="<?= BASE_URL ?>assets/images/icon.png" type="image/png">
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com" rel="preconnect"/>
     <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
@@ -36,8 +33,8 @@ if (!isset($conn)) {
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
     
     <!-- Core & Component Styles (Vanilla CSS Migration) -->
-    <link rel="stylesheet" href="<?= $base_url ?>assets/css/main.css">
-    <link rel="stylesheet" href="<?= $base_url ?>assets/css/components.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/main.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/components.css">
 
 
     <!-- Prevent flash: apply saved theme + scale BEFORE first paint -->

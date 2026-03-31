@@ -14,7 +14,7 @@ $supplies = $supplyModel->getAllSupply();
         <h2 style="font-family: var(--font-headline); font-size: 1.875rem; font-weight: 800; color: var(--color-on-surface); letter-spacing: -0.025em; margin-bottom: 0.5rem;">Water Supply History</h2>
         <p style="font-size: 1rem; color: var(--color-on-surface-variant); max-width: 40rem;">View previous irrigation logs, duration, and billing status.</p>
     </div>
-    <a href="add_supply.php" class="btn bg-gradient-primary" style="padding: 0.75rem 1.5rem; border-radius: 0.75rem;">
+    <a href="<?= BASE_URL ?>views/supply/add_supply.php" class="btn bg-gradient-primary" style="padding: 0.75rem 1.5rem; border-radius: 0.75rem;">
         <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; font-size: 1.25rem;">waves</span>
         <span>Record Supply</span>
     </a>
@@ -82,7 +82,7 @@ $supplies = $supplyModel->getAllSupply();
                                 Billed
                             </span>
                         <?php else: ?>
-                            <a href="../billing/generate_bill.php?supply_id=<?= $row['supply_id'] ?>" class="btn" style="padding: 0.375rem 0.75rem; font-size: 0.6875rem; background-color: rgba(0, 93, 144, 0.1); color: var(--color-primary); border: 1px solid rgba(0, 93, 144, 0.1);" onmouseover="this.style.backgroundColor='var(--color-primary)'; this.style.color='white';" onmouseout="this.style.backgroundColor='rgba(0, 93, 144, 0.1)'; this.style.color='var(--color-primary)';">
+                            <a href="<?= BASE_URL ?>views/billing/generate_bill.php?supply_id=<?= $row['supply_id'] ?>" class="btn" style="padding: 0.375rem 0.75rem; font-size: 0.6875rem; background-color: rgba(0, 93, 144, 0.1); color: var(--color-primary); border: 1px solid rgba(0, 93, 144, 0.1);" onmouseover="this.style.backgroundColor='var(--color-primary)'; this.style.color='white';" onmouseout="this.style.backgroundColor='rgba(0, 93, 144, 0.1)'; this.style.color='var(--color-primary)';">
                                 <span class="material-symbols-outlined" style="font-size: 1rem;">receipt_long</span> Generate Bill
                             </a>
                         <?php endif; ?>

@@ -1,6 +1,6 @@
 <?php
-session_start();
-require_once '../config/database.php';
+require_once __DIR__ . '/../config/config.php';
+require_once __DIR__ . '/../config/database.php';
 
 if (isset($_POST['login'])) {
     $username = trim($_POST['username']);
@@ -16,17 +16,17 @@ if (isset($_POST['login'])) {
         if (password_verify($password, $user['password'])) {
             $_SESSION['admin_id'] = $user['admin_id'];
             $_SESSION['role'] = $user['role'];
-            header("Location: ../views/dashboard.php");
+            header("Location: " . BASE_URL . "views/dashboard.php");
             exit();
         } else {
             $_SESSION['error_msg'] = "Invalid password.";
-            header("Location: ../views/login.php");
+            header("Location: " . BASE_URL . "views/login.php");
             exit();
         }
     } else {
         $_SESSION['error_msg'] = "User not found.";
-        header("Location: ../views/login.php");
+        header("Location: " . BASE_URL . "views/login.php");
         exit();
     }
 }
-?>
+

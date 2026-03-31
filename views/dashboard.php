@@ -3,18 +3,31 @@
 <?php require_once '../config/database.php'; ?>
 
 <?php
-// Fetch some stats
+// Fetch stats for dashboard
 $customers_count = $conn->query("SELECT COUNT(*) as count FROM customers")->fetch_assoc()['count'];
 $motors_count = $conn->query("SELECT COUNT(*) as count FROM motors")->fetch_assoc()['count'];
 $today = date('Y-m-d');
 $today_supply = $conn->query("SELECT IFNULL(SUM(total_hours), 0) as hours, IFNULL(SUM(total_amount), 0) as rev FROM water_supply WHERE date = '$today'")->fetch_assoc();
 
-// Mock data logic for charts if we don't have enough DB entries natively
-$recent_logs = $conn->query("SELECT ws.*, c.name as customer_name, m.name as motor_name 
+// Prepare 7-day trend data
+$chart_labels = [];
+$chart_data = [];
+for ($i = 6; $i >= 0; $i--) {
+    $date = date('Y-m-d', strtotime("-$i days"));
+    $label = date('D', strtotime($date));
+    if ($i == 0) $label = 'Today';
+    $chart_labels[] = $label;
+    
+    $res = $conn->query("SELECT SUM(total_hours) as hours FROM water_supply WHERE date = '$date'")->fetch_assoc();
+    $chart_data[] = $res['hours'] ?: 0;
+}
+
+// Fetch recent supply logs (Limit 5)
+$recent_logs = $conn->query("SELECT ws.*, c.farmer_name as customer_name, m.motor_name 
                              FROM water_supply ws 
-                             JOIN customers c ON ws.customer_id = c.id 
-                             JOIN motors m ON ws.motor_id = m.id 
-                             ORDER BY date DESC, start_time DESC LIMIT 5");
+                             JOIN customers c ON ws.customer_id = c.customer_id 
+                             JOIN motors m ON ws.motor_id = m.motor_id 
+                             ORDER BY ws.date DESC, ws.start_time DESC LIMIT 5");
 ?>
 
 <!-- Hero Stats Bento Grid -->
@@ -87,7 +100,7 @@ $recent_logs = $conn->query("SELECT ws.*, c.name as customer_name, m.name as mot
                 <p style="font-size: 0.875rem; color: var(--color-on-surface-variant);">Common tasks</p>
             </div>
             <div style="display: flex; flex-direction: column; gap: 1rem; flex: 1; justify-content: center;">
-                <a href="supply/add_supply.php" class="flex" style="align-items: center; gap: 1rem; padding: 1rem; border: 1px solid rgba(191, 199, 209, 0.3); border-radius: 0.75rem;">
+                <a href="<?= BASE_URL ?>views/supply/add_supply.php" class="flex" style="align-items: center; gap: 1rem; padding: 1rem; border: 1px solid rgba(191, 199, 209, 0.3); border-radius: 0.75rem;">
                     <div style="width: 3rem; height: 3rem; background-color: var(--color-primary-fixed); color: var(--color-primary); border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
                         <span class="material-symbols-outlined">waves</span>
                     </div>
@@ -96,7 +109,7 @@ $recent_logs = $conn->query("SELECT ws.*, c.name as customer_name, m.name as mot
                         <p style="font-size: 0.75rem; color: var(--color-on-surface-variant);">Record a new supply log</p>
                     </div>
                 </a>
-                <a href="billing/generate_bill.php" class="flex" style="align-items: center; gap: 1rem; padding: 1rem; border: 1px solid rgba(191, 199, 209, 0.3); border-radius: 0.75rem;">
+                <a href="<?= BASE_URL ?>views/billing/generate_bill.php" class="flex" style="align-items: center; gap: 1rem; padding: 1rem; border: 1px solid rgba(191, 199, 209, 0.3); border-radius: 0.75rem;">
                     <div style="width: 3rem; height: 3rem; background-color: var(--color-secondary-fixed); color: var(--color-secondary); border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
                         <span class="material-symbols-outlined">receipt_long</span>
                     </div>
@@ -105,7 +118,7 @@ $recent_logs = $conn->query("SELECT ws.*, c.name as customer_name, m.name as mot
                         <p style="font-size: 0.75rem; color: var(--color-on-surface-variant);">Create invoices for customers</p>
                     </div>
                 </a>
-                <a href="customers/add_customer.php" class="flex" style="align-items: center; gap: 1rem; padding: 1rem; border: 1px solid rgba(191, 199, 209, 0.3); border-radius: 0.75rem;">
+                <a href="<?= BASE_URL ?>views/customers/add_customer.php" class="flex" style="align-items: center; gap: 1rem; padding: 1rem; border: 1px solid rgba(191, 199, 209, 0.3); border-radius: 0.75rem;">
                     <div style="width: 3rem; height: 3rem; background-color: var(--color-tertiary-fixed); color: var(--color-tertiary); border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
                         <span class="material-symbols-outlined">person_add</span>
                     </div>
@@ -134,7 +147,7 @@ $recent_logs = $conn->query("SELECT ws.*, c.name as customer_name, m.name as mot
 <section class="table-container shadow-sm">
     <div class="table-header">
         <h4 style="font-size: 1.125rem;">Recent Supply Logs</h4>
-        <a href="supply/add_supply.php" class="btn btn-primary" style="padding: 0.5rem 1rem;">
+        <a href="<?= BASE_URL ?>views/supply/add_supply.php" class="btn btn-primary" style="padding: 0.5rem 1rem;">
             <span class="material-symbols-outlined" style="font-size: 1rem;">add</span> New Entry
         </a>
     </div>
@@ -181,12 +194,12 @@ $recent_logs = $conn->query("SELECT ws.*, c.name as customer_name, m.name as mot
         </table>
     </div>
     <div style="padding: 1rem 2rem; background-color: rgba(242, 244, 246, 0.1);">
-        <a href="supply/supply_history.php" style="color: var(--color-primary); font-weight: 600; font-size: 0.875rem;">View All History</a>
+        <a href="<?= BASE_URL ?>views/supply/supply_history.php" style="color: var(--color-primary); font-weight: 600; font-size: 0.875rem;">View All History</a>
     </div>
 </section>
 
 <!-- Contextual FAB -->
-<a href="supply/add_supply.php" class="fixed bg-gradient-primary" style="bottom: 2.5rem; right: 2.5rem; width: 4rem; height: 4rem; border-radius: 50%; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); display: flex; align-items: center; justify-content: center; z-index: 50; transition: transform 0.2s ease;">
+<a href="<?= BASE_URL ?>views/supply/add_supply.php" class="fixed bg-gradient-primary" style="bottom: 2.5rem; right: 2.5rem; width: 4rem; height: 4rem; border-radius: 50%; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); display: flex; align-items: center; justify-content: center; z-index: 50; transition: transform 0.2s ease;">
     <span class="material-symbols-outlined" style="font-size: 2rem;">add_task</span>
 </a>
 
@@ -198,10 +211,10 @@ document.addEventListener("DOMContentLoaded", function() {
         const myChart = new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Today'],
+                labels: <?= json_encode($chart_labels) ?>,
                 datasets: [{
                     label: 'Hours Supplied',
-                    data: [0, 0, 0, 0, 0, 0, <?= $today_supply['hours'] ?: 0 ?>],
+                    data: <?= json_encode($chart_data) ?>,
                     backgroundColor: 'rgba(0, 93, 144, 0.2)', // primary color with opacity
                     borderColor: 'rgba(0, 93, 144, 1)',
                     borderWidth: 2,

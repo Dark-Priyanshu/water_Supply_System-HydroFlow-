@@ -1,15 +1,11 @@
 <?php
-session_start();
+require_once __DIR__ . '/../config/config.php';
 if (isset($_SESSION['admin_id'])) {
-    header("Location: dashboard.php");
+    header("Location: " . BASE_URL . "views/dashboard.php");
     exit();
 }
-// Robust dynamic base_url resolution
-$protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http";
-$host = $_SERVER['HTTP_HOST'];
-$project_root = str_replace(['/views', '/includes', '/controllers', '/models'], '', dirname($_SERVER['SCRIPT_NAME']));
-$base_url = $protocol . "://" . $host . rtrim($project_root, '/') . '/';
 ?>
+
 <!DOCTYPE html>
 <html lang="en" class="light">
 <head>
@@ -17,11 +13,11 @@ $base_url = $protocol . "://" . $host . rtrim($project_root, '/') . '/';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login | HydroFlow Portal</title>
     <!-- Favicon -->
-    <link rel="icon" href="<?= $base_url ?>assets/images/icon.png" type="image/png">
+    <link rel="icon" href="<?= BASE_URL ?>assets/images/icon.png" type="image/png">
     
     <!-- Core & Component Styles -->
-    <link rel="stylesheet" href="<?= $base_url ?>assets/css/main.css">
-    <link rel="stylesheet" href="<?= $base_url ?>assets/css/components.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/main.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/components.css">
     
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
@@ -35,7 +31,7 @@ $base_url = $protocol . "://" . $host . rtrim($project_root, '/') . '/';
     <div class="login-card">
         
         <div style="text-align: center; margin-bottom: 2rem;">
-            <img src="<?= $base_url ?>assets/images/icon.png" alt="HydroFlow Logo" style="width: 5rem; height: 5rem; margin: 0 auto 1rem; object-fit: contain; filter: drop-shadow(0 8px 16px rgba(0,93,144,0.3));">
+            <img src="<?= BASE_URL ?>assets/images/icon.png" alt="HydroFlow Logo" style="width: 5rem; height: 5rem; margin: 0 auto 1rem; object-fit: contain; filter: drop-shadow(0 8px 16px rgba(0,93,144,0.3));">
             <h2 style="font-size: 1.875rem; font-weight: 800; font-family: var(--font-headline); color: var(--color-primary); letter-spacing: -0.025em;">HydroFlow</h2>
             <p style="font-size: 0.75rem; font-weight: 700; color: var(--color-on-surface-variant); text-transform: uppercase; letter-spacing: 0.2em; margin-top: 0.5rem;">Portal Access</p>
         </div>
@@ -48,7 +44,7 @@ $base_url = $protocol . "://" . $host . rtrim($project_root, '/') . '/';
             <?php unset($_SESSION['error_msg']); ?>
         <?php endif; ?>
 
-        <form action="<?= $base_url ?>controllers/authController.php" method="POST" style="display: flex; flex-direction: column; gap: 1.25rem;">
+        <form action="<?= BASE_URL ?>controllers/authController.php" method="POST" style="display: flex; flex-direction: column; gap: 1.25rem;">
             <div class="input-group">
                 <label for="username" class="input-label">Username</label>
                 <div class="input-wrapper">

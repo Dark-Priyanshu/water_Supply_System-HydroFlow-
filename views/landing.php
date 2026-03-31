@@ -1,13 +1,5 @@
-<?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-// Robust dynamic base_url resolution
-$protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http";
-$host = $_SERVER['HTTP_HOST'];
-$project_root = str_replace(['/views', '/includes', '/controllers', '/models'], '', dirname($_SERVER['SCRIPT_NAME']));
-$base_url = $protocol . "://" . $host . rtrim($project_root, '/') . '/';
-?>
+<?php require_once __DIR__ . '/../config/config.php'; ?>
+
 <!DOCTYPE html>
 <html class="light" lang="en">
 <head>
@@ -15,23 +7,23 @@ $base_url = $protocol . "://" . $host . rtrim($project_root, '/') . '/';
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <title>HydroFlow – Smart Water Supply Management</title>
     <!-- Favicon -->
-    <link rel="icon" href="<?= $base_url ?>assets/images/icon.png" type="image/png">
+    <link rel="icon" href="<?= BASE_URL ?>assets/images/icon.png" type="image/png">
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
     <!-- Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&display=swap" rel="stylesheet"/>
     
     <!-- Core & Component Styles -->
-    <link rel="stylesheet" href="<?= $base_url ?>assets/css/main.css">
-    <link rel="stylesheet" href="<?= $base_url ?>assets/css/components.css">
-    <link rel="stylesheet" href="<?= $base_url ?>assets/css/landing.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/main.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/components.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/landing.css">
 </head>
 <body class="antialiased">
     <!-- Top Navigation Bar -->
     <nav class="fixed top-0 w-full z-50 glass-nav shadow-sm" style="height: 4.5rem; transition: padding 0.3s ease;" id="main-nav">
         <div class="container flex h-full" style="justify-content: space-between; align-items: center;">
             <a href="#" class="flex" style="align-items: center; gap: 0.75rem;">
-                <img src="<?= $base_url ?>assets/images/icon.png" alt="HydroFlow" style="height: 2rem; width: 2rem; object-fit: contain;">
+                <img src="<?= BASE_URL ?>assets/images/icon.png" alt="HydroFlow" style="height: 2rem; width: 2rem; object-fit: contain;">
                 <div class="text-2xl font-bold text-primary" style="letter-spacing: -0.05em;">HydroFlow</div>
             </a>
             <div class="hidden-md flex nav-links" style="gap: 2rem; align-items: center;">
@@ -42,8 +34,8 @@ $base_url = $protocol . "://" . $host . rtrim($project_root, '/') . '/';
                 <a href="#about">About</a>
             </div>
             <div class="flex" style="align-items: center; gap: 1rem;">
-                <a href="<?= $base_url ?>views/login.php" style="font-size: 0.875rem; font-weight: 600; color: var(--color-on-surface-variant);">Login</a>
-                <a href="<?= $base_url ?>views/login.php" class="btn btn-primary" style="padding-left: 1.5rem; padding-right: 1.5rem;">Get Started</a>
+                <a href="<?= BASE_URL ?>views/login.php" style="font-size: 0.875rem; font-weight: 600; color: var(--color-on-surface-variant);">Login</a>
+                <a href="<?= BASE_URL ?>views/login.php" class="btn btn-primary" style="padding-left: 1.5rem; padding-right: 1.5rem;">Get Started</a>
             </div>
         </div>
     </nav>
@@ -60,7 +52,7 @@ $base_url = $protocol . "://" . $host . rtrim($project_root, '/') . '/';
                     HydroFlow helps manage water distribution efficiently for farmers and consumers, ensuring every drop contributes to growth and sustainability.
                 </p>
                 <div class="flex" style="flex-wrap: wrap; gap: 1rem;">
-                    <a href="<?= $base_url ?>views/login.php" class="btn bg-gradient-primary" style="padding: 1rem 2rem; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);">
+                    <a href="<?= BASE_URL ?>views/login.php" class="btn bg-gradient-primary" style="padding: 1rem 2rem; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);">
                         Get Started Now <span class="material-symbols-outlined">arrow_forward</span>
                     </a>
                     <button class="btn" style="color: var(--color-primary); background: transparent; padding: 1rem 2rem;">
@@ -242,7 +234,7 @@ $base_url = $protocol . "://" . $host . rtrim($project_root, '/') . '/';
             <div class="grid" style="grid-template-columns: repeat(4, 1fr); gap: 3rem;">
                 <div style="grid-column: span 1;">
                     <div class="flex" style="align-items: center; gap: 0.75rem; margin-bottom: 2rem;">
-                        <img src="<?= $base_url ?>assets/images/icon.png" alt="HydroFlow" style="height: 2rem;">
+                        <img src="<?= BASE_URL ?>assets/images/icon.png" alt="HydroFlow" style="height: 2rem;">
                         <div class="text-2xl font-bold text-primary">HydroFlow</div>
                     </div>
                     <p style="font-size: 0.875rem; color: var(--color-on-surface-variant); line-height: 1.6;">Modernizing agricultural water infrastructure through hydrological clarity and precision management.</p>

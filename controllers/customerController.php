@@ -1,7 +1,7 @@
 <?php
-session_start();
-require_once '../config/database.php';
-require_once '../models/Customer.php';
+require_once __DIR__ . '/../config/config.php';
+require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/../models/Customer.php';
 
 $customerModel = new Customer($conn);
 
@@ -15,11 +15,11 @@ if (isset($_POST['add_customer'])) {
 
     if ($customerModel->createCustomer($farmer_name, $mobile, $village, $farm_name, $connection_no, $pipe_size)) {
         $_SESSION['success_msg'] = "Customer added successfully!";
-        header("Location: ../views/customers/customer_list.php");
+        header("Location: " . BASE_URL . "views/customers/customer_list.php");
         exit();
     } else {
         $_SESSION['error_msg'] = "Error adding customer. Connection number might already exist.";
-        header("Location: ../views/customers/add_customer.php");
+        header("Location: " . BASE_URL . "views/customers/add_customer.php");
         exit();
     }
 }
@@ -35,12 +35,12 @@ if (isset($_POST['update_customer'])) {
 
     if ($customerModel->updateCustomer($customer_id, $farmer_name, $mobile, $village, $farm_name, $connection_no, $pipe_size)) {
         $_SESSION['success_msg'] = "Customer updated successfully!";
-        header("Location: ../views/customers/customer_list.php");
+        header("Location: " . BASE_URL . "views/customers/customer_list.php");
         exit();
     } else {
         $_SESSION['error_msg'] = "Error updating customer. Connection number might already exist.";
-        header("Location: ../views/customers/edit_customer.php?id=" . $customer_id);
+        header("Location: " . BASE_URL . "views/customers/edit_customer.php?id=" . $customer_id);
         exit();
     }
 }
-?>
+
