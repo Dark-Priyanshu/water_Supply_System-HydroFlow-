@@ -1,6 +1,6 @@
-<?php include '../includes/header.php'; ?>
-<?php include '../includes/sidebar.php'; ?>
-<?php require_once '../config/database.php'; ?>
+<?php include 'includes/header.php'; ?>
+<?php include 'includes/sidebar.php'; ?>
+<?php require_once 'config/database.php'; ?>
 
 <?php
 // Fetch stats for dashboard
@@ -247,4 +247,4 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 </script>
 
-<?php include '../includes/footer.php'; ?>
+<?php include 'includes/footer.php'; ?>

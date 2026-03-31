@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/../config/config.php';
 if (!isset($_SESSION['admin_id'])) {
-    header("Location: " . BASE_URL . "views/login.php");
+    header("Location: " . BASE_URL . "login.php");
     exit();
 }
 include '../includes/header.php';

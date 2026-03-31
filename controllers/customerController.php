@@ -14,11 +14,11 @@ if (isset($_POST['add_customer'])) {
     $pipe_size = $_POST['pipe_size'];
 
     if ($customerModel->createCustomer($farmer_name, $mobile, $village, $farm_name, $connection_no, $pipe_size)) {
-        $_SESSION['success_msg'] = "Customer added successfully!";
+        $_SESSION['success_msg'] = __('msg_customer_added');
         header("Location: " . BASE_URL . "views/customers/customer_list.php");
         exit();
     } else {
-        $_SESSION['error_msg'] = "Error adding customer. Connection number might already exist.";
+        $_SESSION['error_msg'] = __('err_adding_customer');
         header("Location: " . BASE_URL . "views/customers/add_customer.php");
         exit();
     }
@@ -34,11 +34,11 @@ if (isset($_POST['update_customer'])) {
     $pipe_size = $_POST['pipe_size'];
 
     if ($customerModel->updateCustomer($customer_id, $farmer_name, $mobile, $village, $farm_name, $connection_no, $pipe_size)) {
-        $_SESSION['success_msg'] = "Customer updated successfully!";
+        $_SESSION['success_msg'] = __('msg_customer_updated');
         header("Location: " . BASE_URL . "views/customers/customer_list.php");
         exit();
     } else {
-        $_SESSION['error_msg'] = "Error updating customer. Connection number might already exist.";
+        $_SESSION['error_msg'] = __('err_updating_customer');
         header("Location: " . BASE_URL . "views/customers/edit_customer.php?id=" . $customer_id);
         exit();
     }

@@ -14,11 +14,11 @@ if (isset($_POST['add_payment'])) {
     if ($stmt->execute()) {
         // Also update bill status to paid
         $conn->query("UPDATE bills SET status = 'paid' WHERE bill_id = $bill_id");
-        $_SESSION['success_msg'] = "Payment recorded successfully!";
+        $_SESSION['success_msg'] = __('msg_payment_success');
         header("Location: ../views/payments/payment_history.php");
         exit();
     } else {
-        $_SESSION['error_msg'] = "Error recording payment.";
+        $_SESSION['error_msg'] = __('err_recording_payment');
         header("Location: ../views/payments/add_payment.php");
         exit();
     }

@@ -24,11 +24,11 @@ if (isset($_POST['generate_bill'])) {
     $bill_id = $billModel->generateBill($supply_id, $customer_id, $bill_date, $total_hours, $rate, $total_amount);
     
     if ($bill_id) {
-        $_SESSION['success_msg'] = "Bill generated successfully!";
+        $_SESSION['success_msg'] = __('msg_bill_generated');
         header("Location: " . BASE_URL . "views/billing/view_bill.php?id=" . $bill_id);
         exit();
     } else {
-        $_SESSION['error_msg'] = "Error generating bill.";
+        $_SESSION['error_msg'] = __('err_generating_bill');
         header("Location: " . BASE_URL . "views/supply/supply_history.php");
         exit();
     }

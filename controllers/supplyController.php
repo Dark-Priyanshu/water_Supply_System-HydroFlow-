@@ -26,11 +26,11 @@ if (isset($_POST['record_supply'])) {
     $total_amount = $total_hours * $rate;
 
     if ($supplyModel->recordSupply($customer_id, $motor_id, $date, $start_time, $end_time, $total_hours, $rate, $total_amount)) {
-        $_SESSION['success_msg'] = "Water supply recorded successfully!";
+        $_SESSION['success_msg'] = __('msg_supply_success');
         header("Location: " . BASE_URL . "views/supply/supply_history.php");
         exit();
     } else {
-        $_SESSION['error_msg'] = "Error recording supply.";
+        $_SESSION['error_msg'] = __('err_recording_supply');
         header("Location: " . BASE_URL . "views/supply/add_supply.php");
         exit();
     }

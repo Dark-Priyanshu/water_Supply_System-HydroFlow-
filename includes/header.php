@@ -1,13 +1,13 @@
 <?php
+require_once __DIR__ . '/../config/config.php';
+
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 if (!isset($_SESSION['admin_id'])) {
-    header("Location: ../views/login.php");
+    header("Location: " . BASE_URL . "login.php");
     exit();
 }
-require_once __DIR__ . '/../config/config.php';
-
 
 // DB connection (needed by sidebar for dynamic admin name)
 if (!isset($conn)) {

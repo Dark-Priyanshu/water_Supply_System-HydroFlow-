@@ -16,16 +16,16 @@ if (isset($_POST['login'])) {
         if (password_verify($password, $user['password'])) {
             $_SESSION['admin_id'] = $user['admin_id'];
             $_SESSION['role'] = $user['role'];
-            header("Location: " . BASE_URL . "views/dashboard.php");
+            header("Location: " . BASE_URL . "dashboard.php");
             exit();
         } else {
-            $_SESSION['error_msg'] = "Invalid password.";
-            header("Location: " . BASE_URL . "views/login.php");
+            $_SESSION['error_msg'] = __('err_invalid_password');
+            header("Location: " . BASE_URL . "login.php");
             exit();
         }
     } else {
-        $_SESSION['error_msg'] = "User not found.";
-        header("Location: " . BASE_URL . "views/login.php");
+        $_SESSION['error_msg'] = __('err_user_not_found');
+        header("Location: " . BASE_URL . "login.php");
         exit();
     }
 }

@@ -26,7 +26,7 @@
                 }
             }
             ?>
-            <a class="<?= getLinkClass(['dashboard.php'], $current_page) ?>" href="<?= BASE_URL ?>views/dashboard.php">
+            <a class="<?= getLinkClass(['dashboard.php'], $current_page) ?>" href="<?= BASE_URL ?>dashboard.php">
                 <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
                 <span><?= __('dashboard') ?></span>
             </a>

@@ -3,7 +3,7 @@ require_once __DIR__ . '/config/config.php';
 
 // Redirect to dashboard if already logged in
 if (isset($_SESSION['admin_id'])) {
-    header("Location: " . BASE_URL . "views/dashboard.php");
+    header("Location: " . BASE_URL . "dashboard.php");
     exit();
 }
 ?>
@@ -42,8 +42,8 @@ if (isset($_SESSION['admin_id'])) {
                 <a href="#about">About</a>
             </div>
             <div class="flex" style="align-items: center; gap: 1rem;">
-                <a href="<?= BASE_URL ?>views/login.php" style="font-size: 0.875rem; font-weight: 600; color: var(--color-on-surface-variant);">Login</a>
-                <a href="<?= BASE_URL ?>views/login.php" class="btn btn-primary" style="padding-left: 1.5rem; padding-right: 1.5rem;">Get Started</a>
+                <a href="<?= BASE_URL ?>login.php" style="font-size: 0.875rem; font-weight: 600; color: var(--color-on-surface-variant);">Login</a>
+                <a href="<?= BASE_URL ?>login.php" class="btn btn-primary" style="padding-left: 1.5rem; padding-right: 1.5rem;">Get Started</a>
             </div>
         </div>
     </nav>
@@ -60,7 +60,7 @@ if (isset($_SESSION['admin_id'])) {
                     HydroFlow helps manage water distribution efficiently for farmers and consumers, ensuring every drop contributes to growth and sustainability.
                 </p>
                 <div class="flex" style="flex-wrap: wrap; gap: 1rem;">
-                    <a href="<?= BASE_URL ?>views/login.php" class="btn bg-gradient-primary" style="padding: 1rem 2rem; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);">
+                    <a href="<?= BASE_URL ?>login.php" class="btn bg-gradient-primary" style="padding: 1rem 2rem; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);">
                         Get Started Now <span class="material-symbols-outlined">arrow_forward</span>
                     </a>
                     <button class="btn" style="color: var(--color-primary); background: transparent; padding: 1rem 2rem;">
