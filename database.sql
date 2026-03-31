@@ -71,4 +71,4 @@ CREATE TABLE payments (
 );
 
 -- Default admin password is 'admin123'
-INSERT INTO admins (username, password) VALUES ('admin', '$2y$10$Zsu1SykDdyDItd/lq9832uHrYMlm78Enl.wD7zWHdyJRa34qsbbt.');
+INSERT INTO admins (username, password) VALUES ('admin', '$2y$10$nkhvtSY91KtAsvEJDiaules3aBthhjXx5vbFp2xWcnigsF3ct.iW6');
