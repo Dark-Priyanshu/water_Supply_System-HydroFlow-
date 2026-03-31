@@ -1,8 +1,7 @@
-<?php include '../../includes/header.php'; ?>
-<?php include '../../includes/sidebar.php'; ?>
-<?php require_once '../../config/database.php'; ?>
+<?php 
+require_once '../../config/config.php';
+require_once '../../config/database.php';
 
-<?php
 if (!isset($_GET['supply_id'])) {
     header("Location: ../supply/supply_history.php");
     exit();
@@ -27,12 +26,17 @@ $query = "SELECT s.*, c.farmer_name, c.mobile, c.village, m.motor_name
 $result = $conn->query($query);
 
 if ($result->num_rows === 0) {
+    include '../../includes/header.php';
+    include '../../includes/sidebar.php';
     echo "<div style='padding: 2.5rem; text-align: center; color: var(--color-error); font-weight: 700; font-family: var(--font-headline);'>Supply record not found.</div>";
     include '../../includes/footer.php';
     exit();
 }
 
 $supply = $result->fetch_assoc();
+
+include '../../includes/header.php';
+include '../../includes/sidebar.php';
 ?>
 
 <!-- Header -->
