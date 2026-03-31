@@ -41,10 +41,6 @@ if (isset($_GET['lang'])) {
     if (in_array($requested_lang, ['en', 'hi'])) {
         $_SESSION['lang'] = $requested_lang;
     }
-    // Redirect to clear the GET parameter from URL
-    $clean_url = strtok($_SERVER['REQUEST_URI'], '?');
-    header("Location: " . $clean_url);
-    exit();
 }
 
 if (!isset($_SESSION['lang'])) {

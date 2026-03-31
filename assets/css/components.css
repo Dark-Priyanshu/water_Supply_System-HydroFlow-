@@ -22,7 +22,8 @@
   left: 0;
   top: 0;
   height: 100%;
-  width: 16rem; /* 64 */
+  width: 16rem;
+  /* 64 */
   padding: 2rem 1.5rem;
   display: flex;
   flex-direction: column;
@@ -34,8 +35,13 @@
 }
 
 @media (max-width: 1023px) {
-  .side-sidebar { transform: translateX(-100%); }
-  .sidebar-open { transform: translateX(0); }
+  .side-sidebar {
+    transform: translateX(-100%);
+  }
+
+  .sidebar-open {
+    transform: translateX(0);
+  }
 }
 
 .main-container {
@@ -47,7 +53,9 @@
 }
 
 @media (min-width: 1024px) {
-  .main-container { margin-left: 16rem; }
+  .main-container {
+    margin-left: 16rem;
+  }
 }
 
 /* Nav Links */
@@ -58,12 +66,14 @@
   padding: 0.75rem 1rem;
   border-radius: 0.75rem;
   font-size: 0.875rem;
-  color: #64748b; /* slate-500 */
+  color: #64748b;
+  /* slate-500 */
   transition: all 0.3s ease;
 }
 
 .nav-link:hover {
-  background-color: rgba(241, 245, 249, 0.5); /* slate-100/50 */
+  background-color: rgba(241, 245, 249, 0.5);
+  /* slate-100/50 */
   color: var(--color-primary);
 }
 
@@ -85,12 +95,19 @@
 }
 
 @media (min-width: 768px) {
-  .grid-2-md { grid-template-columns: repeat(2, 1fr); }
-  .grid-4 { grid-template-columns: repeat(2, 1fr); }
+  .grid-2-md {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 @media (min-width: 1024px) {
-  .grid-4 { grid-template-columns: repeat(4, 1fr); }
+  .grid-4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
 }
 
 /* Base Card */
@@ -111,7 +128,9 @@
   box-shadow: 0 12px 24px -10px rgba(0, 0, 0, 0.1);
 }
 
-.card-h-40 { min-height: 10rem; }
+.card-h-40 {
+  min-height: 10rem;
+}
 
 /* Dashboard Stat Cards */
 .stat-card {
@@ -151,7 +170,9 @@
   border: none;
 }
 
-.btn:active { transform: scale(0.95); }
+.btn:active {
+  transform: scale(0.95);
+}
 
 .btn-primary {
   background-color: var(--color-primary);
@@ -235,19 +256,46 @@
 }
 
 /* Icon Helpers */
-.icon-p-2 { padding: 0.5rem; }
-.rounded-lg { border-radius: 0.5rem; }
+.icon-p-2 {
+  padding: 0.5rem;
+}
+
+.rounded-lg {
+  border-radius: 0.5rem;
+}
 
 /* Colors Utility (Mapping common Tailwind colors to variables) */
-.text-primary { color: var(--color-primary); }
-.text-secondary { color: var(--color-secondary); }
-.text-tertiary { color: var(--color-tertiary); }
-.text-on-surface-variant { color: var(--color-on-surface-variant); }
+.text-primary {
+  color: var(--color-primary);
+}
 
-.bg-primary-fixed { background-color: var(--color-primary-fixed); }
-.bg-secondary-fixed { background-color: var(--color-secondary-fixed); }
-.bg-tertiary-fixed { background-color: var(--color-tertiary-fixed); }
-.bg-secondary-container { background-color: var(--color-secondary-container); }
+.text-secondary {
+  color: var(--color-secondary);
+}
+
+.text-tertiary {
+  color: var(--color-tertiary);
+}
+
+.text-on-surface-variant {
+  color: var(--color-on-surface-variant);
+}
+
+.bg-primary-fixed {
+  background-color: var(--color-primary-fixed);
+}
+
+.bg-secondary-fixed {
+  background-color: var(--color-secondary-fixed);
+}
+
+.bg-tertiary-fixed {
+  background-color: var(--color-tertiary-fixed);
+}
+
+.bg-secondary-container {
+  background-color: var(--color-secondary-container);
+}
 
 /* DataTables Pagination Styles */
 .dataTables_paginate {
@@ -342,9 +390,9 @@
   position: relative;
   overflow: hidden;
   background-color: #f2f4f6;
-  background-image: 
-    radial-gradient(at 0% 0%, hsla(202,100%,75%,0.3) 0px, transparent 50%),
-    radial-gradient(at 100% 100%, hsla(168,100%,75%,0.3) 0px, transparent 50%);
+  background-image:
+    radial-gradient(at 0% 0%, hsla(202, 100%, 75%, 0.3) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, hsla(168, 100%, 75%, 0.3) 0px, transparent 50%);
 }
 
 .login-card {
@@ -355,7 +403,7 @@
   padding: 2.5rem;
   border-radius: 1.5rem;
   border: 1px solid rgba(255, 255, 255, 0.4);
-  box-shadow: 0 32px 64px -12px rgba(0,0,0,0.1);
+  box-shadow: 0 32px 64px -12px rgba(0, 0, 0, 0.1);
   z-index: 10;
 }
 
@@ -462,7 +510,9 @@
 }
 
 @media (min-width: 768px) {
-  .form-grid-2 { grid-template-columns: repeat(2, 1fr) !important; }
+  .form-grid-2 {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
 }
 
 .form-label {
@@ -490,7 +540,9 @@
 }
 
 @media (min-width: 768px) {
-  .form-footer { flex-direction: row; }
+  .form-footer {
+    flex-direction: row;
+  }
 }
 
 .btn-secondary {
@@ -564,9 +616,24 @@
 }
 
 /* Position adjustments */
-[data-tooltip-pos="right"]::before { bottom: 50%; left: 120%; transform: translateY(50%) translateX(-8px); }
-[data-tooltip-pos="right"]::after  { bottom: 50%; left: 110%; transform: translateY(50%) translateX(-8px); border-top-color: transparent; border-right-color: #1a1c1e; }
-[data-tooltip-pos="right"]:hover::before, [data-tooltip-pos="right"]:hover::after { transform: translateY(50%) translateX(0); }
+[data-tooltip-pos="right"]::before {
+  bottom: 50%;
+  left: 120%;
+  transform: translateY(50%) translateX(-8px);
+}
+
+[data-tooltip-pos="right"]::after {
+  bottom: 50%;
+  left: 110%;
+  transform: translateY(50%) translateX(-8px);
+  border-top-color: transparent;
+  border-right-color: #1a1c1e;
+}
+
+[data-tooltip-pos="right"]:hover::before,
+[data-tooltip-pos="right"]:hover::after {
+  transform: translateY(50%) translateX(0);
+}
 
 /* Avatar Initials Helpers */
 .avatar-initials {

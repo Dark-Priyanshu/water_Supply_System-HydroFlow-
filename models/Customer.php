@@ -36,5 +36,11 @@ class Customer {
         }
         return false;
     }
+
+    public function deleteCustomer($id) {
+        $stmt = $this->conn->prepare("DELETE FROM customers WHERE customer_id = ?");
+        $stmt->bind_param("i", $id);
+        return $stmt->execute();
+    }
 }
 ?>

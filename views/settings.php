@@ -186,29 +186,47 @@ include '../includes/sidebar.php';
 
                 <div class="settings-divider"></div>
 
-                <!-- UI Scale -->
+                <!-- Text Size -->
                 <div class="settings-row settings-row-col">
                     <div class="settings-row-info" style="margin-bottom: 1rem;">
                         <span class="material-symbols-outlined settings-row-icon">text_fields</span>
                         <div>
-                            <p class="settings-row-label"><?= __('ui_scale') ?></p>
-                            <p class="settings-row-hint"><?= __('ui_scale_hint') ?></p>
+                            <p class="settings-row-label"><?= __('text_size') ?></p>
+                            <p class="settings-row-hint"><?= __('text_size_hint') ?></p>
                         </div>
                     </div>
                     <div class="scale-control">
                         <div class="scale-labels">
-                            <span>80%</span>
+                            <span class="material-symbols-outlined" style="font-size: 14px;">text_fields</span>
                             <span id="scaleValueBadge" class="scale-badge">100%</span>
-                            <span>130%</span>
+                            <span class="material-symbols-outlined" style="font-size: 24px;">text_fields</span>
                         </div>
-                        <input type="range" id="uiScaleSlider" min="80" max="130" step="5" value="100" class="scale-slider">
+                        <input type="range" id="uiScaleSlider" min="80" max="150" step="5" value="100" class="scale-slider">
                         <div class="scale-presets">
                             <button class="scale-preset-btn" style="flex:1" onclick="setScale(80)"><?= __('scale_80') ?></button>
                             <button class="scale-preset-btn active" style="flex:1" onclick="setScale(100)" id="scaleDefault"><?= __('scale_100') ?></button>
                             <button class="scale-preset-btn" style="flex:1" onclick="setScale(115)"><?= __('scale_115') ?></button>
                             <button class="scale-preset-btn" style="flex:1" onclick="setScale(130)"><?= __('scale_130') ?></button>
+                            <button class="scale-preset-btn" style="flex:1" onclick="setScale(150)"><?= __('scale_150') ?></button>
                         </div>
                     </div>
+                </div>
+
+                <div class="settings-divider"></div>
+
+                <!-- Bolder Text Toggle -->
+                <div class="settings-row">
+                    <div class="settings-row-info">
+                        <span class="material-symbols-outlined settings-row-icon" id="boldTextIcon">format_bold</span>
+                        <div>
+                            <p class="settings-row-label"><?= __('bold_text') ?></p>
+                            <p class="settings-row-hint"><?= __('bold_text_hint') ?></p>
+                        </div>
+                    </div>
+                    <label class="toggle-switch" for="boldTextToggle" title="Toggle bolder text">
+                        <input type="checkbox" id="boldTextToggle">
+                        <span class="toggle-slider"></span>
+                    </label>
                 </div>
             </div>
         </div>
@@ -985,18 +1003,23 @@ const i18n = {
        1.  APPEARANCE — Dark Mode & UI Scale
     ══════════════════════════════════════════════════════ */
     const darkToggle   = document.getElementById('darkModeToggle');
+    const boldToggle   = document.getElementById('boldTextToggle');
     const scaleSlider  = document.getElementById('uiScaleSlider');
     const scaleBadge   = document.getElementById('scaleValueBadge');
     const darkModeIcon = document.getElementById('darkModeIcon');
 
     // ── Restore saved state ──────────────────────────────
-    const savedTheme = localStorage.getItem('hydroTheme') || 'light';
-    const savedScale = parseInt(localStorage.getItem('hydroScale') || '100', 10);
+    const savedTheme  = localStorage.getItem('hydroTheme') || 'light';
+    const savedScale  = parseInt(localStorage.getItem('hydroScale') || '100', 10);
+    const savedWeight = localStorage.getItem('hydroWeight') || 'normal';
 
     applyTheme(savedTheme);
     applyScale(savedScale);
-    darkToggle.checked  = savedTheme === 'dark';
-    scaleSlider.value   = savedScale;
+    applyWeight(savedWeight);
+    
+    darkToggle.checked = savedTheme === 'dark';
+    boldToggle.checked = savedWeight === 'bold';
+    scaleSlider.value  = savedScale;
     updateScaleBadge(savedScale);
     updatePresetButtons(savedScale);
 
@@ -1006,6 +1029,7 @@ const i18n = {
         localStorage.setItem('hydroTheme', theme);
         applyTheme(theme);
         showToast(theme === 'dark' ? i18n.darkModeEnabled : i18n.lightModeEnabled);
+        syncSettings();
     });
 
     function applyTheme(theme) {
@@ -1013,6 +1037,21 @@ const i18n = {
         if (darkModeIcon) {
             darkModeIcon.textContent = theme === 'dark' ? 'light_mode' : 'dark_mode';
         }
+    }
+
+    // ── Bold Text Toggle ─────────────────────────────────
+    boldToggle.addEventListener('change', function () {
+        const weight = this.checked ? 'bold' : 'normal';
+        localStorage.setItem('hydroWeight', weight);
+        applyWeight(weight);
+        showToast(weight === 'bold' ? 'Bolder text enabled' : 'Bolder text disabled');
+        syncSettings();
+    });
+
+    function applyWeight(weight) {
+        document.documentElement.style.fontWeight = weight === 'bold' ? '600' : 'normal';
+        // Target specific body text if needed
+        document.body.style.fontWeight = weight === 'bold' ? '500' : 'normal';
     }
 
     // ── UI Scale Slider ──────────────────────────────────
@@ -1024,6 +1063,7 @@ const i18n = {
     });
     scaleSlider.addEventListener('change', function () {
         localStorage.setItem('hydroScale', this.value);
+        syncSettings();
     });
 
     function applyScale(val) {
@@ -1036,7 +1076,7 @@ const i18n = {
         document.querySelectorAll('.scale-control .scale-preset-btn').forEach(btn => {
             btn.classList.remove('active');
         });
-        const presets = { 80: 0, 100: 1, 115: 2, 130: 3 };
+        const presets = { 80: 0, 100: 1, 115: 2, 130: 3, 150: 4 };
         const buttons = document.querySelectorAll('.scale-control .scale-preset-btn');
         if (presets[val] !== undefined && buttons[presets[val]]) {
             buttons[presets[val]].classList.add('active');
@@ -1050,7 +1090,21 @@ const i18n = {
         updatePresetButtons(val);
         localStorage.setItem('hydroScale', val);
         showToast(i18n.uiScaleSet + ' ' + val + '%');
+        syncSettings();
     };
+
+    async function syncSettings() {
+        const fd = new FormData();
+        fd.append('action', 'update_settings');
+        fd.append('language', '<?= $_SESSION['lang'] ?>'); 
+        fd.append('theme', localStorage.getItem('hydroTheme') || 'light');
+        fd.append('ui_scale', localStorage.getItem('hydroScale') || '100');
+        fd.append('font_weight', localStorage.getItem('hydroWeight') || 'normal');
+        
+        try {
+            await fetch(baseUrl + 'controllers/profileController.php', { method: 'POST', body: fd });
+        } catch(e) { console.error('Sync failed', e); }
+    }
 
     /* ══════════════════════════════════════════════════════
        2.  EXPORT TO EXCEL
@@ -1060,7 +1114,7 @@ const i18n = {
     /* ══════════════════════════════════════════════════════
        0.  PROFILE — Load + Update
     ══════════════════════════════════════════════════════ */
-    // Load current username into form + display
+    // Load current username and settings into form + display
     (async function loadProfile() {
         try {
             const fd = new FormData();
@@ -1068,9 +1122,29 @@ const i18n = {
             const res  = await fetch(baseUrl + 'controllers/profileController.php', { method: 'POST', body: fd });
             const data = await res.json();
             if (data.success) {
+                // Profile
                 document.getElementById('profileDisplayName').textContent = data.username;
                 document.getElementById('newUsername').value = data.username;
                 document.getElementById('profileAvatar').textContent = data.username.substring(0, 2).toUpperCase();
+                
+                // Settings Sync (Initial load from DB if localStorage is empty or different)
+                if (data.theme !== localStorage.getItem('hydroTheme')) {
+                    localStorage.setItem('hydroTheme', data.theme);
+                    applyTheme(data.theme);
+                    darkToggle.checked = data.theme === 'dark';
+                }
+                if (data.ui_scale != localStorage.getItem('hydroScale')) {
+                    localStorage.setItem('hydroScale', data.ui_scale);
+                    applyScale(data.ui_scale);
+                    scaleSlider.value = data.ui_scale;
+                    updateScaleBadge(data.ui_scale);
+                    updatePresetButtons(data.ui_scale);
+                }
+                if (data.font_weight !== localStorage.getItem('hydroWeight')) {
+                    localStorage.setItem('hydroWeight', data.font_weight);
+                    applyWeight(data.font_weight);
+                    boldToggle.checked = data.font_weight === 'bold';
+                }
             }
         } catch(e) { /* silent */ }
     })();
@@ -1162,18 +1236,21 @@ const i18n = {
         lbl.style.color       = lvl.color;
     });
 
-    window.setLanguage = function(lang) {
-        fetch(baseUrl + 'controllers/update_language.php', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: 'lang=' + lang
-        })
-        .then(res => res.json())
-        .then(data => {
-            if (data.status === 'success') {
+    window.setLanguage = async function(lang) {
+        const fd = new FormData();
+        fd.append('action', 'update_settings');
+        fd.append('language', lang);
+        fd.append('theme', localStorage.getItem('hydroTheme') || 'light');
+        fd.append('ui_scale', localStorage.getItem('hydroScale') || '100');
+        fd.append('font_weight', localStorage.getItem('hydroWeight') || 'normal');
+
+        try {
+            const res = await fetch(baseUrl + 'controllers/profileController.php', { method: 'POST', body: fd });
+            const data = await res.json();
+            if (data.success) {
                 window.location.reload();
             }
-        });
+        } catch(e) { console.error('Language update failed', e); }
     };
 
     window.exportToExcel = async function(table, filename) {

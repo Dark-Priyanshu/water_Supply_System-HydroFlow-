@@ -15,7 +15,9 @@
 }
 
 @media (min-width: 1024px) {
-  .hero-grid { grid-template-columns: 1fr 1fr; }
+  .hero-grid {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 .hero-tag {
@@ -40,7 +42,9 @@
 }
 
 @media (min-width: 768px) {
-  .hero-title { font-size: 3.75rem; }
+  .hero-title {
+    font-size: 3.75rem;
+  }
 }
 
 .hero-description {
@@ -64,8 +68,13 @@
 }
 
 @media (min-width: 768px) {
-  .feature-grid { grid-template-columns: repeat(4, 1fr); }
-  .col-span-2 { grid-column: span 2 / span 2; }
+  .feature-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .col-span-2 {
+    grid-column: span 2 / span 2;
+  }
 }
 
 .feature-card {
@@ -88,7 +97,7 @@
   align-items: center;
   justify-content: center;
   margin-bottom: 2rem;
-  box-shadow: inset 0 2px 4px 0 rgba(0,0,0,0.05);
+  box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.05);
 }
 
 /* Process Steps */
@@ -104,7 +113,9 @@
 }
 
 @media (min-width: 1024px) {
-  .process-grid { grid-template-columns: 1fr 2fr; }
+  .process-grid {
+    grid-template-columns: 1fr 2fr;
+  }
 }
 
 .step-card {
@@ -150,7 +161,11 @@
   border-bottom: 1px solid var(--color-surface-container-high);
 }
 
-.dot { width: 0.875rem; height: 0.875rem; border-radius: 50%; }
+.dot {
+  width: 0.875rem;
+  height: 0.875rem;
+  border-radius: 50%;
+}
 
 /* Navigation Extra */
 .nav-links a {
@@ -177,5 +192,5 @@
 
 /* Hero Image Custom Shadow */
 .editorial-shadow {
-    box-shadow: 0 32px 64px -12px rgba(25, 28, 30, 0.08);
+  box-shadow: 0 32px 64px -12px rgba(25, 28, 30, 0.08);
 }

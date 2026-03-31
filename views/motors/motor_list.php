@@ -80,8 +80,8 @@ if($total_motors > 0) {
         <?php if ($total_motors > 0): ?>
             <?php foreach ($motors_data as $motor): ?>
             <div class="searchable-item card" style="flex-direction: row; padding: 0; overflow: hidden; border: 1px solid rgba(112, 120, 129, 0.1);">
-                 <div style="width: 8rem; background-color: var(--color-surface-container-highest); display: flex; align-items: center; justify-content: center; position: relative; flex-shrink: 0;">
-                     <span class="material-symbols-outlined" style="font-size: 3.5rem; color: rgba(112, 120, 129, 0.3);">water_pump</span>
+                 <div style="width: 8rem; background-color: var(--color-surface-container-highest); display: flex; align-items: center; justify-content: center; position: relative; flex-shrink: 0; overflow: hidden;">
+                     <img src="<?= BASE_URL ?>assets/images/borwell1.png" alt="Motor Image" style="width: 100%; height: 100%; object-fit: cover; opacity: 0.9;">
                      <?php if($motor['status'] == 'active'): ?>
                      <div style="position: absolute; top: 0.75rem; left: 0.75rem; padding: 0.25rem 0.5rem; background-color: var(--color-secondary); color: white; font-size: 0.625rem; font-weight: 700; border-radius: 9999px; text-transform: uppercase;"><?= __('val_active') ?></div>
                      <?php else: ?>
@@ -104,6 +104,7 @@ if($total_motors > 0) {
                          <a href="../../controllers/motorController.php?action=toggle_status&id=<?= $motor['motor_id'] ?>" style="padding: 0.5rem; color: var(--color-on-surface-variant); display: flex; border-radius: 0.5rem;" onmouseover="this.style.backgroundColor='rgba(0, 93, 144, 0.1)'; this.style.color='var(--color-primary)';" onmouseout="this.style.backgroundColor='transparent'; this.style.color='var(--color-on-surface-variant)';" title="<?= $motor['status'] == 'active' ? __('deactivate_motor') : __('activate_motor') ?>">
                             <span class="material-symbols-outlined"><?= $motor['status'] == 'active' ? 'visibility_off' : 'visibility' ?></span>
                          </a>
+                         <a href="javascript:void(0)" onclick="confirmDeleteMotor(<?= $motor['motor_id'] ?>)" style="padding: 0.5rem; color: var(--color-on-surface-variant); display: flex; border-radius: 0.5rem;" onmouseover="this.style.backgroundColor='rgba(186, 26, 26, 0.1)'; this.style.color='var(--color-error)';" onmouseout="this.style.backgroundColor='transparent'; this.style.color='var(--color-on-surface-variant)';" title="<?= __('tooltip_delete') ?>"><span class="material-symbols-outlined">delete_forever</span></a>
                      </div>
                  </div>
             </div>
@@ -120,5 +121,27 @@ if($total_motors > 0) {
         <?php endif; ?>
     </div>
 </div>
+
+<script>
+function confirmDeleteMotor(id) {
+    Swal.fire({
+        title: '<?= __('confirm_delete_title') ?>',
+        text: '<?= __('confirm_delete_text') ?>',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: 'var(--color-error)',
+        cancelButtonColor: 'var(--color-outline)',
+        confirmButtonText: '<?= __('confirm_delete_btn') ?>',
+        cancelButtonText: '<?= __('confirm_cancel_btn') ?>',
+        background: 'var(--color-surface)',
+        color: 'var(--color-on-surface)',
+        reverseButtons: true
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = 'delete_motor.php?id=' + id;
+        }
+    });
+}
+</script>
 
 <?php include '../../includes/footer.php'; ?>

@@ -1,6 +1,6 @@
 <?php
-session_start();
-require_once '../config/database.php';
+require_once __DIR__ . '/../config/config.php';
+require_once __DIR__ . '/../config/database.php';
 
 if (isset($_POST['add_payment'])) {
     $bill_id = $_POST['bill_id'];
@@ -15,11 +15,11 @@ if (isset($_POST['add_payment'])) {
         // Also update bill status to paid
         $conn->query("UPDATE bills SET status = 'paid' WHERE bill_id = $bill_id");
         $_SESSION['success_msg'] = __('msg_payment_success');
-        header("Location: ../views/payments/payment_history.php");
+        header("Location: " . BASE_URL . "views/payments/payment_history.php");
         exit();
     } else {
         $_SESSION['error_msg'] = __('err_recording_payment');
-        header("Location: ../views/payments/add_payment.php");
+        header("Location: " . BASE_URL . "views/payments/add_payment.php");
         exit();
     }
 }

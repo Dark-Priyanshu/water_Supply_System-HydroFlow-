@@ -30,18 +30,36 @@ if (!isset($conn)) {
     <!-- Icons -->
     <link href="<?= BASE_URL ?>assets/css/material-symbols.css" rel="stylesheet"/>
     
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
     <!-- Core & Component Styles (Vanilla CSS Migration) -->
     <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/main.css?v=1.1">
     <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/components.css?v=1.1">
 
 
-    <!-- Prevent flash: apply saved theme + scale BEFORE first paint -->
+    <!-- Prevent flash: apply saved theme + scale + weight BEFORE first paint -->
     <script>
         (function(){
-            var t = localStorage.getItem('hydroTheme');
+            // Prioritize PHP Session (Database) values if they exist, otherwise fallback to localStorage
+            var t = "<?= $_SESSION['theme'] ?? '' ?>" || localStorage.getItem('hydroTheme') || 'light';
+            var s = parseInt("<?= $_SESSION['ui_scale'] ?? '' ?>" || localStorage.getItem('hydroScale') || '100', 10);
+            var w = "<?= $_SESSION['font_weight'] ?? '' ?>" || localStorage.getItem('hydroWeight') || 'normal';
+            
             if (t === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
-            var s = parseInt(localStorage.getItem('hydroScale') || '100', 10);
             if (s !== 100) document.documentElement.style.fontSize = (s / 100 * 16) + 'px';
+            if (w === 'bold') {
+                document.documentElement.style.fontWeight = '600';
+                // Add a small delay to body weight to ensure CSS is loaded
+                window.addEventListener('DOMContentLoaded', function() {
+                    document.body.style.fontWeight = '500';
+                });
+            }
+            
+            // Sync localStorage if different (handles first-time login on new device)
+            if (t !== localStorage.getItem('hydroTheme')) localStorage.setItem('hydroTheme', t);
+            if (String(s) !== localStorage.getItem('hydroScale')) localStorage.setItem('hydroScale', s);
+            if (w !== localStorage.getItem('hydroWeight')) localStorage.setItem('hydroWeight', w);
         })();
         
         // Global DataTables Language Config

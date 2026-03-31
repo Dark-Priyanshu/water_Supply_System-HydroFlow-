@@ -15,11 +15,41 @@ $admin_id = $_SESSION['admin_id'];
 
 // ── Get current admin info ────────────────────────────────────────
 if ($action === 'get') {
-    $stmt = $conn->prepare("SELECT username FROM admins WHERE admin_id = ?");
+    $stmt = $conn->prepare("SELECT username, language, theme, ui_scale FROM admins WHERE admin_id = ?");
     $stmt->bind_param("i", $admin_id);
     $stmt->execute();
     $row = $stmt->get_result()->fetch_assoc();
-    echo json_encode(['success' => true, 'username' => $row['username'] ?? '']);
+    
+    echo json_encode([
+        'success' => true, 
+        'username' => $row['username'] ?? '',
+        'language' => $row['language'] ?? 'en',
+        'theme' => $row['theme'] ?? 'light',
+        'ui_scale' => (int)($row['ui_scale'] ?? 100),
+        'font_weight' => $row['font_weight'] ?? 'normal'
+    ]);
+    exit;
+}
+
+// ── Update settings ───────────────────────────────────────────────
+if ($action === 'update_settings') {
+    $lang   = $_POST['language']    ?? 'en';
+    $theme  = $_POST['theme']       ?? 'light';
+    $scale  = (int)($_POST['ui_scale'] ?? 100);
+    $weight = $_POST['font_weight'] ?? 'normal';
+
+    $stmt = $conn->prepare("UPDATE admins SET language = ?, theme = ?, ui_scale = ?, font_weight = ? WHERE admin_id = ?");
+    $stmt->bind_param("ssisi", $lang, $theme, $scale, $weight, $admin_id);
+    
+    if ($stmt->execute()) {
+        $_SESSION['lang'] = $lang;
+        $_SESSION['theme'] = $theme;
+        $_SESSION['ui_scale'] = $scale;
+        $_SESSION['font_weight'] = $weight;
+        echo json_encode(['success' => true, 'message' => 'Settings saved to cloud!']);
+    } else {
+        echo json_encode(['success' => false, 'message' => 'Failed to save settings: ' . $conn->error]);
+    }
     exit;
 }
 

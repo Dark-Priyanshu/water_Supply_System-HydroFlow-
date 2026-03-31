@@ -60,12 +60,34 @@
             </a>
             
             <div style="padding-top: 1rem; margin-top: 1rem; border-top: 1px solid rgba(226, 232, 240, 0.5);">
-                <a class="nav-link" style="color: #64748b;" onmouseover="this.style.color='#ba1a1a'; this.style.backgroundColor='rgba(254, 226, 226, 0.5)';" onmouseout="this.style.color='#64748b'; this.style.backgroundColor='transparent';" href="<?= BASE_URL ?>logout.php">
+                <a class="nav-link" style="color: #64748b; cursor: pointer;" onmouseover="this.style.color='#ba1a1a'; this.style.backgroundColor='rgba(254, 226, 226, 0.5)';" onmouseout="this.style.color='#64748b'; this.style.backgroundColor='transparent';" onclick="confirmLogout()">
                     <span class="material-symbols-outlined">logout</span>
                     <span><?= __('logout') ?></span>
                 </a>
             </div>
         </nav>
+        
+        <script>
+        function confirmLogout() {
+            Swal.fire({
+                title: '<?= __('confirm_logout_title') ?>',
+                text: '<?= __('confirm_logout_text') ?>',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: 'var(--color-error)',
+                cancelButtonColor: 'var(--color-outline)',
+                confirmButtonText: '<?= __('confirm_logout_btn') ?>',
+                cancelButtonText: '<?= __('confirm_cancel_btn') ?>',
+                background: 'var(--color-surface)',
+                color: 'var(--color-on-surface)',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = '<?= BASE_URL ?>logout.php';
+                }
+            });
+        }
+        </script>
         
         <div style="margin-top: auto; padding-top: 1.5rem;">
             <div style="background-color: var(--color-surface-container-low); border-radius: 1rem; padding: 1rem; display: flex; align-items: center; gap: 0.75rem;">

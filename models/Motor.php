@@ -40,5 +40,11 @@ class Motor {
         }
         return false;
     }
+
+    public function deleteMotor($id) {
+        $stmt = $this->conn->prepare("DELETE FROM motors WHERE motor_id = ?");
+        $stmt->bind_param("i", $id);
+        return $stmt->execute();
+    }
 }
 ?>

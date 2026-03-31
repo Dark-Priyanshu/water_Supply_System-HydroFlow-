@@ -28,8 +28,11 @@ if (!$customer) {
         </nav>
         <h2
             style="font-size: 1.875rem; font-family: var(--font-headline); font-weight: 800; color: var(--color-on-surface); letter-spacing: -0.025em; margin-bottom: 0.5rem;">
-            <?= __('edit_customer') ?></h2>
-        <p style="font-size: 1rem; color: var(--color-on-surface-variant); max-width: 40rem;"><?= __('edit_customer_desc') ?></p>
+            <?= __('edit_customer') ?>
+        </h2>
+        <p style="font-size: 1rem; color: var(--color-on-surface-variant); max-width: 40rem;">
+            <?= __('edit_customer_desc') ?>
+        </p>
     </div>
     <a href="customer_list.php" class="btn-secondary"
         style="display: flex; align-items: center; gap: 0.5rem; text-decoration: none;">
@@ -52,7 +55,8 @@ if (!$customer) {
             <input type="hidden" name="customer_id" value="<?= htmlspecialchars($customer['customer_id']) ?>">
             <h4
                 style="font-family: var(--font-headline); font-size: 1.125rem; font-weight: 700; color: var(--color-on-surface); margin-bottom: 1.5rem; border-bottom: 1px solid rgba(112, 120, 129, 0.1); padding-bottom: 0.5rem;">
-                <?= __('personal_info') ?></h4>
+                <?= __('personal_info') ?>
+            </h4>
 
             <div class="form-grid form-grid-2">
                 <div class="input-group">
@@ -87,7 +91,8 @@ if (!$customer) {
 
             <h4
                 style="font-family: var(--font-headline); font-size: 1.125rem; font-weight: 700; color: var(--color-on-surface); margin: 2rem 0 1.5rem; border-bottom: 1px solid rgba(112, 120, 129, 0.1); padding-bottom: 0.5rem;">
-                <?= __('farm_tech_details') ?></h4>
+                <?= __('farm_tech_details') ?>
+            </h4>
 
             <div class="form-grid form-grid-2">
                 <div class="input-group">
