@@ -43,7 +43,7 @@ $supplies = $supplyModel->getAllSupply();
                     <th style="white-space: nowrap;"><?= __('th_farmer_name') ?></th>
                     <th style="white-space: nowrap;"><?= __('th_motor_used') ?></th>
                     <th style="white-space: nowrap;"><?= __('th_duration') ?></th>
-                    <th style="text-right; white-space: nowrap;"><?= __('th_amount') ?></th>
+                    <th style="text-align: right; white-space: nowrap;"><?= __('th_amount') ?></th>
                     <th style="padding-right: 1.5rem; text-align: center; white-space: nowrap;"><?= __('th_actions') ?></th>
                 </tr>
             </thead>
