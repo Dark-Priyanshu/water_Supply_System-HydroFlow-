@@ -12,6 +12,22 @@ $bill_id = (int)$_GET['id'];
 $billModel = new Bill($conn);
 $bill = $billModel->getBillById($bill_id);
 
+require_once '../../models/Setting.php';
+$settingModel = new Setting($conn);
+$inv_company_name = $settingModel->get('inv_company_name', 'HydroFlow Water Supply');
+$inv_address      = $settingModel->get('inv_address', '');
+$inv_contact      = $settingModel->get('inv_contact', '');
+$inv_gst          = $settingModel->get('inv_gst', '');
+$inv_terms        = $settingModel->get('inv_terms', __('term_1') . "\n" . __('term_2'));
+$inv_footer_note  = $settingModel->get('inv_footer_note', '');
+$inv_signatory    = $settingModel->get('inv_signatory', __('auth_signatory'));
+
+// Fetch payments data
+$paymentQuery = $conn->query("SELECT COALESCE(SUM(amount), 0) as paid_amount FROM payments WHERE bill_id = " . $bill_id);
+$paymentData = $paymentQuery->fetch_assoc();
+$paid_amount = $paymentData['paid_amount'];
+$due_balance = max(0, $bill['total_amount'] - $paid_amount);
+
 if (!$bill) {
     include '../../includes/header.php';
     include '../../includes/sidebar.php';
@@ -104,9 +120,10 @@ include '../../includes/sidebar.php';
                     <img src="../../assets/images/icon.png" alt="HydroFlow Logo" style="width: 100%; height: 100%; object-contain;">
                 </div>
                 <div>
-                    <h3 style="font-size: 1.25rem; font-weight: 800; color: #1e293b; margin: 0; font-family: var(--font-headline);"><?= __('title_hydroflow') ?></h3>
-                    <p style="font-size: 0.625rem; text-transform: uppercase; letter-spacing: 0.2em; color: #64748b; font-weight: 700; margin: 0.25rem 0 0.5rem;"><?= __('irrigation_systems') ?></p>
-                    <p style="font-size: 0.6875rem; color: #475569; font-weight: 600;"><?= __('prof_mgmt') ?></p>
+                    <h3 style="font-size: 1.25rem; font-weight: 800; color: #1e293b; margin: 0; font-family: var(--font-headline);"><?= htmlspecialchars($inv_company_name) ?></h3>
+                    <?php if(!empty($inv_gst)): ?><p style="font-size: 0.625rem; text-transform: uppercase; letter-spacing: 0.1em; color: #64748b; font-weight: 700; margin: 0.25rem 0 0;"><?= htmlspecialchars($inv_gst) ?></p><?php endif; ?>
+                    <?php if(!empty($inv_address)): ?><p style="font-size: 0.6875rem; color: #475569; font-weight: 600; margin: 0.25rem 0 0;"><?= htmlspecialchars($inv_address) ?></p><?php endif; ?>
+                    <?php if(!empty($inv_contact)): ?><p style="font-size: 0.6875rem; color: #475569; font-weight: 600; margin: 0;"><?= htmlspecialchars($inv_contact) ?></p><?php endif; ?>
                 </div>
             </div>
             <div style="text-align: right;">
@@ -132,6 +149,8 @@ include '../../includes/sidebar.php';
                 <p style="font-size: 0.5625rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.2em; font-weight: 800; margin-bottom: 0.75rem;"><?= __('th_status') ?></p>
                 <?php if($bill['status'] == 'paid'): ?>
                     <span style="display: inline-block; padding: 0.5rem 1rem; border-radius: 999px; background: #f1f5f9; color: #1e293b; font-size: 0.625rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.2em; border: 1px solid #e2e8f0;"><?= __('paid_settled') ?></span>
+                <?php elseif($bill['status'] == 'partial'): ?>
+                    <span style="display: inline-block; padding: 0.5rem 1rem; border-radius: 999px; background: #fffbeb; color: #d97706; font-size: 0.625rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.2em; border: 1px solid #fde68a;">PARTIAL</span>
                 <?php elseif($bill['status'] == 'cancelled'): ?>
                     <span style="display: inline-block; padding: 0.5rem 1rem; border-radius: 999px; background: #f1f5f9; color: #1e293b; font-size: 0.625rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.2em; border: 1px solid #e2e8f0;"><?= __('val_cancelled') ?></span>
                 <?php else: ?>
@@ -174,9 +193,13 @@ include '../../includes/sidebar.php';
                     <span><?= __('subtotal') ?></span>
                     <span style="font-weight: 800; color: #1e293b;">₹<?= number_format($bill['total_amount'], 2) ?></span>
                 </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.8125rem; color: #475569; font-weight: 600; padding: 0 0.5rem;">
+                    <span><?= __('amount_paid') ?></span>
+                    <span style="font-weight: 800; color: #10b981;">₹<?= number_format($paid_amount, 2) ?></span>
+                </div>
                 <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem 0.5rem; border-top: 1px solid #f1f5f9; margin-top: 1rem;">
                     <span style="font-size: 0.9375rem; font-weight: 800; color: #475569; text-transform: uppercase; letter-spacing: 0.1em;"><?= __('total_due') ?></span>
-                    <span style="font-size: 1.75rem; font-weight: 900; color: #1e293b; font-family: var(--font-headline); letter-spacing: -0.025em;">₹<?= number_format($bill['total_amount'], 2) ?></span>
+                    <span style="font-size: 1.75rem; font-weight: 900; color: #1e293b; font-family: var(--font-headline); letter-spacing: -0.025em;">₹<?= number_format($due_balance, 2) ?></span>
                 </div>
             </div>
         </div>
@@ -187,14 +210,16 @@ include '../../includes/sidebar.php';
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start;">
             <div>
                 <h6 style="font-size: 0.5625rem; text-transform: uppercase; font-weight: 800; color: #475569; letter-spacing: 0.2em; margin-bottom: 0.75rem;"><?= __('terms_conditions') ?></h6>
-                <ul style="font-size: 0.625rem; color: #64748b; line-height: 1.6; list-style: disc; padding-left: 1rem; font-weight: 600;">
-                    <li><?= __('term_1') ?></li>
-                    <li><?= __('term_2') ?></li>
-                </ul>
+                <div style="font-size: 0.625rem; color: #64748b; line-height: 1.6; font-weight: 600;">
+                    <?= nl2br(htmlspecialchars($inv_terms)) ?>
+                </div>
             </div>
             <div style="text-align: right; display: flex; flex-direction: column; align-items: flex-end; justify-content: flex-end;">
-                <p style="font-size: 0.5625rem; text-transform: uppercase; font-weight: 800; color: #475569; letter-spacing: 0.2em;"><?= __('auth_signatory') ?></p>
-                <p style="font-size: 0.625rem; color: #64748b; margin-top: 0.25rem; font-weight: 600;"><?= __('hydroflow_mgmt') ?></p>
+                <p style="font-size: 0.5625rem; text-transform: uppercase; font-weight: 800; color: #475569; letter-spacing: 0.2em;"><?= htmlspecialchars($inv_signatory) ?></p>
+                <div style="margin-top: 0.25rem;">
+                    <p style="font-size: 0.625rem; color: #64748b; font-weight: 600; margin: 0;"><?= htmlspecialchars($inv_company_name) ?></p>
+                    <?php if(!empty($inv_footer_note)): ?><p style="font-size: 0.5625rem; color: #64748b; font-weight: 500; margin: 0.25rem 0 0; font-style: italic;"><?= htmlspecialchars($inv_footer_note) ?></p><?php endif; ?>
+                </div>
             </div>
         </div>
     </div>

@@ -6,6 +6,17 @@ if (!isset($_SESSION['admin_id'])) {
 }
 include '../includes/header.php';
 include '../includes/sidebar.php';
+require_once '../models/Setting.php';
+
+// Fetch Invoice Settings
+$settingModel = new Setting($conn);
+$inv_company_name = $settingModel->get('inv_company_name', 'HydroFlow Water Supply');
+$inv_address = $settingModel->get('inv_address', '123 Main Street, City, Country');
+$inv_contact = $settingModel->get('inv_contact', '+91 98765 43210');
+$inv_gst = $settingModel->get('inv_gst', 'GSTIN: 22AAAAA0000A1Z5');
+$inv_terms = $settingModel->get('inv_terms', "1. Payment is due within 7 days of invoice issue.\n2. This invoice is system-generated based on supply logs.");
+$inv_footer_note = $settingModel->get('inv_footer_note', 'Thank you for your business!');
+$inv_signatory = $settingModel->get('inv_signatory', 'Authorized Signatory');
 ?>
 
 
@@ -409,6 +420,100 @@ include '../includes/sidebar.php';
                         <button class="btn-import" onclick="confirmImport()" id="confirmImportBtn">
                             <span class="material-symbols-outlined">check_circle</span> <?= __('confirm_import') ?>
                         </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ╔══════════════════════════════╗
+             ║   CARD 4 – INVOICE SETTINGS  ║
+             ╚══════════════════════════════╝ -->
+        <div class="settings-card profile-full-card" id="invoiceSettingsCard">
+            <div class="settings-card-header" onclick="toggleSettingsCard('invoiceSettingsCard')" style="cursor: pointer;">
+                <div class="settings-card-icon bill-icon" style="background: rgba(125,87,0,0.1);">
+                    <span class="material-symbols-outlined" style="color: #7d5700;">receipt_long</span>
+                </div>
+                <div style="flex: 1;">
+                    <h2 class="settings-card-title"><?= __('invoice_settings') ?></h2>
+                    <p class="settings-card-desc"><?= __('invoice_settings_desc') ?></p>
+                </div>
+                <span class="material-symbols-outlined settings-chevron">expand_more</span>
+            </div>
+            
+            <div class="settings-card-body">
+                <div style="padding-top: 0.5rem;">
+                    <div class="profile-forms" style="width: 100%;">
+                        
+                        <div class="grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                            <!-- Company Name -->
+                            <div class="profile-input-group">
+                                <label for="invCompanyName"><?= __('inv_company_name') ?></label>
+                                <div class="profile-input-wrap">
+                                    <span class="material-symbols-outlined profile-input-icon">corporate_fare</span>
+                                    <input type="text" id="invCompanyName" class="profile-input" value="<?= htmlspecialchars($inv_company_name) ?>">
+                                </div>
+                            </div>
+
+                            <!-- GST/TIN -->
+                            <div class="profile-input-group">
+                                <label for="invGst"><?= __('inv_gst') ?></label>
+                                <div class="profile-input-wrap">
+                                    <span class="material-symbols-outlined profile-input-icon">account_balance</span>
+                                    <input type="text" id="invGst" class="profile-input" value="<?= htmlspecialchars($inv_gst) ?>">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Address -->
+                        <div class="profile-input-group">
+                            <label for="invAddress"><?= __('inv_address') ?></label>
+                            <div class="profile-input-wrap">
+                                <span class="material-symbols-outlined profile-input-icon">location_on</span>
+                                <input type="text" id="invAddress" class="profile-input" value="<?= htmlspecialchars($inv_address) ?>">
+                            </div>
+                        </div>
+
+                        <div class="grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                            <!-- Contact -->
+                            <div class="profile-input-group">
+                                <label for="invContact"><?= __('inv_contact') ?></label>
+                                <div class="profile-input-wrap">
+                                    <span class="material-symbols-outlined profile-input-icon">call</span>
+                                    <input type="text" id="invContact" class="profile-input" value="<?= htmlspecialchars($inv_contact) ?>">
+                                </div>
+                            </div>
+
+                            <!-- Signatory -->
+                            <div class="profile-input-group">
+                                <label for="invSignatory"><?= __('inv_signatory') ?></label>
+                                <div class="profile-input-wrap">
+                                    <span class="material-symbols-outlined profile-input-icon">draw</span>
+                                    <input type="text" id="invSignatory" class="profile-input" value="<?= htmlspecialchars($inv_signatory) ?>">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Terms & Conditions -->
+                        <div class="profile-input-group">
+                            <label for="invTerms"><?= __('inv_terms') ?></label>
+                            <div class="profile-input-wrap">
+                                <textarea id="invTerms" class="profile-input" style="height: 80px; padding-left: 1rem; resize: vertical;"><?= htmlspecialchars($inv_terms) ?></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Footer Note -->
+                        <div class="profile-input-group">
+                            <label for="invFooterNote"><?= __('inv_footer_note') ?></label>
+                            <div class="profile-input-wrap">
+                                <span class="material-symbols-outlined profile-input-icon">format_quote</span>
+                                <input type="text" id="invFooterNote" class="profile-input" value="<?= htmlspecialchars($inv_footer_note) ?>">
+                            </div>
+                        </div>
+
+                        <button class="profile-save-btn" onclick="saveInvoiceSettings()" style="margin-top: 0.5rem; background: #7d5700;">
+                            <span class="material-symbols-outlined">save</span> <?= __('save_invoice_settings') ?>
+                        </button>
+
                     </div>
                 </div>
             </div>
@@ -952,6 +1057,7 @@ const i18n = {
     noDataFile: '<?= __('no_data_file') ?>',
     moreRows: '<?= __('more_rows') ?>',
     templateDownloaded: '<?= __('template_downloaded') ?>',
+    msgInvoiceSettingsSaved: '<?= __('msg_invoice_settings_saved') ?>',
     strength: [
         '<?= __('vec_weak') ?>',
         '<?= __('weak') ?>',
@@ -1447,6 +1553,33 @@ const i18n = {
         XLSX.utils.book_append_sheet(wb, ws, 'Template');
         XLSX.writeFile(wb, 'HydroFlow_' + table + '_template.xlsx');
         showToast('📄 ' + i18n.templateDownloaded);
+    };
+
+    /* ══════════════════════════════════════════════════════
+       4.5 INVOICE SETTINGS
+    ══════════════════════════════════════════════════════ */
+    window.saveInvoiceSettings = async function() {
+        const fd = new FormData();
+        fd.append('action', 'update_invoice_settings');
+        fd.append('inv_company_name', document.getElementById('invCompanyName').value);
+        fd.append('inv_gst', document.getElementById('invGst').value);
+        fd.append('inv_address', document.getElementById('invAddress').value);
+        fd.append('inv_contact', document.getElementById('invContact').value);
+        fd.append('inv_signatory', document.getElementById('invSignatory').value);
+        fd.append('inv_terms', document.getElementById('invTerms').value);
+        fd.append('inv_footer_note', document.getElementById('invFooterNote').value);
+        
+        try {
+            const res = await fetch(baseUrl + 'controllers/settingsController.php', { method: 'POST', body: fd });
+            const data = await res.json();
+            if (data.success) {
+                showToast(i18n.msgInvoiceSettingsSaved || 'Invoice settings saved!');
+            } else {
+                showToast(data.message || 'Error occurred', true);
+            }
+        } catch(e) {
+            showToast('Error: ' + e.message, true);
+        }
     };
 
     /* ══════════════════════════════════════════════════════

@@ -125,24 +125,25 @@
                         #mobileMenuBtn { display: flex !important; align-items: center; justify-content: center; width: 2.5rem; height: 2.5rem; border-radius: 0.75rem; background-color: rgba(0, 93, 144, 0.1); color: var(--color-primary); border: none; cursor: pointer; }
                     }
                 </style>
+                <?php if ($current_page === 'dashboard.php'): ?>
                 <h2 style="font-family: var(--font-headline); font-size: 1.125rem; font-weight: 600; color: #0f172a;" class="hidden-sm">
-                    <?php 
-                        switch($current_page) {
-                            case 'dashboard.php': echo __('dashboard'); break;
-                            case 'customer_list.php': echo __('customers'); break;
-                            case 'motor_list.php': echo __('motors'); break;
-                            case 'supply_history.php': echo __('supply_record'); break;
-                            case 'bill_history.php': echo __('billing'); break;
-                            case 'payment_history.php': echo __('payments'); break;
-                            case 'daily_report.php': echo __('reports'); break;
-                            case 'settings.php': echo __('settings'); break;
-                            default: echo __('mgmt_system'); break;
-                        }
-                    ?>
+                    <?= __('dashboard') ?>
                 </h2>
+                <?php endif; ?>
+                <?php 
+                    $search_placeholder = __('search_records');
+                    switch($current_page) {
+                        case 'customer_list.php': $search_placeholder = __('search_customers'); break;
+                        case 'motor_list.php': $search_placeholder = __('search_motors'); break;
+                        case 'supply_history.php': $search_placeholder = __('search_supply'); break;
+                        case 'bill_history.php': $search_placeholder = __('search_bills'); break;
+                        case 'payment_history.php': $search_placeholder = __('search_payments'); break;
+                        case 'daily_report.php': $search_placeholder = __('search_reports'); break;
+                    }
+                ?>
                 <div style="position: relative;" class="hidden-md" data-tooltip="<?= __('tooltip_search') ?>" data-tooltip-pos="right">
                     <span class="material-symbols-outlined" style="position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%); color: var(--color-outline);">search</span>
-                    <input id="topGlobalSearch" style="background-color: var(--color-surface-container-high); border: none; border-radius: 0.5rem; padding: 0.5rem 1rem 0.5rem 2.5rem; width: 18rem; font-size: 0.875rem; transition: all 0.3s ease;" placeholder="<?= __('search_records') ?>" type="text"/>
+                    <input id="topGlobalSearch" style="background-color: var(--color-surface-container-high); border: none; border-radius: 0.5rem; padding: 0.5rem 1rem 0.5rem 2.5rem; width: 18rem; font-size: 0.875rem; transition: all 0.3s ease;" placeholder="<?= $search_placeholder ?>" type="text"/>
                 </div>
             </div>
             <div style="display: flex; align-items: center; gap: 1rem;">

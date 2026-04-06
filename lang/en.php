@@ -14,6 +14,12 @@ return [
     'precision_supply' => 'Precision Supply',
     'system_admin' => 'System Administrator',
     'search_records' => 'Search records...',
+    'search_customers' => 'Search customers...',
+    'search_motors' => 'Search motors...',
+    'search_supply' => 'Search supply records...',
+    'search_bills' => 'Search bills...',
+    'search_payments' => 'Search payments...',
+    'search_reports' => 'Search reports...',
     'tooltip_edit' => 'Edit Record',
     'tooltip_delete' => 'Delete Record',
     'tooltip_view' => 'View Details',
@@ -254,6 +260,19 @@ return [
     'confirm_import' => 'Confirm Import',
     'toast_done' => 'Done!',
     'profile' => 'Profile',
+
+    // Invoice Settings
+    'invoice_settings' => 'Invoice Settings',
+    'invoice_settings_desc' => 'Customize the details shown on your printed invoices.',
+    'inv_company_name' => 'Company Name',
+    'inv_address' => 'Full Address',
+    'inv_contact' => 'Contact Info',
+    'inv_gst' => 'GST / TIN Number',
+    'inv_terms' => 'Terms & Conditions',
+    'inv_footer_note' => 'Footer Note / Greeting',
+    'inv_signatory' => 'Authorized Signatory Name',
+    'save_invoice_settings' => 'Save Settings',
+    'msg_invoice_settings_saved' => 'Invoice settings saved successfully!',
 
     // Table Headers
     'th_id' => 'ID',

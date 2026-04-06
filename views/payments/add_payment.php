@@ -4,10 +4,12 @@
 
 <?php
 // Get unpaid bills
-$pending_bills = $conn->query("SELECT b.bill_id, b.total_amount, c.farmer_name 
+$pending_bills = $conn->query("SELECT b.bill_id, b.total_amount, 
+                              (SELECT COALESCE(SUM(amount), 0) FROM payments WHERE bill_id = b.bill_id) as paid_amount,
+                              c.farmer_name 
                               FROM bills b 
                               JOIN customers c ON b.customer_id = c.customer_id 
-                              WHERE b.status = 'pending'");
+                              WHERE b.status IN ('pending', 'partial')");
 ?>
 
 <!-- Header -->
@@ -46,9 +48,11 @@ $pending_bills = $conn->query("SELECT b.bill_id, b.total_amount, c.farmer_name
                     <span class="material-symbols-outlined input-icon">receipt_long</span>
                     <select name="bill_id" id="bill_id" required class="input-field" style="appearance: none; cursor: pointer;">
                         <option value=""><?= __('select_invoice_to_settle') ?></option>
-                        <?php while($row = $pending_bills->fetch_assoc()): ?>
-                            <option value="<?= $row['bill_id'] ?>" data-amount="<?= $row['total_amount'] ?>">
-                                INV-<?= str_pad($row['bill_id'], 4, '0', STR_PAD_LEFT) ?> - <?= htmlspecialchars($row['farmer_name']) ?> (₹<?= $row['total_amount'] ?>)
+                        <?php while($row = $pending_bills->fetch_assoc()): 
+                            $due = max(0, $row['total_amount'] - $row['paid_amount']);
+                        ?>
+                            <option value="<?= $row['bill_id'] ?>" data-amount="<?= $due ?>">
+                                INV-<?= str_pad($row['bill_id'], 4, '0', STR_PAD_LEFT) ?> - <?= htmlspecialchars($row['farmer_name']) ?> (<?= __('total_due') ?>: ₹<?= number_format($due, 2) ?>)
                             </option>
                         <?php endwhile; ?>
                     </select>
