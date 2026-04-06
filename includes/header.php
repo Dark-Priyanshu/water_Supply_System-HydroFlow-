@@ -1,17 +1,9 @@
 <?php
-require_once __DIR__ . '/../config/config.php';
-
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-if (!isset($_SESSION['admin_id'])) {
-    header("Location: " . BASE_URL . "login.php");
-    exit();
-}
+// ── Security Gate: Handles auth, path traversal, session fixation ──
+require_once __DIR__ . '/auth_check.php';
 
 // DB connection (needed by sidebar for dynamic admin name)
 if (!isset($conn)) {
-    // Resolve config path regardless of which view includes header
     $config_path = __DIR__ . '/../config/database.php';
     if (!file_exists($config_path)) $config_path = __DIR__ . '/../../config/database.php';
     require_once $config_path;
@@ -87,6 +79,13 @@ if (!isset($conn)) {
                 <p style="font-size: 0.75rem; color: var(--color-outline); margin-top: 0.25rem;"><?= __('dt_no_match_desc') ?></p>
             </div>`
         };
+
+        // ── Session Manager Config (read by session-manager.js) ──
+        window.HYDRO_BASE_URL          = '<?= BASE_URL ?>';
+        window.HYDRO_SESSION_SECS      = <?= (int)($GLOBALS['_session_timeout_seconds'] ?? 1800) ?>;
+        window.HYDRO_REAUTH_REQUIRED   = <?= !empty($GLOBALS['_reauth_required']) ? 'true' : 'false' ?>;
     </script>
+    <!-- Session Manager -->
+    <script src="<?= BASE_URL ?>assets/js/session-manager.js" defer></script>
 </head>
 <body class="bg-surface font-body text-on-surface antialiased">

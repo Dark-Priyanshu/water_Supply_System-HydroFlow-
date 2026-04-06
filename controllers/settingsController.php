@@ -40,6 +40,20 @@ if ($action === 'update_invoice_settings') {
     exit();
 }
 
+if ($action === 'update_session_settings') {
+    $settingModel = new Setting($conn);
+
+    $reauth_min = (int)($_POST['reauth_interval_minutes'] ?? 0);
+    $allowed_reauth = [0, 60, 120, 240];
+    if (!in_array($reauth_min, $allowed_reauth)) $reauth_min = 0;
+
+    $settingModel->set('reauth_interval_minutes', $reauth_min);
+    $_SESSION['reauth_interval'] = $reauth_min * 60;
+
+    echo json_encode(['success' => true, 'message' => 'Session settings updated.']);
+    exit();
+}
+
 echo json_encode(['success' => false, 'message' => 'Invalid action']);
 exit();
 ?>

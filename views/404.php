@@ -1,5 +1,5 @@
 <?php
-require_once '../../config/config.php';
+require_once '../config/config.php';
 ?>
 <!DOCTYPE html>
 <html lang="<?= $_SESSION['lang'] ?? 'en' ?>" data-theme="<?= htmlspecialchars($_COOKIE['hydroTheme'] ?? 'light') ?>">
@@ -230,11 +230,11 @@ require_once '../../config/config.php';
 
 <!-- Top Nav -->
 <nav class="nav-404">
-    <a href="<?= BASE_URL ?>views/dashboard.php" class="nav-logo">
+    <a href="<?= BASE_URL ?>dashboard.php" class="nav-logo">
         <img src="<?= BASE_URL ?>assets/images/icon.png" alt="HydroFlow Logo">
         HydroFlow
     </a>
-    <a href="<?= BASE_URL ?>views/dashboard.php" class="nav-back-btn">
+    <a href="<?= BASE_URL ?>dashboard.php" class="nav-back-btn">
         <span class="material-symbols-outlined">arrow_back</span>
         Back to Dashboard
     </a>
@@ -285,7 +285,7 @@ require_once '../../config/config.php';
             </p>
 
             <div class="btn-row">
-                <a href="<?= BASE_URL ?>views/dashboard.php" class="btn-primary-404">
+                <a href="<?= BASE_URL ?>dashboard.php" class="btn-primary-404">
                     <span class="material-symbols-outlined">dashboard</span>
                     Back to Dashboard
                 </a>
@@ -314,6 +314,9 @@ require_once '../../config/config.php';
                     <a href="<?= BASE_URL ?>views/settings.php" class="quick-link">
                         <span class="material-symbols-outlined">settings</span> Settings
                     </a>
+                    <a href="<?= BASE_URL ?>login.php" class="quick-link">
+                        <span class="material-symbols-outlined">login</span> Login
+                    </a>
                 </div>
             </div>
         </div>
@@ -327,7 +330,7 @@ require_once '../../config/config.php';
     <div class="footer-links">
         <a href="<?= BASE_URL ?>views/settings.php">Settings</a>
         <a href="<?= BASE_URL ?>views/reports/reports.php">Reports</a>
-        <a href="<?= BASE_URL ?>views/dashboard.php">Dashboard</a>
+        <a href="<?= BASE_URL ?>dashboard.php">Dashboard</a>
     </div>
 </footer>
 

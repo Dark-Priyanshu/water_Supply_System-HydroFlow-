@@ -1,9 +1,6 @@
 <?php
 require_once __DIR__ . '/../config/config.php';
-if (!isset($_SESSION['admin_id'])) {
-    header("Location: " . BASE_URL . "login.php");
-    exit();
-}
+require_once __DIR__ . '/../includes/auth_check.php';
 include '../includes/header.php';
 include '../includes/sidebar.php';
 require_once '../models/Setting.php';
@@ -17,6 +14,10 @@ $inv_gst = $settingModel->get('inv_gst', 'GSTIN: 22AAAAA0000A1Z5');
 $inv_terms = $settingModel->get('inv_terms', "1. Payment is due within 7 days of invoice issue.\n2. This invoice is system-generated based on supply logs.");
 $inv_footer_note = $settingModel->get('inv_footer_note', 'Thank you for your business!');
 $inv_signatory = $settingModel->get('inv_signatory', 'Authorized Signatory');
+
+// Fetch Session Security Settings
+$saved_timeout = (int)$settingModel->get('session_timeout_minutes', '30');
+$saved_reauth  = (int)$settingModel->get('reauth_interval_minutes', '0');
 ?>
 
 
@@ -516,6 +517,145 @@ $inv_signatory = $settingModel->get('inv_signatory', 'Authorized Signatory');
 
                     </div>
                 </div>
+            </div>
+        </div>
+
+
+        <!-- ╔══════════════════════════════╗
+             ║   CARD 5 – SESSION SECURITY   ║
+             ╚══════════════════════════════╝ -->
+        <div class="settings-card profile-full-card" id="sessionSecCard">
+            <div class="settings-card-header" onclick="toggleSettingsCard('sessionSecCard')" style="cursor: pointer;">
+                <div class="settings-card-icon" style="background:rgba(0,93,144,0.1);">
+                    <span class="material-symbols-outlined" style="color:var(--color-primary);">security</span>
+                </div>
+                <div style="flex:1;">
+                    <h2 class="settings-card-title">Session Security</h2>
+                    <p class="settings-card-desc">Auto logout, multi-tab blocking & re-authentication settings</p>
+                </div>
+                <span class="material-symbols-outlined settings-chevron">expand_more</span>
+            </div>
+
+            <div class="settings-card-body">
+
+                <!-- Live Session Status Badge -->
+                <div id="sessionStatusBadge" style="
+                    display:flex;align-items:center;gap:1rem;
+                    padding:1rem 1.25rem;
+                    background:var(--color-surface-container-low,#f2f4f6);
+                    border-radius:1rem;
+                    margin-bottom:1.5rem;
+                    border:1px solid var(--color-outline-variant,#e0e3e5);
+                ">
+                    <div style="
+                        width:2.5rem;height:2.5rem;border-radius:50%;flex-shrink:0;
+                        background:rgba(0,93,144,0.12);
+                        display:flex;align-items:center;justify-content:center;
+                    ">
+                        <span class="material-symbols-outlined" style="color:var(--color-primary);font-size:1.25rem;">timer</span>
+                    </div>
+                    <div style="flex:1;">
+                        <p style="font-size:0.8rem;font-weight:700;color:var(--color-on-surface-variant);text-transform:uppercase;letter-spacing:0.08em;margin:0;">Current Session</p>
+                        <p id="sessionTimeLeft" style="font-size:1rem;font-weight:700;color:var(--color-primary);margin:0.2rem 0 0;">Calculating...</p>
+                    </div>
+                    <button onclick="HydroSession && HydroSession.keepAlive()" style="
+                        padding:0.45rem 1rem;
+                        background:linear-gradient(135deg,var(--color-primary),#0077b6);
+                        color:#fff;border:none;border-radius:0.625rem;
+                        font-size:0.78rem;font-weight:700;cursor:pointer;
+                    ">
+                        <span class="material-symbols-outlined" style="font-size:0.9rem;vertical-align:middle;">refresh</span>
+                        Extend
+                    </button>
+                </div>
+
+                <!-- Auto Logout Timeout -->
+                <div class="settings-row settings-row-col">
+                    <div class="settings-row-info" style="margin-bottom:1rem;">
+                        <span class="material-symbols-outlined settings-row-icon">logout</span>
+                        <div>
+                            <p class="settings-row-label">Auto Logout After Inactivity</p>
+                            <p class="settings-row-hint">Session will automatically end after the selected idle time</p>
+                        </div>
+                    </div>
+                    <div style="display:flex;flex-wrap:wrap;gap:0.625rem;">
+                        <?php
+                        $timeout_options = [15 => '15 min', 30 => '30 min', 60 => '1 hour', 120 => '2 hours', 240 => '4 hours'];
+                        foreach ($timeout_options as $val => $label):
+                            $active = ((int)$saved_timeout === $val) ? 'session-opt-btn active' : 'session-opt-btn';
+                        ?>
+                        <button class="<?= $active ?>" onclick="setSessionTimeout(<?= $val ?>)" data-timeout="<?= $val ?>">
+                            <?= $label ?>
+                        </button>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+
+                <div class="settings-divider"></div>
+
+                <!-- Re-Authentication Interval -->
+                <div class="settings-row settings-row-col">
+                    <div class="settings-row-info" style="margin-bottom:1rem;">
+                        <span class="material-symbols-outlined settings-row-icon">lock_person</span>
+                        <div>
+                            <p class="settings-row-label">Periodic Re-Authentication</p>
+                            <p class="settings-row-hint">Lock screen and ask for password again after this period (0 = disabled)</p>
+                        </div>
+                    </div>
+                    <div style="display:flex;flex-wrap:wrap;gap:0.625rem;">
+                        <?php
+                        $reauth_options = [0 => 'Disabled', 60 => '1 hour', 120 => '2 hours', 240 => '4 hours'];
+                        foreach ($reauth_options as $val => $label):
+                            $active = ((int)$saved_reauth === $val) ? 'session-opt-btn session-opt-reauth active' : 'session-opt-btn session-opt-reauth';
+                        ?>
+                        <button class="<?= $active ?>" onclick="setReauthInterval(<?= $val ?>)" data-reauth="<?= $val ?>">
+                            <?= $label ?>
+                        </button>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+
+                <div class="settings-divider"></div>
+
+                <!-- Multi-Tab Blocking Toggle -->
+                <div class="settings-row">
+                    <div class="settings-row-info">
+                        <span class="material-symbols-outlined settings-row-icon">tab_close</span>
+                        <div>
+                            <p class="settings-row-label">Single Tab Enforcement</p>
+                            <p class="settings-row-hint">Block the app from being opened simultaneously in multiple browser tabs</p>
+                        </div>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:0.75rem;">
+                        <span style="font-size:0.75rem;font-weight:700;color:var(--color-primary);background:rgba(0,93,144,0.1);padding:0.25rem 0.75rem;border-radius:999px;">Always On</span>
+                    </div>
+                </div>
+
+                <div class="settings-divider"></div>
+
+                <!-- Test Re-Auth -->
+                <div class="settings-row">
+                    <div class="settings-row-info">
+                        <span class="material-symbols-outlined settings-row-icon">verified_user</span>
+                        <div>
+                            <p class="settings-row-label">Test Re-Authentication</p>
+                            <p class="settings-row-hint">Manually trigger the lock screen to verify it works correctly</p>
+                        </div>
+                    </div>
+                    <button onclick="HydroSession && HydroSession.showReauth()" style="
+                        padding:0.5rem 1.25rem;
+                        background:var(--color-surface-container,#eceef0);
+                        color:var(--color-primary);
+                        border:1.5px solid var(--color-primary);
+                        border-radius:0.75rem;
+                        font-size:0.82rem;font-weight:700;cursor:pointer;
+                        display:flex;align-items:center;gap:0.4rem;
+                    ">
+                        <span class="material-symbols-outlined" style="font-size:1rem;">lock</span>
+                        Lock Now
+                    </button>
+                </div>
+
             </div>
         </div>
 
@@ -1600,10 +1740,100 @@ const i18n = {
         clearTimeout(toastTimer);
         toastTimer = setTimeout(() => el.classList.add('hidden'), 4000);
     }
+
+    /* ══════════════════════════════════════════════════════
+       6.  SESSION SECURITY SETTINGS
+    ══════════════════════════════════════════════════════ */
+    const SESSION_CTRL = window.HYDRO_BASE_URL + 'controllers/sessionController.php';
+
+    window.setSessionTimeout = function(minutes) {
+        document.querySelectorAll('.session-opt-btn:not(.session-opt-reauth)').forEach(function(b) {
+            b.classList.toggle('active', parseInt(b.dataset.timeout) === minutes);
+        });
+        fetch(SESSION_CTRL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: 'action=save_timeout&timeout_minutes=' + minutes
+        }).then(function(r) { return r.json(); }).then(function(d) {
+            if (d.success) {
+                window.HYDRO_SESSION_SECS = minutes * 60;
+                showToast('Auto logout set to ' + (minutes < 60 ? minutes + ' minutes' : (minutes/60) + ' hour(s)'));
+            } else { showToast('Failed to save timeout setting', true); }
+        }).catch(function() { showToast('Network error saving timeout', true); });
+    };
+
+    window.setReauthInterval = function(minutes) {
+        document.querySelectorAll('.session-opt-reauth').forEach(function(b) {
+            b.classList.toggle('active', parseInt(b.dataset.reauth) === minutes);
+        });
+        // Reuse save_timeout but also send reauth setting via settingsController
+        fetch('<?= BASE_URL ?>controllers/settingsController.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: 'action=update_session_settings&reauth_interval_minutes=' + minutes
+        }).then(function(r) { return r.json(); }).then(function(d) {
+            var label = minutes === 0 ? 'Re-auth disabled' : 'Re-auth every ' + (minutes < 60 ? minutes + ' min' : (minutes/60) + ' hr(s)');
+            showToast(d.success ? label : 'Failed to save re-auth', !d.success);
+        }).catch(function() { showToast('Network error', true); });
+    };
+
+    // Live session countdown in the status badge
+    function updateSessionCountdown() {
+        var el = document.getElementById('sessionTimeLeft');
+        if (!el) return;
+        if (!window._hydroLastSync || (Date.now() - window._hydroLastSync) > 30000) {
+            fetch(SESSION_CTRL + '?action=get_status')
+                .then(function(r) { return r.json(); })
+                .then(function(d) {
+                    if (d.success) {
+                        window._hydroRemaining = d.remaining_seconds;
+                        window._hydroLastSync  = Date.now();
+                        el.textContent = 'Expires in ' + fmtTime(d.remaining_seconds);
+                    }
+                }).catch(function() {});
+        } else if (window._hydroRemaining !== undefined) {
+            window._hydroRemaining = Math.max(0, window._hydroRemaining - 1);
+            el.textContent = 'Expires in ' + fmtTime(window._hydroRemaining);
+        }
+    }
+    function fmtTime(s) {
+        if (s <= 0) return 'Expired';
+        var m = Math.floor(s / 60), sec = s % 60;
+        return (m > 0 ? m + 'm ' : '') + sec + 's';
+    }
+    setInterval(updateSessionCountdown, 1000);
+    updateSessionCountdown();
+
 })();
 </script>
 <style>
 @keyframes spin { from{transform:rotate(0)} to{transform:rotate(360deg)} }
+
+/* Session Security Option Buttons */
+.session-opt-btn {
+    padding: 0.5rem 1.1rem;
+    border: 1.5px solid var(--color-outline-variant, #bfc7d1);
+    border-radius: 0.75rem;
+    background: var(--color-surface-container-low, #f2f4f6);
+    color: var(--color-on-surface-variant, #404850);
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+.session-opt-btn:hover {
+    border-color: var(--color-primary, #005d90);
+    color: var(--color-primary, #005d90);
+    background: rgba(0,93,144,0.06);
+    transform: translateY(-1px);
+}
+.session-opt-btn.active {
+    background: linear-gradient(135deg, var(--color-primary, #005d90), #0077b6);
+    color: #fff;
+    border-color: transparent;
+    box-shadow: 0 4px 12px rgba(0,93,144,0.25);
+}
 </style>
 
 <?php include '../includes/footer.php'; ?>

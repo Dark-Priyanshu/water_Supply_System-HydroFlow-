@@ -1,13 +1,64 @@
 Options -Indexes
 
-# Custom 404 Error Page
+# ─── Custom Error Pages ────────────────────────────────────────────────────────
 ErrorDocument 404 /waterS/views/404.php
+ErrorDocument 403 /waterS/views/404.php
 
-# Security - Hide sensitive files
-<FilesMatch "\.(sql|log|env|ini|bak)$">
+# ─── Rewrite Engine ───────────────────────────────────────────────────────────
+RewriteEngine On
+RewriteBase /waterS/
+
+# ─── Security: Block Direct Access to Sensitive Folders ───────────────────────
+# Block direct access to config/, models/, includes/, and lang/ folders
+RewriteRule ^config/.*$       - [F,L]
+RewriteRule ^models/.*$       - [F,L]
+RewriteRule ^includes/.*$     - [F,L]
+RewriteRule ^lang/.*$         - [F,L]
+
+# ─── Security: Block Direct Access to views/ Subfolders ────────────────────────
+# Allow ONLY views/404.php, views/settings.php, and views/*/  specific pages
+# that properly include header.php (which enforces auth)
+# Note: We do NOT block views/ entirely because these files use header.php for auth.
+# Instead, we rely on header.php session check + block raw folder browsing.
+
+# ─── Security: Hide Sensitive File Types ──────────────────────────────────────
+<FilesMatch "\.(sql|log|env|ini|bak|sh|py|txt|md)$">
     Order allow,deny
     Deny from all
 </FilesMatch>
 
-# PHP settings
+# ─── Security: Block syno.txt and database.sql explicitly ─────────────────────
+<Files "syno.txt">
+    Order allow,deny
+    Deny from all
+</Files>
+<Files "database.sql">
+    Order allow,deny
+    Deny from all
+</Files>
+
+# ─── Security: Prevent Script Injection in Query Strings ──────────────────────
+RewriteCond %{QUERY_STRING} (\<|%3C).*script.*(\>|%3E) [NC,OR]
+RewriteCond %{QUERY_STRING} GLOBALS(=|\[|\%[0-9A-Z]{0,2}) [OR]
+RewriteCond %{QUERY_STRING} _REQUEST(=|\[|\%[0-9A-Z]{0,2}) [OR]
+RewriteCond %{QUERY_STRING} ^.*(\[|\]|\(|\)|<|>|ê|"|;|\?|\*|=$).* [NC,OR]
+RewriteCond %{QUERY_STRING} ^.*(&#x22;|&#x27;|&#x3C;|&#x3E;|&#x5C;|&#x7B;|&#x7B;).* [NC,OR]
+RewriteCond %{QUERY_STRING} (NULL|OUTFILE|LOAD_FILE) [OR]
+RewriteCond %{QUERY_STRING} (\.\.\/|\.\.\\|%2e%2e%2f|%2e%2e\/|\.\.%2f|%2e%2e%5c) [NC]
+RewriteRule .* - [F,L]
+
+# ─── Security: Block Directory Traversal in URI ───────────────────────────────
+RewriteCond %{REQUEST_URI} \.\.\/ [NC]
+RewriteRule .* - [F,L]
+
+# ─── PHP Settings ─────────────────────────────────────────────────────────────
 php_flag display_errors Off
+php_flag log_errors On
+
+# ─── Security Headers ─────────────────────────────────────────────────────────
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "SAMEORIGIN"
+    Header always set X-XSS-Protection "1; mode=block"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
