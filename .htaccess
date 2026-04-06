@@ -1,0 +1,13 @@
+Options -Indexes
+
+# Custom 404 Error Page
+ErrorDocument 404 /waterS/views/404.php
+
+# Security - Hide sensitive files
+<FilesMatch "\.(sql|log|env|ini|bak)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# PHP settings
+php_flag display_errors Off
