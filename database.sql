@@ -72,3 +72,17 @@ CREATE TABLE payments (
 
 -- Default admin password is 'admin123'
 INSERT INTO admins (username, password) VALUES ('admin', '$2y$10$nkhvtSY91KtAsvEJDiaules3aBthhjXx5vbFp2xWcnigsF3ct.iW6');
+
+CREATE TABLE settings (
+    setting_key VARCHAR(100) PRIMARY KEY,
+    setting_value TEXT
+);
+
+INSERT IGNORE INTO settings (setting_key, setting_value) VALUES 
+('inv_company_name', 'HydroFlow Water Supply'),
+('inv_address', '123 Main Street, City, Country'),
+('inv_contact', '+91 98765 43210'),
+('inv_gst', 'GSTIN: 22AAAAA0000A1Z5'),
+('inv_terms', '1. Payment is due within 7 days of invoice issue.\n2. This invoice is system-generated based on supply logs.'),
+('inv_footer_note', 'Thank you for your business!'),
+('inv_signatory', 'Authorized Signatory');
