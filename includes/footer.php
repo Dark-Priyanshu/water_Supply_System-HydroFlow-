@@ -31,6 +31,7 @@
                 $('.datatable').DataTable({
                     "pageLength": 10,
                     "ordering": true,
+                    "order": [], // Prevents default sort on first column, respects PHP ordering
                     "info": true,
                     "dom": "<'dt-container-row'lf>" +
                            "<'table-container'tr>" +

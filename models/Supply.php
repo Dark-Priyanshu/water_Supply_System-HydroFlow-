@@ -17,7 +17,7 @@ class Supply {
                   FROM water_supply s 
                   JOIN customers c ON s.customer_id = c.customer_id 
                   JOIN motors m ON s.motor_id = m.motor_id 
-                  ORDER BY s.date DESC, s.start_time DESC";
+                  ORDER BY s.supply_id DESC";
         return $this->conn->query($query);
     }
 }

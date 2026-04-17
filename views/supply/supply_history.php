@@ -67,7 +67,17 @@ $supplies = $supplyModel->getAllSupply();
                         <div style="font-size: 0.75rem; font-weight: 600; color: var(--color-on-surface-variant); margin-bottom: 0.25rem; white-space: nowrap;">
                             <?= date('h:i A', strtotime($row['start_time'])) ?> - <?= date('h:i A', strtotime($row['end_time'])) ?>
                         </div>
-                        <span style="padding: 0.125rem 0.5rem; background-color: var(--color-surface-container-high); border-radius: 0.25rem; font-size: 0.6875rem; font-weight: 700; color: var(--color-on-surface-variant); white-space: nowrap;"><?= number_format($row['total_hours'], 2) ?> <?= __('hours') ?></span>
+                        <?php
+                            $start = strtotime($row['start_time']);
+                            $end = strtotime($row['end_time']);
+                            if ($end < $start) {
+                                $end += 86400;
+                            }
+                            $diffMins = round(($end - $start) / 60);
+                            $h = floor($diffMins / 60);
+                            $m = $diffMins % 60;
+                        ?>
+                        <span style="padding: 0.125rem 0.5rem; background-color: var(--color-surface-container-high); border-radius: 0.25rem; font-size: 0.6875rem; font-weight: 700; color: var(--color-on-surface-variant); white-space: nowrap;"><?= $h ?>h<?= $m ?>m</span>
                     </td>
                     <td style="text-align: right; font-weight: 800; color: var(--color-secondary);">
                         ₹<?= number_format($row['total_amount'], 2) ?>
